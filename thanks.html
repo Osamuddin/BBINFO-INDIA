@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>送信完了 | BBINFO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Inter"', '"Noto Sans JP"', 'sans-serif'] },
+                    colors: { glass: { 100: 'rgba(255, 255, 255, 0.05)', 200: 'rgba(255, 255, 255, 0.1)' } },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #050505; color: #ffffff; overflow-x: hidden; }
+        .gradient-dots-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; --bg-color: #050505; --dot-size: 8px; --spacing: 10px; --hex-spacing: 17.32px; background-color: var(--bg-color); background-image: radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)), radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)), radial-gradient(circle at 50% 50%, #f00, transparent 60%), radial-gradient(circle at 50% 50%, #ff0, transparent 60%), radial-gradient(circle at 50% 50%, #0f0, transparent 60%), radial-gradient(ellipse at 50% 50%, #00f, transparent 60%); background-size: var(--spacing) var(--hex-spacing), var(--spacing) var(--hex-spacing), 200% 200%, 200% 200%, 200% 200%, 200% var(--hex-spacing); animation: gradient-dots-anim 60s linear infinite; opacity: 0.5; }
+        @keyframes gradient-dots-anim { 0% { background-position: 0px 0px, calc(var(--spacing)/2) calc(var(--hex-spacing)/2), 800% 400%, 1000% -400%, -1200% -600%, 400% var(--hex-spacing); } 100% { background-position: 0px 0px, calc(var(--spacing)/2) calc(var(--hex-spacing)/2), 0% 0%, 0% 0%, 0% 0%, 0% 0%; } }
+        .glass-panel { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); }
+        .glass-header { background: rgba(20, 20, 20, 0.15); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); }
+        
+        /* Gradient Button (Houdini) */
+        @property --pos-x { syntax: '<percentage>'; initial-value: 11.14%; inherits: false; } @property --pos-y { syntax: '<percentage>'; initial-value: 140%; inherits: false; } @property --spread-x { syntax: '<percentage>'; initial-value: 150%; inherits: false; } @property --spread-y { syntax: '<percentage>'; initial-value: 180.06%; inherits: false; } @property --color-1 { syntax: '<color>'; initial-value: #000; inherits: false; } @property --color-2 { syntax: '<color>'; initial-value: #08012c; inherits: false; } @property --color-3 { syntax: '<color>'; initial-value: #4e1e40; inherits: false; } @property --color-4 { syntax: '<color>'; initial-value: #70464e; inherits: false; } @property --color-5 { syntax: '<color>'; initial-value: #88394c; inherits: false; } @property --border-angle { syntax: '<angle>'; initial-value: 20deg; inherits: true; } @property --border-color-1 { syntax: '<color>'; initial-value: hsla(340, 75%, 60%, 0.2); inherits: true; } @property --border-color-2 { syntax: '<color>'; initial-value: hsla(340, 75%, 40%, 0.75); inherits: true; } @property --stop-1 { syntax: '<percentage>'; initial-value: 37.35%; inherits: false; } @property --stop-2 { syntax: '<percentage>'; initial-value: 61.36%; inherits: false; } @property --stop-3 { syntax: '<percentage>'; initial-value: 78.42%; inherits: false; } @property --stop-4 { syntax: '<percentage>'; initial-value: 89.52%; inherits: false; } @property --stop-5 { syntax: '<percentage>'; initial-value: 100%; inherits: false; }
+        .gradient-button { position: relative; appearance: none; cursor: pointer; background: #111; background: radial-gradient(circle at center, #1f1f1f 0%, #000000 100%); background: radial-gradient(var(--spread-x) var(--spread-y) at var(--pos-x) var(--pos-y), var(--color-1) var(--stop-1), var(--color-2) var(--stop-2), var(--color-3) var(--stop-3), var(--color-4) var(--stop-4), var(--color-5) var(--stop-5)); transition: --pos-x 0.5s, --pos-y 0.5s, --spread-x 0.5s, --spread-y 0.5s, --color-1 0.5s, --color-2 0.5s, --color-3 0.5s, --color-4 0.5s, --color-5 0.5s, --border-angle 0.5s, --border-color-1 0.5s, --border-color-2 0.5s, --stop-1 0.5s, --stop-2 0.5s, --stop-3 0.5s, --stop-4 0.5s, --stop-5 0.5s; }
+        .gradient-button::before { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(var(--border-angle), var(--border-color-1), var(--border-color-2)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+        .gradient-button:hover { --pos-x: 0%; --pos-y: 91.51%; --spread-x: 120.24%; --spread-y: 103.18%; --color-1: #c96287; --color-2: #c66c64; --color-3: #cc7d23; --color-4: #37140a; --color-5: #000; --border-angle: 190deg; --border-color-1: hsla(340, 78%, 90%, 0.1); --border-color-2: hsla(340, 75%, 90%, 0.6); --stop-1: 0%; --stop-2: 8.8%; --stop-3: 21.44%; --stop-4: 71.34%; --stop-5: 85.76%; }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-white">
+    <div class="gradient-dots-bg"></div>
+    <nav class="fixed w-full z-50 top-0 left-0 px-6 py-4">
+        <div class="max-w-7xl mx-auto glass-header rounded-full px-6 py-3 flex justify-between items-center relative z-50">
+            <a href="index.html" class="flex items-center gap-2 group"><div class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl group-hover:scale-110 transition-transform duration-300">B</div><span class="font-bold text-lg tracking-wider">BBINFO</span></a>
+        </div>
+    </nav>
+
+    <main class="min-h-screen flex items-center justify-center px-6 relative z-10 py-32">
+        <div class="max-w-lg w-full">
+            <div class="glass-panel rounded-3xl p-10 text-center relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-500/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                
+                <div class="mb-6 inline-flex items-center justify-center w-20 h-20 rounded-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+                    <i class="ph-fill ph-paper-plane-tilt text-4xl"></i>
+                </div>
+                
+                <h1 class="text-3xl font-black mb-4">送信完了</h1>
+                <p class="text-gray-300 mb-8 leading-relaxed">
+                    お申し込みありがとうございます。<br>
+                    内容を確認の上、担当者より迅速にご連絡させていただきます。
+                </p>
+
+                <a href="index.html" class="block w-full gradient-button inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white transition-transform hover:scale-105 shadow-lg">
+                    トップページに戻る
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

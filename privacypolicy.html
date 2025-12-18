@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プライバシーポリシー | BBINFO</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Lenis (Smooth Scroll) -->
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', '"Noto Sans JP"', 'sans-serif'],
+                    },
+                    colors: {
+                        glass: {
+                            100: 'rgba(255, 255, 255, 0.05)',
+                            200: 'rgba(255, 255, 255, 0.1)',
+                            300: 'rgba(255, 255, 255, 0.15)',
+                            border: 'rgba(255, 255, 255, 0.1)',
+                        },
+                        neon: {
+                            cyan: '#00f3ff',
+                            purple: '#bc13fe',
+                            pink: '#ff0055'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Styles & Reset */
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Lenis Recommended CSS */
+        html.lenis, html.lenis body { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+        .lenis.lenis-scrolling iframe { pointer-events: none; }
+
+        /* Background Gradient Dots */
+        .gradient-dots-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            --bg-color: #050505;
+            --dot-size: 8px;
+            --spacing: 10px;
+            --hex-spacing: 17.32px;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)),
+                radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)),
+                radial-gradient(circle at 50% 50%, #f00, transparent 60%),
+                radial-gradient(circle at 50% 50%, #ff0, transparent 60%),
+                radial-gradient(circle at 50% 50%, #0f0, transparent 60%),
+                radial-gradient(ellipse at 50% 50%, #00f, transparent 60%);
+            background-size: 
+                var(--spacing) var(--hex-spacing),
+                var(--spacing) var(--hex-spacing),
+                200% 200%, 200% 200%, 200% 200%, 200% var(--hex-spacing);
+            animation: gradient-dots-anim 30s linear infinite, gradient-dots-hue 6s linear infinite;
+        }
+
+        @keyframes gradient-dots-anim {
+            0% { background-position: 0px 0px, calc(var(--spacing) / 2) calc(var(--hex-spacing) / 2), 800% 400%, 1000% -400%, -1200% -600%, 400% var(--hex-spacing); }
+            100% { background-position: 0px 0px, calc(var(--spacing) / 2) calc(var(--hex-spacing) / 2), 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+        }
+
+        @keyframes gradient-dots-hue {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        /* Glassmorphism & Cards */
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Header Glass */
+        .glass-header {
+            background: rgba(20, 20, 20, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+        }
+
+        /* Animation Classes */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glowing Effect */
+        .glow-card-container {
+            position: relative;
+            border-radius: 1.5rem;
+            padding: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .glow-effect {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            overflow: hidden;
+            --start: 0;
+            --spread: 60;
+            --active: 0;
+            --border-width: 2px;
+            --gradient: radial-gradient(circle, #00f3ff 10%, transparent 20%),
+                        radial-gradient(circle at 40% 40%, #bc13fe 10%, transparent 20%),
+                        radial-gradient(circle at 60% 60%, #00f3ff 10%, transparent 20%),
+                        repeating-conic-gradient(from 0deg at 50% 50%, #00f3ff 0%, #bc13fe 25%, #00f3ff 50%, #bc13fe 75%, #00f3ff 100%);
+        }
+
+        .glow-effect::after {
+            content: "";
+            position: absolute;
+            inset: calc(-1 * var(--border-width));
+            border: var(--border-width) solid transparent;
+            border-radius: inherit;
+            background: var(--gradient);
+            background-attachment: fixed;
+            opacity: var(--active);
+            transition: opacity 0.3s;
+            -webkit-mask: linear-gradient(#0000, #0000), conic-gradient(from calc((var(--start) - var(--spread)) * 1deg), transparent 0deg, #fff, transparent calc(var(--spread) * 2deg));
+            mask: linear-gradient(#0000, #0000), conic-gradient(from calc((var(--start) - var(--spread)) * 1deg), transparent 0deg, #fff, transparent calc(var(--spread) * 2deg));
+            -webkit-mask-clip: padding-box, border-box;
+            mask-clip: padding-box, border-box;
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .glow-card-content {
+            position: relative;
+            height: 100%;
+            border-radius: 1.5rem;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(16px);
+            padding: 2rem;
+        }
+
+        /* Neon Text */
+        .text-glow { text-shadow: 0 0 20px rgba(0, 243, 255, 0.3); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        /* Gradient Button */
+        @property --pos-x { syntax: '<percentage>'; initial-value: 11.14%; inherits: false; }
+        @property --pos-y { syntax: '<percentage>'; initial-value: 140%; inherits: false; }
+        @property --spread-x { syntax: '<percentage>'; initial-value: 150%; inherits: false; }
+        @property --spread-y { syntax: '<percentage>'; initial-value: 180.06%; inherits: false; }
+        @property --color-1 { syntax: '<color>'; initial-value: #000; inherits: false; }
+        @property --color-2 { syntax: '<color>'; initial-value: #08012c; inherits: false; }
+        @property --color-3 { syntax: '<color>'; initial-value: #4e1e40; inherits: false; }
+        @property --color-4 { syntax: '<color>'; initial-value: #70464e; inherits: false; }
+        @property --color-5 { syntax: '<color>'; initial-value: #88394c; inherits: false; }
+        @property --border-angle { syntax: '<angle>'; initial-value: 20deg; inherits: true; }
+        @property --border-color-1 { syntax: '<color>'; initial-value: hsla(340, 75%, 60%, 0.2); inherits: true; }
+        @property --border-color-2 { syntax: '<color>'; initial-value: hsla(340, 75%, 40%, 0.75); inherits: true; }
+        @property --stop-1 { syntax: '<percentage>'; initial-value: 37.35%; inherits: false; }
+        @property --stop-2 { syntax: '<percentage>'; initial-value: 61.36%; inherits: false; }
+        @property --stop-3 { syntax: '<percentage>'; initial-value: 78.42%; inherits: false; }
+        @property --stop-4 { syntax: '<percentage>'; initial-value: 89.52%; inherits: false; }
+        @property --stop-5 { syntax: '<percentage>'; initial-value: 100%; inherits: false; }
+
+        .gradient-button {
+            position: relative;
+            appearance: none;
+            cursor: pointer;
+            background: radial-gradient(var(--spread-x) var(--spread-y) at var(--pos-x) var(--pos-y), var(--color-1) var(--stop-1), var(--color-2) var(--stop-2), var(--color-3) var(--stop-3), var(--color-4) var(--stop-4), var(--color-5) var(--stop-5));
+            transition: all 0.5s;
+        }
+        .gradient-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(var(--border-angle), var(--border-color-1), var(--border-color-2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        .gradient-button:hover {
+            --pos-x: 0%; --pos-y: 91.51%; --spread-x: 120.24%; --spread-y: 103.18%;
+            --color-1: #c96287; --color-2: #c66c64; --color-3: #cc7d23; --color-4: #37140a; --color-5: #000;
+            --border-angle: 190deg;
+            --border-color-1: hsla(340, 78%, 90%, 0.1); --border-color-2: hsla(340, 75%, 90%, 0.6);
+            --stop-1: 0%; --stop-2: 8.8%; --stop-3: 21.44%; --stop-4: 71.34%; --stop-5: 85.76%;
+        }
+
+        /* Mobile Menu */
+        #mobile-menu { transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; }
+        #mobile-menu.hidden { display: none; }
+        #mobile-menu.open { display: flex; transform: translateY(0); opacity: 1; }
+        #mobile-menu.closed { transform: translateY(-20px); opacity: 0; }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-white">
+
+    <!-- Background -->
+    <div class="gradient-dots-bg"></div>
+    <!-- 3D Canvas (Removed. Keeping the div just in case but it is empty now) -->
+    <div id="canvas-container" class="fixed inset-0 z-0 opacity-20 pointer-events-none"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 left-0 px-6 py-4 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto glass-header rounded-full px-6 py-3 flex justify-between items-center relative z-50">
+            
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl group-hover:scale-110 transition-transform duration-300">B</div>
+                <span class="font-bold text-lg tracking-wider">BBINFO</span>
+            </a>
+            
+            <!-- Desktop Menu (Links back to Home) -->
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="index.html#features" class="hover:text-white transition-colors">サービス詳細</a>
+                <a href="index.html#channels" class="hover:text-white transition-colors">チャンネル一覧</a>
+                <a href="index.html#pricing" class="hover:text-white transition-colors">料金プラン</a>
+            </div>
+
+            <!-- Header Buttons -->
+            <div class="hidden md:flex items-center gap-3">
+                <a href="#" class="inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white border border-white/20 hover:bg-white hover:text-black transition-all">
+                    お問い合わせ
+                </a>
+                <a href="trial.html" class="hidden md:inline-flex gradient-button items-center justify-center rounded-full min-w-[132px] px-6 md:px-9 py-4 text-sm leading-[19px] font-medium text-white font-sans font-bold hover:scale-105 transition-transform duration-300">
+                    <span class="flex items-center gap-2">
+                        1週間無料体験を申し込む <i class="ph-bold ph-lightning"></i>
+                    </span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-toggle" class="md:hidden text-white text-2xl focus:outline-none">
+                <i class="ph ph-list" id="menu-icon"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden absolute top-20 left-6 right-6 glass-panel rounded-3xl p-6 flex-col gap-4 text-center z-40 origin-top">
+            <a href="index.html" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">ホームに戻る</a>
+            <a href="index.html#features" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">サービス詳細</a>
+            <a href="index.html#channels" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">チャンネル一覧</a>
+            <a href="index.html#pricing" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">料金プラン</a>
+            <a href="trial.html" class="mt-2 gradient-button inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white mobile-link whitespace-nowrap">
+                <span class="flex items-center gap-2">
+                    1週間無料体験を申し込む <i class="ph-bold ph-lightning"></i>
+                </span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 pt-32 pb-20 px-6 min-h-screen">
+        <div class="max-w-4xl mx-auto">
+            
+            <!-- Page Title -->
+            <div class="text-center mb-16 reveal-up">
+                <h1 class="text-3xl md:text-5xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 text-glow">
+                    Privacy Policy
+                </h1>
+                <p class="text-gray-400">プライバシーポリシー</p>
+            </div>
+
+            <!-- Policy Content Container -->
+            <div class="glow-card-container reveal-up">
+                <div class="glow-effect" aria-hidden="true"></div>
+                <div class="glow-card-content !p-8 md:!p-12">
+                    
+                    <div class="space-y-10 text-gray-300 leading-relaxed">
+                        
+                        <!-- Intro -->
+                        <div>
+                            <p class="mb-4">
+                                BBINFO（以下、「当社」といいます。）は、本ウェブサイト上で提供するサービス（以下、「本サービス」といいます。）における、ユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めます。
+                            </p>
+                        </div>
+
+                        <!-- Article 1 -->
+                        <section>
+                            <h2 class="text-xl md:text-2xl font-bold text-white mb-4 border-l-4 border-cyan-400 pl-4">
+                                第1条（個人情報）
+                            </h2>
+                            <p>
+                                「個人情報」とは、個人情報保護法にいう「個人情報」を指すものとし、生存する個人に関する情報であって、当該情報に含まれる氏名、生年月日、住所、電話番号、連絡先その他の記述等により特定の個人を識別できる情報及び容貌、指紋、声紋にかかるデータ、及び健康保険証の保険者番号などの当該情報単体から特定の個人を識別できる情報（個人識別情報）を指します。
+                            </p>
+                        </section>
+
+                        <!-- Article 2 -->
+                        <section>
+                            <h2 class="text-xl md:text-2xl font-bold text-white mb-4 border-l-4 border-cyan-400 pl-4">
+                                第2条（個人情報の収集方法）
+                            </h2>
+                            <p class="mb-4">
+                                当社は、ユーザーが利用登録をする際に以下の情報を収集する場合があります。
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 bg-white/5 p-6 rounded-xl border border-white/5">
+                                <li>氏名</li>
+                                <li>メールアドレス</li>
+                                <li>電話番号</li>
+                                <li>住所（機器配送先）</li>
+                                <li>クレジットカード情報（決済代行会社経由）</li>
+                            </ul>
+                        </section>
+
+                        <!-- Article 3 -->
+                        <section>
+                            <h2 class="text-xl md:text-2xl font-bold text-white mb-4 border-l-4 border-cyan-400 pl-4">
+                                第3条（個人情報を収集・利用する目的）
+                            </h2>
+                            <p class="mb-4">当社が個人情報を収集・利用する目的は、以下のとおりです。</p>
+                            <ol class="list-decimal list-inside space-y-2 pl-2">
+                                <li>当社サービスの提供・運営のため</li>
+                                <li>ユーザーからのお問い合わせに回答するため（本人確認を行うことを含む）</li>
+                                <li>ユーザーが利用中のサービスの新機能、更新情報、キャンペーン等及び当社が提供する他のサービスの案内のメールを送付するため</li>
+                                <li>メンテナンス、重要なお知らせなど必要に応じたご連絡のため</li>
+                                <li>利用規約に違反したユーザーや、不正・不当な目的でサービスを利用しようとするユーザーの特定をし、ご利用をお断りするため</li>
+                                <li>有料サービスにおいて、ユーザーに利用料金を請求するため</li>
+                            </ol>
+                        </section>
+
+                        <!-- Article 4 -->
+                        <section>
+                            <h2 class="text-xl md:text-2xl font-bold text-white mb-4 border-l-4 border-cyan-400 pl-4">
+                                第4条（利用目的の変更）
+                            </h2>
+                            <p>
+                                当社は、利用目的が変更前と関連性を有すると合理的に認められる場合に限り、個人情報の利用目的を変更するものとします。利用目的の変更を行った場合には、変更後の目的について、当社所定の方法により、本ウェブサイト上に公表するものとします。
+                            </p>
+                        </section>
+
+                        <!-- Article 5 -->
+                        <section>
+                            <h2 class="text-xl md:text-2xl font-bold text-white mb-4 border-l-4 border-cyan-400 pl-4">
+                                第5条（個人情報の第三者提供）
+                            </h2>
+                            <p>
+                                当社は、次に掲げる場合を除いて、あらかじめユーザーの同意を得ることなく、第三者に個人情報を提供することはありません。ただし、個人情報保護法その他の法令で認められる場合を除きます。
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 mt-4 text-sm text-gray-400">
+                                <li>人の生命、身体または財産の保護のために必要がある場合であって、本人の同意を得ることが困難であるとき</li>
+                                <li>公衆衛生の向上または児童の健全な育成の推進のために特に必要がある場合であって、本人の同意を得ることが困難であるとき</li>
+                                <li>国の機関もしくは地方公共団体またはその委託を受けた者が法令の定める事務を遂行することに対して協力する必要がある場合であって、本人の同意を得ることにより当該事務の遂行に支障を及ぼすおそれがあるとき</li>
+                            </ul>
+                        </section>
+
+                        <!-- Article 6 -->
+                        <section>
+                            <h2 class="text-xl md:text-2xl font-bold text-white mb-4 border-l-4 border-cyan-400 pl-4">
+                                第6条（セキュリティ対策）
+                            </h2>
+                            <p>
+                                当社は、個人情報の正確性及び安全性確保のために、セキュリティに万全の対策を講じています。また、通信内容の暗号化（SSL）などを行い、第三者による盗聴や改ざんを防止します。
+                            </p>
+                        </section>
+
+                        <!-- Contact -->
+                        <section class="mt-12 pt-8 border-t border-white/10">
+                            <h2 class="text-xl md:text-2xl font-bold text-white mb-4">
+                                お問い合わせ窓口
+                            </h2>
+                            <p class="mb-4">
+                                本ポリシーに関するお問い合わせは、下記の窓口までお願いいたします。
+                            </p>
+                            <div class="bg-gradient-to-br from-gray-900 to-black p-6 rounded-xl border border-white/10">
+                                <p class="font-bold text-lg mb-2">BBINFO India</p>
+                                <p class="text-sm text-gray-400 mb-1">運営会社：JCNET Communications Private Limited</p>
+                                <p class="text-sm text-gray-400">Email: india@myslingtv.com</p>
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 bg-black pt-16 pb-8 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div class="col-span-1 md:col-span-2">
+                <!-- フッターロゴ -->
+                <a href="index.html" class="inline-flex items-center gap-2 mb-4 group">
+                    <div class="text-2xl font-bold">BBINFO</div>
+                </a>
+
+                <p class="text-gray-400 text-sm mb-4">JCNET Communications Private Limited</p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-black transition-all"><i class="ph-fill ph-facebook-logo"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-black transition-all"><i class="ph-fill ph-instagram-logo"></i></a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold mb-4 text-gray-200">CONTACT</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="contact.html" class="hover:text-cyan-400 transition-colors flex items-center"><i class="ph ph-envelope-simple mr-2"></i>お問い合わせ</a></li>
+                    <li><i class="ph ph-phone mr-2"></i>+91 9560054243</li>
+                    <li><i class="ph ph-clock mr-2"></i>Mon-Fri 9:00-18:00</li>
+                    <li><i class="ph ph-map-pin mr-2"></i>インド全土対応</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-bold mb-4 text-gray-200">LINKS</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="index.html#features" class="hover:text-cyan-400 transition-colors">サービス詳細</a></li>
+                    <li><a href="index.html#channels" class="hover:text-cyan-400 transition-colors">チャンネル一覧</a></li>
+                    <li><a href="index.html#pricing" class="hover:text-cyan-400 transition-colors">料金プラン</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto pt-8 border-t border-white/5 text-xs text-gray-600 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>© 2025 BBINFO - All Rights Reserved.</div>
+            <a href="privacy.html" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // 2. Lenis (Smooth Scroll)
+        const initLenis = () => {
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                direction: 'vertical',
+                gestureDirection: 'vertical',
+                smooth: true,
+                smoothTouch: false,
+                touchMultiplier: 2,
+            });
+
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+        }
+
+        // 3. Scroll Observer (Reveal Up)
+        const initScrollObserver = () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+        };
+
+        // 4. Navbar Logic
+        const initNavbar = () => {
+            const navbar = document.getElementById('navbar');
+            const menuToggle = document.getElementById('menu-toggle');
+            const menuIcon = document.getElementById('menu-icon');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('py-2');
+                    navbar.classList.remove('py-4');
+                } else {
+                    navbar.classList.add('py-4');
+                    navbar.classList.remove('py-2');
+                }
+            });
+
+            menuToggle.addEventListener('click', () => {
+                const isOpen = !mobileMenu.classList.contains('hidden');
+                if (isOpen) {
+                    mobileMenu.classList.remove('open');
+                    mobileMenu.classList.add('closed');
+                    setTimeout(() => {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('closed');
+                    }, 300);
+                    menuIcon.classList.remove('ph-x');
+                    menuIcon.classList.add('ph-list');
+                } else {
+                    mobileMenu.classList.remove('hidden');
+                    void mobileMenu.offsetWidth;
+                    mobileMenu.classList.add('open');
+                    menuIcon.classList.remove('ph-list');
+                    menuIcon.classList.add('ph-x');
+                }
+            });
+        };
+
+        // 5. Glowing Effect Logic
+        const initGlowingEffect = () => {
+            const cards = document.querySelectorAll('.glow-card-container');
+            const handleMove = (e) => {
+                cards.forEach(card => {
+                    const glowEffect = card.querySelector('.glow-effect');
+                    if (!glowEffect) return;
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const inside = x >= -50 && x <= rect.width + 50 && y >= -50 && y <= rect.height + 50;
+                    
+                    if (inside) {
+                        glowEffect.style.setProperty('--active', '1');
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        const angle = Math.atan2(y - centerY, x - centerX) * (180 / Math.PI) + 90;
+                        glowEffect.style.setProperty('--start', angle);
+                    } else {
+                        glowEffect.style.setProperty('--active', '0');
+                    }
+                });
+            };
+            window.addEventListener('mousemove', handleMove);
+        };
+
+        // Initialize
+        window.addEventListener('load', () => {
+            initLenis();
+            initScrollObserver();
+            initNavbar();
+            initGlowingEffect();
+        });
+    </script>
+</body>
+</html>

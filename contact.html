@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせ | BBINFO</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Lenis (Smooth Scroll) -->
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', '"Noto Sans JP"', 'sans-serif'],
+                    },
+                    colors: {
+                        glass: {
+                            100: 'rgba(255, 255, 255, 0.05)',
+                            200: 'rgba(255, 255, 255, 0.1)',
+                        },
+                        neon: {
+                            cyan: '#00f3ff',
+                            purple: '#bc13fe',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* -------------------------------------------
+           Lenis Recommended CSS
+           ------------------------------------------- */
+        html.lenis, html.lenis body {
+            height: auto;
+        }
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
+        }
+
+        /* -------------------------------------------
+           Gradient Dots Background (Optimized)
+           ------------------------------------------- */
+        .gradient-dots-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            --bg-color: #050505;
+            --dot-size: 8px;
+            --spacing: 10px;
+            --hex-spacing: 17.32px;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)),
+                radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)),
+                radial-gradient(circle at 50% 50%, #f00, transparent 60%),
+                radial-gradient(circle at 50% 50%, #ff0, transparent 60%),
+                radial-gradient(circle at 50% 50%, #0f0, transparent 60%),
+                radial-gradient(ellipse at 50% 50%, #00f, transparent 60%);
+            background-size: 
+                var(--spacing) var(--hex-spacing),
+                var(--spacing) var(--hex-spacing),
+                200% 200%,
+                200% 200%,
+                200% 200%,
+                200% var(--hex-spacing);
+            
+            /* 輝度を0.5 -> 0.8 に向上 */
+            opacity: 0.8; 
+            
+            /* アニメーションを結合: 位置変化 + 色相変化 */
+            animation: gradient-dots-anim 60s linear infinite, hue-shift 30s linear infinite;
+        }
+
+        @keyframes gradient-dots-anim {
+            0% { background-position: 0px 0px, calc(var(--spacing)/2) calc(var(--hex-spacing)/2), 800% 400%, 1000% -400%, -1200% -600%, 400% var(--hex-spacing); }
+            100% { background-position: 0px 0px, calc(var(--spacing)/2) calc(var(--hex-spacing)/2), 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+        }
+        
+        @keyframes hue-shift {
+            to { filter: hue-rotate(360deg); }
+        }
+
+
+        /* Glass Panel */
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Glass Header */
+        .glass-header {
+            background: rgba(20, 20, 20, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Form Input Styles */
+        .glass-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .glass-input:focus {
+            outline: none;
+            border-color: #00f3ff;
+            background: rgba(0, 243, 255, 0.05);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+        }
+        .glass-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Select Styling */
+        select.glass-input {
+            appearance: none;
+            cursor: pointer;
+        }
+        select.glass-input option {
+            background-color: #1a1a1a;
+            color: white;
+        }
+
+        /* Custom Radio (Same as trial.html) */
+        .custom-radio {
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        .custom-radio:checked {
+            border-color: #00f3ff;
+            background-color: rgba(0, 243, 255, 0.2);
+        }
+        .custom-radio:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0.6rem;
+            height: 0.6rem;
+            background-color: #00f3ff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00f3ff;
+        }
+
+        /* Input Wrapper for Icons */
+        .input-wrapper {
+            position: relative;
+        }
+        .input-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Map Dark Mode Filter */
+        .dark-map-filter {
+            filter: grayscale(100%) invert(92%) contrast(83%);
+            border-radius: 0.75rem;
+        }
+
+        /* Gradient Button (Houdini) */
+        @property --pos-x { syntax: '<percentage>'; initial-value: 11.14%; inherits: false; }
+        @property --pos-y { syntax: '<percentage>'; initial-value: 140%; inherits: false; }
+        @property --spread-x { syntax: '<percentage>'; initial-value: 150%; inherits: false; }
+        @property --spread-y { syntax: '<percentage>'; initial-value: 180.06%; inherits: false; }
+        @property --color-1 { syntax: '<color>'; initial-value: #000; inherits: false; }
+        @property --color-2 { syntax: '<color>'; initial-value: #08012c; inherits: false; }
+        @property --color-3 { syntax: '<color>'; initial-value: #4e1e40; inherits: false; }
+        @property --color-4 { syntax: '<color>'; initial-value: #70464e; inherits: false; }
+        @property --color-5 { syntax: '<color>'; initial-value: #88394c; inherits: false; }
+        @property --border-angle { syntax: '<angle>'; initial-value: 20deg; inherits: true; }
+        @property --border-color-1 { syntax: '<color>'; initial-value: hsla(340, 75%, 60%, 0.2); inherits: true; }
+        @property --border-color-2 { syntax: '<color>'; initial-value: hsla(340, 75%, 40%, 0.75); inherits: true; }
+        @property --stop-1 { syntax: '<percentage>'; initial-value: 37.35%; inherits: false; }
+        @property --stop-2 { syntax: '<percentage>'; initial-value: 61.36%; inherits: false; }
+        @property --stop-3 { syntax: '<percentage>'; initial-value: 78.42%; inherits: false; }
+        @property --stop-4 { syntax: '<percentage>'; initial-value: 89.52%; inherits: false; }
+        @property --stop-5 { syntax: '<percentage>'; initial-value: 100%; inherits: false; }
+
+        .gradient-button {
+            position: relative;
+            appearance: none;
+            cursor: pointer;
+            background: #111; 
+            background: radial-gradient(circle at center, #1f1f1f 0%, #000000 100%);
+            background: radial-gradient(
+                var(--spread-x) var(--spread-y) at var(--pos-x) var(--pos-y),
+                var(--color-1) var(--stop-1),
+                var(--color-2) var(--stop-2),
+                var(--color-3) var(--stop-3),
+                var(--color-4) var(--stop-4),
+                var(--color-5) var(--stop-5)
+            );
+            transition:
+                --pos-x 0.5s, --pos-y 0.5s, --spread-x 0.5s, --spread-y 0.5s,
+                --color-1 0.5s, --color-2 0.5s, --color-3 0.5s, --color-4 0.5s, --color-5 0.5s,
+                --border-angle 0.5s, --border-color-1 0.5s, --border-color-2 0.5s,
+                --stop-1 0.5s, --stop-2 0.5s, --stop-3 0.5s, --stop-4 0.5s, --stop-5 0.5s;
+        }
+        .gradient-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(
+                var(--border-angle),
+                var(--border-color-1),
+                var(--border-color-2)
+            );
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        .gradient-button:hover {
+            --pos-x: 0%;
+            --pos-y: 91.51%;
+            --spread-x: 120.24%;
+            --spread-y: 103.18%;
+            --color-1: #c96287;
+            --color-2: #c66c64;
+            --color-3: #cc7d23;
+            --color-4: #37140a;
+            --color-5: #000;
+            --border-angle: 190deg;
+            --border-color-1: hsla(340, 78%, 90%, 0.1);
+            --border-color-2: hsla(340, 75%, 90%, 0.6);
+            --stop-1: 0%;
+            --stop-2: 8.8%;
+            --stop-3: 21.44%;
+            --stop-4: 71.34%;
+            --stop-5: 85.76%;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-white">
+
+    <!-- Background -->
+    <div class="gradient-dots-bg"></div>
+
+    <!-- Navigation (Same as trial.html) -->
+    <nav class="fixed w-full z-50 top-0 left-0 px-6 py-4">
+        <div class="max-w-7xl mx-auto glass-header rounded-full px-6 py-3 flex justify-between items-center relative z-50">
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl group-hover:scale-110 transition-transform duration-300">B</div>
+                <span class="font-bold text-lg tracking-wider">BBINFO</span>
+            </a>
+            <a href="index.html" class="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                <i class="ph ph-arrow-left"></i> トップに戻る
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="min-h-screen pt-32 pb-20 px-6 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            
+            <!-- Page Header -->
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-5xl font-black mb-4">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Contact Us</span>
+                </h1>
+                <p class="text-gray-300 text-lg">お問い合わせ</p>
+                <p class="text-sm text-white mt-2">ご質問・ご相談などお気軽にお問い合わせください。</p>
+            </div>
+
+            <!-- Two Column Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                
+                <!-- Left Column: Contact Form -->
+                <div class="glass-panel rounded-3xl p-8 md:p-10 relative overflow-hidden h-full">
+                    <!-- Decoration -->
+                    <div class="absolute top-0 left-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+
+                    <!-- Netlify フォーム設定とアクションを追加 -->
+                    <!-- name属性を日本語表記に変更 -->
+                    <form name="お問い合わせ" method="POST" action="/thanx2.html" data-netlify="true" class="space-y-6 relative z-10">
+                        <!-- Netlify Bot Field (Hidden) -->
+                        <input type="hidden" name="form-name" value="お問い合わせ" />
+                        
+                        <!-- Name & Email -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-gray-300">お名前 <span class="text-red-500">*</span></label>
+                            <!-- name属性を「お名前」に変更 -->
+                            <input type="text" name="お名前" placeholder="山田 太郎" class="glass-input" required>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-gray-300">メールアドレス <span class="text-red-500">*</span></label>
+                            <div class="input-wrapper">
+                                <!-- name属性を「メールアドレス」に変更 -->
+                                <input type="email" name="メールアドレス" placeholder="your@email.com" class="glass-input" required>
+                                <i class="ph ph-envelope input-icon"></i>
+                            </div>
+                        </div>
+
+                        <!-- Phone (Moved to single line) -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-gray-300">電話番号</label>
+                            <div class="input-wrapper">
+                                <!-- name属性を「電話番号」に変更 -->
+                                <input type="tel" name="電話番号" placeholder="+91 98765 43210" class="glass-input">
+                                <i class="ph ph-phone input-icon"></i>
+                            </div>
+                        </div>
+
+                        <!-- Subject (Select Box) -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-gray-300">お問い合わせ内容 <span class="text-red-500">*</span></label>
+                            <div class="input-wrapper">
+                                <!-- name属性を「お問い合わせ内容」に変更 -->
+                                <select name="お問い合わせ内容" class="glass-input cursor-pointer" required>
+                                    <option value="" disabled selected>選択してください</option>
+                                    <option value="サービスについて詳しく知りたい">サービスについて詳しく知りたい</option>
+                                    <option value="初期設定に関して">初期設定に関して</option>
+                                    <option value="視聴に関するトラブル">視聴に関するトラブル</option>
+                                    <option value="お支払いに関して">お支払いに関して</option>
+                                    <option value="その他">その他</option>
+                                </select>
+                                <i class="ph ph-caret-down input-icon"></i>
+                            </div>
+                        </div>
+
+                        <!-- Message -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-gray-300">お問い合わせ詳細 <span class="text-red-500">*</span></label>
+                            <!-- name属性を「お問い合わせ詳細」に変更 -->
+                            <textarea rows="5" name="お問い合わせ詳細" placeholder="詳細をご記入ください..." class="glass-input" required></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-4">
+                            <button type="submit" class="w-full gradient-button inline-flex items-center justify-center rounded-full px-6 md:px-9 py-4 text-sm leading-[19px] font-medium text-white font-sans font-bold focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring hover:scale-105 transition-transform duration-300 shadow-lg">
+                                <span class="flex items-center gap-2">
+                                    送信する <i class="ph-bold ph-paper-plane-right"></i>
+                                </span>
+                            </button>
+
+                            <p class="text-center text-xs text-gray-500 mt-4">
+                                送信することで、<a href="privacypolicy.html" class="text-cyan-400 underline hover:text-cyan-300 transition-colors">プライバシーポリシー</a>に同意したものとみなされます。
+                            </p>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Right Column: Company Info & Map -->
+                <div class="glass-panel rounded-3xl p-8 md:p-10 flex flex-col h-full relative overflow-hidden">
+                    <!-- Decoration -->
+                    <div class="absolute bottom-0 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-[80px] translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+
+                    <div class="relative z-10 flex-grow flex flex-col">
+                        
+                        <!-- Header with Name structure -->
+                        <div class="mb-8">
+                            <h3 class="text-xl font-black tracking-wide">BBINFO INDIA</h3>
+                            <p class="text-sm text-gray-400 font-bold">JCNET Communications Pvt. Ltd.</p>
+                        </div>
+
+                        <!-- Info List (Updated) -->
+                        <div class="space-y-6 mb-8">
+                            <!-- Address -->
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center flex-shrink-0 text-white">
+                                    <i class="ph ph-map-pin"></i>
+                                </div>
+                                <div class="text-sm leading-relaxed text-gray-300">
+                                    3rd Floor, Building No.17 (Beyond Designs Building)<br>
+                                    KH. No.382, M.G.Road, Sultanpur, New Delhi 110030
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="flex items-center gap-4">
+                                <div class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center flex-shrink-0 text-white">
+                                    <i class="ph ph-envelope-simple"></i>
+                                </div>
+                                <div class="text-lg font-bold text-white tracking-wide">
+                                    india@myslingtv.com
+                                </div>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="flex items-center gap-4">
+                                <div class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center flex-shrink-0 text-white">
+                                    <i class="ph ph-phone"></i>
+                                </div>
+                                <div class="text-base text-gray-300">
+                                    <span class="font-bold text-white">+91 95 6005 4243</span>
+                                    <span class="text-xs text-gray-400 ml-1">(日本語／英語／ヒンディー)</span>
+                                </div>
+                            </div>
+
+                            <!-- Hours (Updated) -->
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center flex-shrink-0 text-white">
+                                    <i class="ph ph-buildings"></i>
+                                </div>
+                                <div class="text-sm text-gray-300 space-y-1">
+                                    <div><span class="font-bold text-white">営業時間</span> 〈月〜金〉 9:00〜18:00</div>
+                                    <div><span class="font-bold text-white">出張設置対応時間</span> 〈月〜金〉 10:00〜17:00</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Google Maps Embed -->
+                        <div class="w-full h-64 bg-gray-900 rounded-xl overflow-hidden shadow-inner border border-white/10 relative mb-6">
+                            <iframe 
+                                src="https://maps.google.com/maps?q=Beyond+Designs+Home+Sultanpur+New+Delhi&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade"
+                                class="dark-map-filter absolute inset-0 w-full h-full">
+                            </iframe>
+                        </div>
+
+                        <!-- Access Guide (List Only) -->
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-5 relative overflow-hidden">
+                            <!-- Steps (Header Removed) -->
+                            <ul class="space-y-4 text-sm text-gray-300">
+                                <li class="flex items-start gap-3">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 flex-shrink-0"></div>
+                                    <div>
+                                        スルタンプルメトロ駅より徒歩7分
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 flex-shrink-0"></div>
+                                    <div>
+                                        アバロンコートヤードホテル 向かって右側の白いビル（家具工房）の3rd Floor (最上階)です。
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer: Simplified for Trust & Focus (Same as trial.html) -->
+    <footer class="border-t border-white/10 bg-black py-8">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            
+            <!-- Company Info & Contact (Trust) -->
+            <div class="text-center md:text-left">
+                <a href="index.html" class="inline-flex items-center gap-2 mb-4 group justify-center md:justify-start">
+                    <div class="text-xl font-bold">BBINFO</div>
+                </a>
+                <p class="text-xs text-gray-400 mb-2">JCNET Communications Private Limited</p>
+                <div class="text-xs text-gray-500 space-y-1">
+                    <p><i class="ph-fill ph-map-pin mr-1"></i> New Delhi</p>
+                    <p><i class="ph-fill ph-phone mr-1"></i> +91 95600 54243 (Mon-Fri 9:00-18:00)</p>
+                </div>
+            </div>
+
+            <!-- Copyright & Policy -->
+            <div class="text-center md:text-right text-xs text-gray-600 flex flex-col gap-2">
+                <a href="privacypolicy.html" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
+                <div>© 2025 BBINFO - All Rights Reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Init Lenis (Optimized)
+        const lenis = new Lenis({
+            duration: 0.8, // Snappy scroll
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1.5,
+            smoothTouch: false,
+            touchMultiplier: 2,
+        });
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+    </script>
+</body>
+</html>
