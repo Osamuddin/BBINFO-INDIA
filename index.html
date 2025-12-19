@@ -7,8 +7,6 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -121,7 +119,7 @@
 
         /* Glassmorphism Card Utilities (Solid Version) */
         .glass-panel {
-            /* 修正: 不透明度を 0.98 (98%) に設定。ほぼ透けない黒。 */
+            /* 不透明度 98% */
             background: rgba(10, 10, 10, 0.98);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -229,7 +227,7 @@
             position: relative;
             height: 100%;
             border-radius: 1.5rem;
-            /* 修正: 不透明度を 0.98 (98%) に設定 */
+            /* 不透明度 98% */
             background: rgba(5, 5, 5, 0.98);
             padding: 2rem;
             overflow: hidden;
@@ -285,7 +283,7 @@
         /* Mobile Menu Animations */
         #mobile-menu {
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            /* 修正: 不透明度を 0.99 (99%) に設定 */
+            /* 不透明度 99% */
             background: rgba(5, 5, 5, 0.99) !important;
             backdrop-filter: none !important;
         }
@@ -382,7 +380,7 @@
 
         /* Header Style (High Opacity) */
         .glass-header {
-            /* 修正: 不透明度を 0.98 (98%) に設定 */
+            /* 不透明度 98% */
             background: rgba(10, 10, 10, 0.98);
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
@@ -391,7 +389,7 @@
 
         /* Modal Styles (Darker Overlay) */
         .modal-overlay {
-            /* 修正: 不透明度を 0.95 (95%) に設定 */
+            /* 不透明度 95% */
             background: rgba(0, 0, 0, 0.95);
         }
         
@@ -470,8 +468,6 @@
     </nav>
 
     <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <div id="canvas-container" class="absolute inset-0 z-0 opacity-60"></div>
-
         <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
             
             <div class="reveal-up font-black mb-10 tracking-tight">
@@ -1085,7 +1081,8 @@
             }
         });
 
-        // Three.js Scene Setup (Optimized)
+        /*
+        // Three.js Scene Setup (軽量化のためコメントアウト)
         const initThreeJS = () => {
             const container = document.getElementById('canvas-container');
             if (!container) return;
@@ -1181,6 +1178,7 @@
                 renderer.setSize(window.innerWidth, window.innerHeight);
             });
         };
+        */
 
         // Scroll Animation
         const initScrollObserver = () => {
@@ -1346,7 +1344,7 @@
         };
 
         window.addEventListener('load', () => {
-            initThreeJS();
+            // initThreeJS(); // 軽量化のため停止
             initScrollObserver();
             initNavbar();
             initGlowingEffect();
