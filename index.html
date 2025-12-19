@@ -5,19 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BBINFO | インドで日本のテレビを見るなら</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
-    <!-- Phosphor Icons (Lightweight Icons) -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-    <!-- Lenis (Smooth Scroll) は軽量化のため削除 -->
 
     <script>
         tailwind.config = {
@@ -63,7 +57,7 @@
         }
 
         /* -------------------------------------------
-           Gradient Dots Background (Restored Original)
+           Gradient Dots Background
            ------------------------------------------- */
         .gradient-dots-bg {
             position: fixed;
@@ -73,15 +67,13 @@
             height: 100%;
             z-index: -1;
             
-            /* Variables based on React props */
             --bg-color: #050505;
             --dot-size: 8px;
             --spacing: 10px;
-            --hex-spacing: 17.32px; /* spacing * 1.732 */
+            --hex-spacing: 17.32px;
 
             background-color: var(--bg-color);
             
-            /* Layered gradients */
             background-image: 
                 radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)),
                 radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)),
@@ -98,7 +90,6 @@
                 200% 200%,
                 200% var(--hex-spacing);
                 
-            /* Animations */
             animation: gradient-dots-anim 30s linear infinite, gradient-dots-hue 6s linear infinite;
         }
 
@@ -128,23 +119,19 @@
             100% { filter: hue-rotate(360deg); }
         }
 
-        /* Glassmorphism Card Utilities */
+        /* Glassmorphism Card Utilities (Solid Version) */
         .glass-panel {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            /* 修正: 不透明度を 0.98 (98%) に設定。ほぼ透けない黒。 */
+            background: rgba(10, 10, 10, 0.98);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .glass-panel:hover {
             border-color: rgba(255, 255, 255, 0.2);
-            /* 静的パネルとして扱うためtransformは削除（軽量化） */
-            /* transform: translateY(-5px) scale(1.01); */
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
-        /* 追加: チャンネル一覧用の強めのホバーエフェクト */
         .glass-panel-interactive {
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease !important;
         }
@@ -155,7 +142,6 @@
             z-index: 10;
         }
 
-        /* 追加: ご利用の流れ用の静的パネル（浮かない） */
         .glass-panel-static:hover {
             transform: none !important;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
@@ -174,9 +160,7 @@
             transform: translateY(0);
         }
 
-        /* -------------------------------------------
-           Glowing Effect Card Styles
-           ------------------------------------------- */
+        /* Glowing Effect Card Styles */
         .glow-card-container {
             position: relative;
             border-radius: 1.5rem;
@@ -240,12 +224,13 @@
             mask-composite: exclude;
         }
 
+        /* Solid Content Background */
         .glow-card-content {
             position: relative;
             height: 100%;
             border-radius: 1.5rem;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(16px);
+            /* 修正: 不透明度を 0.98 (98%) に設定 */
+            background: rgba(5, 5, 5, 0.98);
             padding: 2rem;
             overflow: hidden;
         }
@@ -287,7 +272,6 @@
             text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
         }
 
-        /* 暖色系グロー */
         .text-glow-warm {
             text-shadow: 0 0 30px rgba(255, 100, 50, 0.6);
         }
@@ -301,6 +285,9 @@
         /* Mobile Menu Animations */
         #mobile-menu {
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            /* 修正: 不透明度を 0.99 (99%) に設定 */
+            background: rgba(5, 5, 5, 0.99) !important;
+            backdrop-filter: none !important;
         }
         #mobile-menu.hidden {
             display: none;
@@ -393,20 +380,19 @@
             --stop-5: 85.76%;
         }
 
-        /* Header Specific Glass Style */
+        /* Header Style (High Opacity) */
         .glass-header {
-            background: rgba(20, 20, 20, 0.15);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            /* 修正: 不透明度を 0.98 (98%) に設定 */
+            background: rgba(10, 10, 10, 0.98);
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
             transition: all 0.4s ease;
         }
 
-        /* Modal Styles */
+        /* Modal Styles (Darker Overlay) */
         .modal-overlay {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
+            /* 修正: 不透明度を 0.95 (95%) に設定 */
+            background: rgba(0, 0, 0, 0.95);
         }
         
         .modal-enter {
@@ -434,27 +420,22 @@
 </head>
 <body class="antialiased selection:bg-cyan-500 selection:text-white">
 
-    <!-- Background (New Gradient Dots) -->
     <div class="gradient-dots-bg"></div>
 
-    <!-- Navigation -->
     <nav class="fixed w-full z-50 top-0 left-0 px-6 py-4 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto glass-header rounded-full px-6 py-3 flex justify-between items-center relative z-50">
             
-            <!-- Logo -->
             <a href="#" class="flex items-center gap-2 group">
                 <div class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl group-hover:scale-110 transition-transform duration-300">B</div>
                 <span class="font-bold text-lg tracking-wider">BBINFO</span>
             </a>
             
             <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-                <!-- 修正: IDを #features から #service_detail に変更 -->
                 <a href="#service_detail" class="hover:text-white transition-colors">サービス詳細</a>
                 <a href="#channels" class="hover:text-white transition-colors">チャンネル一覧</a>
                 <a href="#pricing" class="hover:text-white transition-colors">料金プラン</a>
             </div>
 
-            <!-- Header Buttons Area -->
             <div class="hidden md:flex items-center gap-3">
                 <a href="contact.html" class="inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white border border-white/20 hover:bg-white hover:text-black transition-all">
                     お問い合わせ
@@ -466,25 +447,20 @@
                 </a>
             </div>
 
-            <!-- Mobile Menu Button -->
             <button id="menu-toggle" class="md:hidden text-white text-2xl focus:outline-none">
                 <i class="ph ph-list" id="menu-icon"></i>
             </button>
         </div>
 
-        <!-- Mobile Menu Overlay -->
         <div id="mobile-menu" class="hidden absolute top-20 left-6 right-6 glass-panel rounded-3xl p-6 flex-col gap-4 text-center z-40 origin-top">
-            <!-- 修正: IDを #features から #service_detail に変更 -->
             <a href="#service_detail" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">サービス詳細</a>
             <a href="#channels" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">チャンネル一覧</a>
             <a href="#pricing" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">料金プラン</a>
             
-            <!-- お問い合わせボタン化 -->
             <a href="contact.html" class="inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white border border-white/20 hover:bg-white hover:text-black transition-all mobile-link">
                 お問い合わせ
             </a>
 
-            <!-- Mobile Menu CTA Button -->
             <a href="trial.html" class="mt-2 gradient-button inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white mobile-link whitespace-nowrap">
                 <span class="flex items-center gap-2">
                     無料体験を申し込む <i class="ph-bold ph-lightning"></i>
@@ -493,26 +469,20 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <!-- 3D Canvas Container -->
         <div id="canvas-container" class="absolute inset-0 z-0 opacity-60"></div>
 
         <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
             
-            <!-- タイトル部分 -->
             <div class="reveal-up font-black mb-10 tracking-tight">
-                <!-- 修正: text-2xl -> text-3xl にサイズアップ (他ブレークポイントも1段階アップ) -->
                 <div class="text-3xl sm:text-5xl md:text-6xl lg:text-8xl text-white mb-4 md:mb-8">
                     あなたのインド生活に、
                 </div>
-                <!-- 修正: 暖色系グラデーション（オレンジ→赤→ピンク）と暖色系グロー効果に変更 -->
                 <div class="text-5xl sm:text-6xl md:text-8xl lg:text-9xl text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 text-glow-warm leading-tight pt-2 pb-2 break-keep">
                     日本のテレビを。
                 </div>
             </div>
             
-            <!-- サブコピー -->
             <p class="reveal-up text-white text-sm md:text-lg max-w-2xl mx-auto mb-12 leading-loose">
                 BBINFOならインドにいても<br class="hidden md:block">
                 日本のテレビ（地上波、BS、CS）66チャンネルが楽しめます。<br>
@@ -523,7 +493,6 @@
             </p>
 
             <div class="reveal-up flex flex-col md:flex-row gap-4 justify-center items-center">
-                <!-- Hero CTA Button -->
                 <a href="trial.html" class="gradient-button inline-flex items-center justify-center rounded-full min-w-[132px] px-6 md:px-9 py-4 text-sm leading-[19px] font-medium text-white font-sans font-bold focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-transform duration-300 whitespace-nowrap">
                     <span class="flex items-center gap-2">
                         1週間無料体験を申し込む <i class="ph-bold ph-lightning"></i>
@@ -537,8 +506,6 @@
         </div>
     </section>
 
-    <!-- Features Section -->
-    <!-- 修正: IDを features から service_detail に変更 -->
     <section id="service_detail" class="py-24 px-6 relative">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 reveal-up">
@@ -547,8 +514,6 @@
             </div>
 
             <div class="bento-grid">
-                <!-- Large Card 1 -->
-                <!-- 修正: 光らない静的パネル(glass-panel)に変更して軽量化 -->
                 <div class="col-span-1 md:col-span-2 row-span-2 reveal-up glass-panel p-0 rounded-3xl overflow-hidden group hover:border-white/20 transition-colors duration-500">
                     <div class="relative h-full flex flex-col justify-end p-8">
                         <div class="absolute top-0 right-0 w-full h-full z-0">
@@ -556,7 +521,7 @@
                             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                         </div>
                         <div class="relative z-10 h-full flex flex-col justify-end">
-                            <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center mb-4 border border-white/10">
+                            <div class="w-12 h-12 bg-black/90 rounded-xl flex items-center justify-center mb-4 border border-white/10">
                                 <i class="ph-fill ph-television text-2xl text-cyan-400"></i>
                             </div>
                             <h3 class="text-2xl md:text-3xl font-bold mb-2">地上波・BS・CS 66局</h3>
@@ -576,7 +541,6 @@
                     </div>
                 </div>
 
-                <!-- Small Card 1 -->
                 <div class="glass-panel p-8 rounded-3xl reveal-up flex flex-col justify-between hover:border-white/20 transition-colors duration-500" style="transition-delay: 100ms;">
                     <i class="ph-fill ph-clock-counter-clockwise text-4xl text-purple-400 mb-4"></i>
                     <div>
@@ -585,7 +549,6 @@
                     </div>
                 </div>
 
-                <!-- Small Card 2 -->
                 <div class="glass-panel p-8 rounded-3xl reveal-up flex flex-col justify-between hover:border-white/20 transition-colors duration-500" style="transition-delay: 200ms;">
                     <i class="ph-fill ph-globe-hemisphere-east text-4xl text-green-400 mb-4"></i>
                     <div>
@@ -595,8 +558,6 @@
                     </div>
                 </div>
 
-                <!-- 順序入れ替え: スマホ・タブレットのカードを先に配置 (左側へ) -->
-                <!-- New Card (Smartphone View) -->
                 <div class="col-span-1 glass-panel p-8 rounded-3xl reveal-up flex flex-col justify-between hover:border-white/20 transition-colors duration-500">
                     <i class="ph-fill ph-device-mobile-camera text-4xl text-pink-500 mb-4"></i>
                     <div>
@@ -605,15 +566,11 @@
                     </div>
                 </div>
 
-                <!-- 順序入れ替え: ストレスフリーな視聴体験のカードを後に配置 (右側へ) -->
-                <!-- Wide Card (Modified to col-span-2) -->
                 <div class="col-span-1 md:col-span-2 glass-panel p-8 rounded-3xl reveal-up hover:border-white/20 transition-colors duration-500 relative overflow-hidden">
-                    <!-- グラデーション修正のための配置（維持） -->
                     <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
                     
                     <div class="flex flex-col md:flex-row items-center gap-8 relative z-10 h-full">
                         <div class="flex-1">
-                            <!-- 修正: text-2xl を text-xl に変更し、md以上で text-2xl に戻す -->
                             <h3 class="text-xl md:text-2xl font-bold mb-2">ストレスフリーな視聴体験</h3>
                             <p class="text-gray-400">専用機器をテレビとネットにつなぐだけ。面倒な設定はありません。</p>
                         </div>
@@ -638,14 +595,11 @@
         </div>
     </section>
 
-    <!-- Channels Section -->
     <section id="channels" class="py-24 px-6 bg-gradient-to-t from-black to-transparent">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center reveal-up">チャンネル一覧</h2>
 
             <div class="space-y-6">
-                <!-- Terrestrial -->
-                <!-- 修正: detailsタグ構造に戻し、Web Animations APIで制御 -->
                 <div class="glow-card-container interactive reveal-up">
                     <div class="glow-effect" aria-hidden="true"></div>
                     <details class="glow-card-content !p-0 group overflow-hidden w-full">
@@ -678,7 +632,6 @@
                     </details>
                 </div>
 
-                <!-- BS -->
                 <div class="glow-card-container interactive reveal-up">
                     <div class="glow-effect" aria-hidden="true"></div>
                     <details class="glow-card-content !p-0 group overflow-hidden w-full">
@@ -717,7 +670,6 @@
                     </details>
                 </div>
 
-                <!-- CS -->
                 <div class="glow-card-container interactive reveal-up">
                     <div class="glow-effect" aria-hidden="true"></div>
                     <details class="glow-card-content !p-0 group overflow-hidden w-full">
@@ -729,7 +681,6 @@
                             <i class="ph-bold ph-caret-down transform group-open:rotate-180 transition-transform"></i>
                         </summary>
                         <div class="p-6 border-t border-white/10">
-                            <!-- グリッドレイアウトに変更 -->
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm md:text-base text-gray-300">
                                 <div class="hover:text-white transition-colors">衛星劇場</div>
                                 <div class="hover:text-white transition-colors">ムービープラス HD</div>
@@ -769,9 +720,7 @@
         </div>
     </section>
 
-    <!-- Pricing Section (Restored) -->
     <section id="pricing" class="py-24 px-6 relative overflow-hidden">
-        <!-- Decoration -->
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-900/10 rounded-full blur-[100px] pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto relative z-10">
@@ -781,14 +730,12 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-                <!-- Plan A -->
                 <div class="glow-card-container interactive reveal-up relative h-full group">
                     <div class="glow-effect" aria-hidden="true"></div>
                     <div class="glow-card-content flex flex-col h-full">
                         <h3 class="text-xl font-bold mb-2">Plan A</h3>
                         <div class="text-4xl font-black mb-3">₹2,800<span class="text-sm font-medium text-gray-500">/mo</span></div>
                         
-                        <!-- バッジ -->
                         <div class="self-start inline-block px-3 py-1 rounded-full bg-cyan-900/20 text-xs text-cyan-300 border border-cyan-500/20 mb-3">
                             年払いで1ヶ月分無料
                         </div>
@@ -800,19 +747,16 @@
                             <p class="text-sm text-gray-400">地上波 15ch + BS 7ch</p>
                         </div>
                         
-                        <!-- Plan A ボタン -->
                         <button onclick="openChannelModal('planA')" class="block w-full py-3 rounded-xl border border-white/20 hover:bg-white hover:text-black text-center transition-all font-bold cursor-pointer">チャンネルを確認する</button>
                     </div>
                 </div>
 
-                <!-- Plan B -->
                 <div class="glow-card-container interactive reveal-up relative h-full group">
                     <div class="glow-effect" aria-hidden="true"></div>
                     <div class="glow-card-content flex flex-col h-full">
                         <h3 class="text-xl font-bold mb-2">Plan B</h3>
                         <div class="text-4xl font-black mb-3">₹3,800<span class="text-sm font-medium text-gray-500">/mo</span></div>
                         
-                        <!-- バッジ -->
                         <div class="self-start inline-block px-3 py-1 rounded-full bg-cyan-900/20 text-xs text-cyan-300 border border-cyan-500/20 mb-3">
                             年払いで2ヶ月分無料
                         </div>
@@ -824,19 +768,16 @@
                             <p class="text-sm text-gray-400">地上波 15ch + BS 21ch</p>
                         </div>
                         
-                        <!-- Plan B ボタン -->
                         <button onclick="openChannelModal('planB')" class="block w-full py-3 rounded-xl border border-white/20 hover:bg-white hover:text-black text-center transition-all font-bold cursor-pointer">チャンネルを確認する</button>
                     </div>
                 </div>
 
-                <!-- Plan C -->
                 <div class="glow-card-container interactive reveal-up relative h-full group">
                     <div class="glow-effect" aria-hidden="true"></div>
                     <div class="glow-card-content flex flex-col h-full">
                         <h3 class="text-xl font-bold mb-2">Plan C</h3>
                         <div class="text-4xl font-black mb-3">₹4,600<span class="text-sm font-medium text-gray-500">/mo</span></div>
                         
-                        <!-- バッジ -->
                         <div class="self-start inline-block px-3 py-1 rounded-full bg-purple-900/20 text-xs text-purple-300 border border-purple-500/20 mb-3">
                             年払いで3ヶ月分無料
                         </div>
@@ -848,7 +789,6 @@
                             <p class="text-sm text-gray-400">地上波 15ch + BS 21ch + CS 30ch</p>
                         </div>
                         
-                        <!-- Plan C ボタン -->
                         <button onclick="openChannelModal('planC')" class="block w-full py-3 rounded-xl border border-white/20 hover:bg-white hover:text-black text-center transition-all font-bold cursor-pointer">チャンネルを確認する</button>
                     </div>
                 </div>
@@ -856,13 +796,11 @@
         </div>
     </section>
 
-    <!-- Flow Section (Moved Down) -->
     <section class="py-20 bg-black/30">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-center text-3xl md:text-5xl font-bold mb-16 reveal-up">ご利用の流れ</h2>
             
             <div class="grid grid-cols-2 md:grid-cols-6 gap-4 reveal-up">
-                <!-- Step 1 -->
                 <div class="relative group">
                     <div class="glass-panel glass-panel-static p-6 rounded-2xl h-full flex flex-col items-center text-center hover:bg-white/5">
                         <div class="w-10 h-10 rounded-full bg-cyan-900/50 text-cyan-400 flex items-center justify-center font-bold mb-4 border border-cyan-500/30">1</div>
@@ -871,7 +809,6 @@
                     <div class="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 text-gray-600 z-10"><i class="ph-bold ph-caret-right"></i></div>
                 </div>
                 
-                <!-- Step 2 -->
                 <div class="relative group">
                     <div class="glass-panel glass-panel-static p-6 rounded-2xl h-full flex flex-col items-center text-center hover:bg-white/5">
                         <div class="w-10 h-10 rounded-full bg-gray-800 text-gray-400 flex items-center justify-center font-bold mb-4 border border-gray-700">2</div>
@@ -880,7 +817,6 @@
                     <div class="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 text-gray-600 z-10"><i class="ph-bold ph-caret-right"></i></div>
                 </div>
 
-                <!-- Step 3 -->
                 <div class="relative group">
                     <div class="glass-panel glass-panel-static p-6 rounded-2xl h-full flex flex-col items-center text-center hover:bg-white/5">
                         <div class="w-10 h-10 rounded-full bg-gray-800 text-gray-400 flex items-center justify-center font-bold mb-4 border border-gray-700">3</div>
@@ -889,7 +825,6 @@
                     <div class="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 text-gray-600 z-10"><i class="ph-bold ph-caret-right"></i></div>
                 </div>
 
-                <!-- Step 4 -->
                 <div class="relative group">
                     <div class="glass-panel glass-panel-static p-6 rounded-2xl h-full flex flex-col items-center text-center hover:bg-white/5">
                         <div class="w-10 h-10 rounded-full bg-gray-800 text-gray-400 flex items-center justify-center font-bold mb-4 border border-gray-700">4</div>
@@ -898,7 +833,6 @@
                     <div class="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 text-gray-600 z-10"><i class="ph-bold ph-caret-right"></i></div>
                 </div>
 
-                <!-- Step 5 -->
                 <div class="relative group">
                     <div class="glass-panel glass-panel-static p-6 rounded-2xl h-full flex flex-col items-center text-center bg-cyan-900/10 border-cyan-500/30">
                         <div class="w-10 h-10 rounded-full bg-cyan-500 text-white flex items-center justify-center font-bold mb-4 shadow-[0_0_15px_rgba(6,182,212,0.5)]">5</div>
@@ -908,7 +842,6 @@
                     <div class="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 text-gray-600 z-10"><i class="ph-bold ph-caret-right"></i></div>
                 </div>
 
-                <!-- Step 6 -->
                 <div class="relative group">
                     <div class="glass-panel glass-panel-static p-6 rounded-2xl h-full flex flex-col items-center text-center hover:bg-white/5">
                         <div class="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center font-bold mb-4">6</div>
@@ -919,7 +852,6 @@
         </div>
     </section>
 
-    <!-- Final CTA -->
     <section id="trial" class="py-32 px-6 relative">
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000&auto=format&fit=crop" alt="World Connection" class="w-full h-full object-cover opacity-20">
@@ -933,7 +865,6 @@
                 <p class="text-sm md:text-base text-gray-300 mb-8">今なら1週間、完全無料で日本のテレビ体験を。<br>リスクなしでお試しいただけます。</p>
                 
                 <div class="flex justify-center mb-8 w-full">
-                    <!-- Final CTA Button -->
                     <a href="trial.html" class="gradient-button inline-flex items-center justify-center rounded-full min-w-[132px] px-6 md:px-9 py-4 text-sm leading-[19px] font-medium text-white font-sans font-bold focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-transform duration-300 whitespace-nowrap">
                         <span class="flex items-center gap-2">
                             1週間無料体験を申し込む <i class="ph-bold ph-lightning"></i>
@@ -945,11 +876,9 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="border-t border-white/10 bg-black pt-16 pb-8 px-6">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             <div class="col-span-1 md:col-span-2">
-                <!-- フッターロゴ -->
                 <a href="#" class="inline-flex items-center gap-2 mb-4 group">
                     <div class="text-2xl font-bold">BBINFO</div>
                 </a>
@@ -974,7 +903,6 @@
             <div>
                 <h4 class="font-bold mb-4 text-gray-200">LINKS</h4>
                 <ul class="space-y-2 text-sm text-gray-400">
-                    <!-- お問い合わせリンクを削除 -->
                     <li><a href="#features" class="hover:text-cyan-400 transition-colors">サービス詳細</a></li>
                     <li><a href="#channels" class="hover:text-cyan-400 transition-colors">チャンネル一覧</a></li>
                     <li><a href="#pricing" class="hover:text-cyan-400 transition-colors">料金プラン</a></li>
@@ -988,13 +916,10 @@
         </div>
     </footer>
 
-    <!-- Channel Modal -->
     <div id="channel-modal-overlay" class="fixed inset-0 z-[100] hidden modal-overlay items-center justify-center p-4">
         <div id="channel-modal" class="bg-[#0a0a0a] border border-white/10 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300">
-            <!-- Modal Header -->
             <div class="px-6 py-5 border-b border-white/5 flex justify-between items-center bg-white/[0.02]">
                 <div>
-                    <!-- 変更: 「視聴可能チャンネル」を削除し、プラン名を大きく表示 -->
                     <h3 class="modal-plan-name text-3xl font-black text-white tracking-tight leading-none mb-1">Plan A</h3>
                     <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wider">Channel List</p>
                 </div>
@@ -1003,24 +928,16 @@
                 </button>
             </div>
             
-            <!-- Modal Body -->
             <div id="modal-content" class="p-6 max-h-[60vh] overflow-y-auto custom-scrollbar" data-lenis-prevent>
-                <!-- Content injected via JS -->
-            </div>
+                </div>
             
-            <!-- Modal Footer -->
             <div class="px-6 py-3 border-t border-white/5 bg-black/20 text-center">
                 <button id="modal-close-btn" onclick="closeChannelModal()" class="w-full sm:w-auto px-6 py-2 rounded-lg border border-white/10 hover:bg-white hover:text-black text-gray-300 text-xs font-bold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-black">閉じる</button>
             </div>
         </div>
     </div>
 
-    <!-- Scripts -->
     <script>
-        // グローバル変数としてLenisインスタンスを保持
-        let lenis;
-
-        // Channel Data (全プランのデータを実装)
         const channelData = {
             planA: {
                 title: "Plan A",
@@ -1101,7 +1018,6 @@
             }
         };
 
-        // Modal Logic
         const modalOverlay = document.getElementById('channel-modal-overlay');
         const modal = document.getElementById('channel-modal'); 
         const modalPlanName = document.querySelector('.modal-plan-name');
@@ -1111,13 +1027,8 @@
             const data = channelData[planId];
             if (!data) return;
 
-            // Lenis停止（背景スクロール防止）
-            // if (lenis) lenis.stop(); // 削除
-
-            // Set Title (プランごとの色分けはCSSクラス操作が複雑になるため、今回はシンプルに白文字で統一して大きく表示します)
             modalPlanName.textContent = data.title;
 
-            // Generate Content (Minimalist & Compact Design)
             let html = '';
             data.groups.forEach(group => {
                 html += `
@@ -1141,28 +1052,23 @@
             });
             modalContent.innerHTML = html;
 
-            // Show Modal
             modalOverlay.classList.remove('hidden');
             modalOverlay.classList.add('flex');
             
-            // Animation
             setTimeout(() => {
                 modal.classList.remove('scale-95', 'opacity-0');
                 modal.classList.add('scale-100', 'opacity-100');
                 
-                // 自動的に「閉じる」ボタンにフォーカスを移動
                 const closeBtn = document.getElementById('modal-close-btn');
                 if (closeBtn) {
                     closeBtn.focus();
                 }
             }, 10);
 
-            // Prevent body scroll (Lenis以外の標準スクロール対策)
             document.body.style.overflow = 'hidden';
         }
 
         function closeChannelModal() {
-            // Animation
             modal.classList.remove('scale-100', 'opacity-100');
             modal.classList.add('scale-95', 'opacity-0');
 
@@ -1170,45 +1076,32 @@
                 modalOverlay.classList.add('hidden');
                 modalOverlay.classList.remove('flex');
                 document.body.style.overflow = '';
-                
-                // Lenis再開
-                // if (lenis) lenis.start(); // 削除
             }, 300);
         }
 
-        // Close on overlay click
         modalOverlay.addEventListener('click', (e) => {
             if (e.target === modalOverlay) {
                 closeChannelModal();
             }
         });
 
-        // 1. Three.js Scene Setup (パーティクル削除・軽量化)
+        // Three.js Scene Setup (Optimized)
         const initThreeJS = () => {
             const container = document.getElementById('canvas-container');
-            if (!container) return; // エラー防止
+            if (!container) return;
 
             const scene = new THREE.Scene();
             
-            // 削除: Fog計算をカットして軽量化
-            // scene.fog = new THREE.FogExp2(0x000000, 0.002);
-
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             camera.position.z = 5;
 
-            // 変更: antialias: false (ジャギー軽減処理をオフにして負荷軽減)
             const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
-            
-            // 変更: デバイスピクセル比を1に固定（Retinaディスプレイ等での描画負荷を劇的に下げる）
-            renderer.setPixelRatio(1);
-            
+            renderer.setPixelRatio(1); // Force 1x pixel ratio for performance
             renderer.setSize(window.innerWidth, window.innerHeight);
             container.appendChild(renderer.domElement);
 
-            // Create Neon Cube (Wireframe) - キューブは維持
             const geometry = new THREE.BoxGeometry(2.5, 2.5, 2.5);
             
-            // Use EdgesGeometry for clean lines
             const edges = new THREE.EdgesGeometry(geometry);
             const material = new THREE.LineBasicMaterial({ 
                 color: 0x00f3ff,
@@ -1218,7 +1111,6 @@
             });
             const cube = new THREE.LineSegments(edges, material);
             
-            // Inner glowing cube
             const innerGeo = new THREE.BoxGeometry(2, 2, 2);
             const innerMat = new THREE.MeshBasicMaterial({
                 color: 0xbc13fe,
@@ -1233,7 +1125,6 @@
             group.add(innerCube);
             scene.add(group);
 
-            // Mouse Interaction
             let mouseX = 0;
             let mouseY = 0;
             let targetX = 0;
@@ -1247,7 +1138,6 @@
             };
             document.addEventListener('mousemove', onDocumentMouseMove);
 
-            // Animate
             const clock = new THREE.Clock();
             let animationId;
 
@@ -1257,15 +1147,12 @@
                 targetX = mouseX * 0.001;
                 targetY = mouseY * 0.001;
 
-                // Smooth rotation
                 group.rotation.y += 0.05 * (targetX - group.rotation.y);
                 group.rotation.x += 0.05 * (targetY - group.rotation.x);
                 
-                // Continuous rotation
                 group.rotation.z += 0.002;
                 group.rotation.y += 0.002;
 
-                // Breathing effect
                 const scale = 1 + Math.sin(elapsedTime * 2) * 0.05;
                 group.scale.set(scale, scale, scale);
 
@@ -1274,7 +1161,6 @@
                 animationId = requestAnimationFrame(animate);
             };
             
-            // 最適化: 画面外ではアニメーションを停止
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1289,7 +1175,6 @@
             });
             observer.observe(container);
 
-            // Resize handling
             window.addEventListener('resize', () => {
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
@@ -1297,10 +1182,7 @@
             });
         };
 
-        // 2. Lenis Initialization (削除)
-        // const initLenis = () => { ... }
-
-        // 3. Scroll Animation (Intersection Observer)
+        // Scroll Animation
         const initScrollObserver = () => {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1315,7 +1197,7 @@
             document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
         };
 
-        // 4. Navbar Transparency on Scroll & Mobile Menu
+        // Navbar Logic
         const initNavbar = () => {
             const navbar = document.getElementById('navbar');
             const menuToggle = document.getElementById('menu-toggle');
@@ -1367,7 +1249,7 @@
             });
         }
 
-        // 5. Glowing Effect Logic (Restored user provided simple logic)
+        // Glowing Effect Logic
         const initGlowingEffect = () => {
             const cards = document.querySelectorAll('.glow-card-container');
             
@@ -1380,13 +1262,11 @@
                     const x = e.clientX - rect.left;
                     const y = e.clientY - rect.top;
 
-                    // Proximity check (cursor must be close to activate)
                     const inside = x >= -50 && x <= rect.width + 50 && y >= -50 && y <= rect.height + 50;
                     
                     if (inside) {
                         glowEffect.style.setProperty('--active', '1');
                         
-                        // Calculate Angle
                         const centerX = rect.width / 2;
                         const centerY = rect.height / 2;
                         const angle = Math.atan2(y - centerY, x - centerX) * (180 / Math.PI) + 90;
@@ -1401,7 +1281,7 @@
             window.addEventListener('mousemove', handleMove);
         };
 
-        // 6. Accordion Animation (Lightweight Version using CSS Grid)
+        // Accordion Animation
         const initAccordions = () => {
             const details = document.querySelectorAll("details");
             
@@ -1409,16 +1289,13 @@
                 const summary = detail.querySelector("summary");
                 const content = summary.nextElementSibling;
                 
-                // アニメーション用のスタイルをJavaScriptで直接適用（HTML変更なしで実装するため）
                 content.style.display = 'grid';
                 content.style.transition = 'grid-template-rows 0.4s ease-out, padding 0.4s ease-out, opacity 0.4s ease-out, border-color 0.4s ease-out';
                 content.style.overflow = 'hidden';
                 
-                // 内部のラッパー（div.grid...）を取得し、最小高さを0に設定（Gridアニメーションの要件）
                 const inner = content.firstElementChild;
                 if (inner) inner.style.minHeight = '0';
 
-                // 初期状態の設定
                 if (!detail.open) {
                     content.style.gridTemplateRows = '0fr';
                     content.style.paddingTop = '0';
@@ -1428,41 +1305,36 @@
                 } else {
                     content.style.gridTemplateRows = '1fr';
                     content.style.opacity = '1';
-                    // パディングはTailwindクラスの値を維持
                 }
 
                 let isAnimating = false;
 
                 summary.addEventListener("click", (e) => {
                     e.preventDefault();
-                    if (isAnimating) return; // 連打防止
+                    if (isAnimating) return;
 
                     isAnimating = true;
 
                     if (detail.open) {
-                        // 閉じる
                         content.style.gridTemplateRows = '0fr';
                         content.style.paddingTop = '0';
                         content.style.paddingBottom = '0';
                         content.style.opacity = '0';
-                        content.style.borderTopColor = 'transparent'; // ボーダーもフェードアウト
+                        content.style.borderTopColor = 'transparent'; 
                         
-                        // CSS transitionの終了に合わせてopen属性を削除
                         setTimeout(() => {
                             detail.removeAttribute("open");
                             isAnimating = false;
-                        }, 400); // transition時間と合わせる
+                        }, 400); 
                     } else {
-                        // 開く
                         detail.setAttribute("open", "true");
                         
-                        // open属性付与直後のレンダリング待ち
                         requestAnimationFrame(() => {
                             content.style.gridTemplateRows = '1fr';
                             content.style.opacity = '1';
-                            content.style.paddingTop = '1.5rem'; // p-6 = 1.5rem
+                            content.style.paddingTop = '1.5rem';
                             content.style.paddingBottom = '1.5rem';
-                            content.style.borderTopColor = 'rgba(255, 255, 255, 0.1)'; // ボーダーを復帰
+                            content.style.borderTopColor = 'rgba(255, 255, 255, 0.1)'; 
                             
                             setTimeout(() => {
                                 isAnimating = false;
@@ -1473,10 +1345,8 @@
             });
         };
 
-        // Initialize Everything
         window.addEventListener('load', () => {
             initThreeJS();
-            // initLenis(); // 削除
             initScrollObserver();
             initNavbar();
             initGlowingEffect();
