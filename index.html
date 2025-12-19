@@ -286,6 +286,11 @@
         .text-glow {
             text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
         }
+
+        /* 暖色系グロー */
+        .text-glow-warm {
+            text-shadow: 0 0 30px rgba(255, 100, 50, 0.6);
+        }
         
         .gradient-text {
             background: linear-gradient(135deg, #fff 0%, #a5f3fc 100%);
@@ -501,8 +506,8 @@
                 <div class="text-3xl sm:text-5xl md:text-6xl lg:text-8xl text-white mb-4 md:mb-8">
                     あなたのインド生活に、
                 </div>
-                <!-- 修正: text-4xl -> text-5xl にサイズアップ (他ブレークポイントも1段階アップ) -->
-                <div class="text-5xl sm:text-6xl md:text-8xl lg:text-9xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 text-glow leading-tight pt-2 pb-2 break-keep">
+                <!-- 修正: 暖色系グラデーション（オレンジ→赤→ピンク）と暖色系グロー効果に変更 -->
+                <div class="text-5xl sm:text-6xl md:text-8xl lg:text-9xl text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 text-glow-warm leading-tight pt-2 pb-2 break-keep">
                     日本のテレビを。
                 </div>
             </div>
