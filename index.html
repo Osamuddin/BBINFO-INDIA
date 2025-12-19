@@ -1396,51 +1396,73 @@
             window.addEventListener('mousemove', handleMove);
         };
 
-        // 6. Accordion Animation (Restored Web Animations API Logic)
+        // 6. Accordion Animation (Lightweight Version using CSS Grid)
         const initAccordions = () => {
             const details = document.querySelectorAll("details");
             
             details.forEach((detail) => {
                 const summary = detail.querySelector("summary");
-                const content = summary.nextElementSibling; // div.p-6...
+                const content = summary.nextElementSibling;
                 
+                // アニメーション用のスタイルをJavaScriptで直接適用（HTML変更なしで実装するため）
+                content.style.display = 'grid';
+                content.style.transition = 'grid-template-rows 0.4s ease-out, padding 0.4s ease-out, opacity 0.4s ease-out, border-color 0.4s ease-out';
+                content.style.overflow = 'hidden';
+                
+                // 内部のラッパー（div.grid...）を取得し、最小高さを0に設定（Gridアニメーションの要件）
+                const inner = content.firstElementChild;
+                if (inner) inner.style.minHeight = '0';
+
+                // 初期状態の設定
+                if (!detail.open) {
+                    content.style.gridTemplateRows = '0fr';
+                    content.style.paddingTop = '0';
+                    content.style.paddingBottom = '0';
+                    content.style.opacity = '0';
+                    content.style.borderTopColor = 'transparent';
+                } else {
+                    content.style.gridTemplateRows = '1fr';
+                    content.style.opacity = '1';
+                    // パディングはTailwindクラスの値を維持
+                }
+
+                let isAnimating = false;
+
                 summary.addEventListener("click", (e) => {
                     e.preventDefault();
-                    
+                    if (isAnimating) return; // 連打防止
+
+                    isAnimating = true;
+
                     if (detail.open) {
-                        // 閉じるアニメーション
-                        const startHeight = content.offsetHeight;
+                        // 閉じる
+                        content.style.gridTemplateRows = '0fr';
+                        content.style.paddingTop = '0';
+                        content.style.paddingBottom = '0';
+                        content.style.opacity = '0';
+                        content.style.borderTopColor = 'transparent'; // ボーダーもフェードアウト
                         
-                        const anim = content.animate(
-                            [
-                                { height: startHeight + "px", opacity: 1, paddingTop: '1.5rem', paddingBottom: '1.5rem' }, 
-                                { height: "0px", opacity: 0, paddingTop: 0, paddingBottom: 0 }
-                            ],
-                            {
-                                duration: 500, // 少しゆっくりに設定して「ぬるーっと」感を出す
-                                easing: "ease-out"
-                            }
-                        );
-                        
-                        anim.onfinish = () => {
+                        // CSS transitionの終了に合わせてopen属性を削除
+                        setTimeout(() => {
                             detail.removeAttribute("open");
-                        };
+                            isAnimating = false;
+                        }, 400); // transition時間と合わせる
                     } else {
-                        // 開くアニメーション
+                        // 開く
                         detail.setAttribute("open", "true");
                         
-                        const endHeight = content.offsetHeight;
-                        
-                        content.animate(
-                            [
-                                { height: "0px", opacity: 0, paddingTop: 0, paddingBottom: 0 },
-                                { height: endHeight + "px", opacity: 1, paddingTop: '1.5rem', paddingBottom: '1.5rem' }
-                            ],
-                            {
-                                duration: 500, // 少しゆっくりに設定して「ぬるーっと」感を出す
-                                easing: "ease-out"
-                            }
-                        );
+                        // open属性付与直後のレンダリング待ち
+                        requestAnimationFrame(() => {
+                            content.style.gridTemplateRows = '1fr';
+                            content.style.opacity = '1';
+                            content.style.paddingTop = '1.5rem'; // p-6 = 1.5rem
+                            content.style.paddingBottom = '1.5rem';
+                            content.style.borderTopColor = 'rgba(255, 255, 255, 0.1)'; // ボーダーを復帰
+                            
+                            setTimeout(() => {
+                                isAnimating = false;
+                            }, 400);
+                        });
                     }
                 });
             });
