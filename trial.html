@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>無料体験申込み | BBINFO</title>
+    <title>無料体験お申し込み | BBINFO</title>
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
+    <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -23,10 +25,13 @@
                         glass: {
                             100: 'rgba(255, 255, 255, 0.05)',
                             200: 'rgba(255, 255, 255, 0.1)',
+                            300: 'rgba(255, 255, 255, 0.15)',
+                            border: 'rgba(255, 255, 255, 0.1)',
                         },
                         neon: {
                             cyan: '#00f3ff',
                             purple: '#bc13fe',
+                            pink: '#ff0055'
                         }
                     },
                     animation: {
@@ -44,24 +49,31 @@
     </script>
 
     <style>
+        /* Base Styles & Reset */
         body {
             background-color: #050505;
             color: #ffffff;
             overflow-x: hidden;
         }
 
-        /* Lenis Recommended CSS */
-        html.lenis, html.lenis body { height: auto; }
-        .lenis.lenis-smooth { scroll-behavior: auto !important; }
-        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-        .lenis.lenis-stopped { overflow: hidden; }
-        .lenis.lenis-scrolling iframe { pointer-events: none; }
-
-        /* Gradient Dots Background */
+        /* -------------------------------------------
+           Gradient Dots Background (Restored)
+           ------------------------------------------- */
         .gradient-dots-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            --bg-color: #050505; --dot-size: 8px; --spacing: 10px; --hex-spacing: 17.32px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            
+            --bg-color: #050505;
+            --dot-size: 8px;
+            --spacing: 10px;
+            --hex-spacing: 17.32px;
+
             background-color: var(--bg-color);
+            
             background-image: 
                 radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)),
                 radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)),
@@ -69,38 +81,84 @@
                 radial-gradient(circle at 50% 50%, #ff0, transparent 60%),
                 radial-gradient(circle at 50% 50%, #0f0, transparent 60%),
                 radial-gradient(ellipse at 50% 50%, #00f, transparent 60%);
+                
             background-size: 
-                var(--spacing) var(--hex-spacing), var(--spacing) var(--hex-spacing),
-                200% 200%, 200% 200%, 200% 200%, 200% var(--hex-spacing);
+                var(--spacing) var(--hex-spacing),
+                var(--spacing) var(--hex-spacing),
+                200% 200%,
+                200% 200%,
+                200% 200%,
+                200% var(--hex-spacing);
+                
             animation: gradient-dots-anim 30s linear infinite, gradient-dots-hue 6s linear infinite;
             opacity: 0.8;
         }
+
         @keyframes gradient-dots-anim {
-            0% { background-position: 0px 0px, calc(var(--spacing)/2) calc(var(--hex-spacing)/2), 800% 400%, 1000% -400%, -1200% -600%, 400% var(--hex-spacing); }
-            100% { background-position: 0px 0px, calc(var(--spacing)/2) calc(var(--hex-spacing)/2), 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
-        }
-        @keyframes gradient-dots-hue {
-            0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); }
+            0% {
+                background-position: 
+                    0px 0px, 
+                    calc(var(--spacing) / 2) calc(var(--hex-spacing) / 2),
+                    800% 400%,
+                    1000% -400%,
+                    -1200% -600%,
+                    400% var(--hex-spacing);
+            }
+            100% {
+                background-position: 
+                    0px 0px, 
+                    calc(var(--spacing) / 2) calc(var(--hex-spacing) / 2),
+                    0% 0%,
+                    0% 0%,
+                    0% 0%,
+                    0% 0%;
+            }
         }
 
-        /* Glass Styles */
+        @keyframes gradient-dots-hue {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        /* Glassmorphism Card Utilities */
         .glass-panel {
-            background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+        
         .glass-header {
-            background: rgba(20, 20, 20, 0.15); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            background: rgba(20, 20, 20, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
         }
+
+        /* Form Input Styles */
         .glass-input {
-            width: 100%; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0.75rem; padding: 1rem; color: white; transition: all 0.3s ease; position: relative;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
         }
         .glass-input:focus {
-            outline: none; border-color: #00f3ff; background: rgba(0, 243, 255, 0.05); box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+            outline: none;
+            border-color: #00f3ff;
+            background: rgba(0, 243, 255, 0.05);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
         }
-        .glass-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+        .glass-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
 
         /* Date/Time Input Icons */
         input[type="date"]::-webkit-calendar-picker-indicator, input[type="time"]::-webkit-calendar-picker-indicator {
@@ -112,10 +170,10 @@
         }
         input[type="date"], input[type="time"] { color-scheme: dark; }
 
-        /* Custom Checkbox/Radio */
+        /* Custom Radio/Checkbox */
         .custom-radio {
             appearance: none; width: 1.25rem; height: 1.25rem; border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%; background-color: rgba(255, 255, 255, 0.05); cursor: pointer; position: relative; transition: all 0.2s ease;
+            border-radius: 50%; background-color: rgba(255, 255, 255, 0.05); cursor: pointer; position: relative; transition: all 0.2s ease; flex-shrink: 0;
         }
         .custom-radio:checked { border-color: #00f3ff; background-color: rgba(0, 243, 255, 0.2); }
         .custom-radio:checked::after {
@@ -132,7 +190,7 @@
             color: black; font-size: 0.8rem; font-weight: bold;
         }
 
-        /* Gradient Button (Houdini) */
+        /* Gradient Button Styles (CSS Houdini) */
         @property --pos-x { syntax: '<percentage>'; initial-value: 11.14%; inherits: false; }
         @property --pos-y { syntax: '<percentage>'; initial-value: 140%; inherits: false; }
         @property --spread-x { syntax: '<percentage>'; initial-value: 150%; inherits: false; }
@@ -152,44 +210,99 @@
         @property --stop-5 { syntax: '<percentage>'; initial-value: 100%; inherits: false; }
 
         .gradient-button {
-            position: relative; appearance: none; cursor: pointer; background: #111; 
+            position: relative;
+            appearance: none;
+            cursor: pointer;
+            background: #111; 
             background: radial-gradient(circle at center, #1f1f1f 0%, #000000 100%);
-            background: radial-gradient(var(--spread-x) var(--spread-y) at var(--pos-x) var(--pos-y), var(--color-1) var(--stop-1), var(--color-2) var(--stop-2), var(--color-3) var(--stop-3), var(--color-4) var(--stop-4), var(--color-5) var(--stop-5));
-            transition: --pos-x 0.5s, --pos-y 0.5s, --spread-x 0.5s, --spread-y 0.5s, --color-1 0.5s, --color-2 0.5s, --color-3 0.5s, --color-4 0.5s, --color-5 0.5s, --border-angle 0.5s, --border-color-1 0.5s, --border-color-2 0.5s, --stop-1 0.5s, --stop-2 0.5s, --stop-3 0.5s, --stop-4 0.5s, --stop-5 0.5s;
+            background: radial-gradient(
+                var(--spread-x) var(--spread-y) at var(--pos-x) var(--pos-y),
+                var(--color-1) var(--stop-1),
+                var(--color-2) var(--stop-2),
+                var(--color-3) var(--stop-3),
+                var(--color-4) var(--stop-4),
+                var(--color-5) var(--stop-5)
+            );
+            transition:
+                --pos-x 0.5s, --pos-y 0.5s, --spread-x 0.5s, --spread-y 0.5s,
+                --color-1 0.5s, --color-2 0.5s, --color-3 0.5s, --color-4 0.5s, --color-5 0.5s,
+                --border-angle 0.5s, --border-color-1 0.5s, --border-color-2 0.5s,
+                --stop-1 0.5s, --stop-2 0.5s, --stop-3 0.5s, --stop-4 0.5s, --stop-5 0.5s;
         }
+
         .gradient-button::before {
-            content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
-            background: linear-gradient(var(--border-angle), var(--border-color-1), var(--border-color-2));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(
+                var(--border-angle),
+                var(--border-color-1),
+                var(--border-color-2)
+            );
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
+
         .gradient-button:hover {
-            --pos-x: 0%; --pos-y: 91.51%; --spread-x: 120.24%; --spread-y: 103.18%;
-            --color-1: #c96287; --color-2: #c66c64; --color-3: #cc7d23; --color-4: #37140a; --color-5: #000;
-            --border-angle: 190deg; --border-color-1: hsla(340, 78%, 90%, 0.1); --border-color-2: hsla(340, 75%, 90%, 0.6);
-            --stop-1: 0%; --stop-2: 8.8%; --stop-3: 21.44%; --stop-4: 71.34%; --stop-5: 85.76%;
+            --pos-x: 0%;
+            --pos-y: 91.51%;
+            --spread-x: 120.24%;
+            --spread-y: 103.18%;
+            --color-1: #c96287;
+            --color-2: #c66c64;
+            --color-3: #cc7d23;
+            --color-4: #37140a;
+            --color-5: #000;
+            --border-angle: 190deg;
+            --border-color-1: hsla(340, 78%, 90%, 0.1);
+            --border-color-2: hsla(340, 75%, 90%, 0.6);
+            --stop-1: 0%;
+            --stop-2: 8.8%;
+            --stop-3: 21.44%;
+            --stop-4: 71.34%;
+            --stop-5: 85.76%;
         }
     </style>
 </head>
 <body class="antialiased selection:bg-cyan-500 selection:text-white">
 
+    <!-- Background -->
     <div class="gradient-dots-bg"></div>
 
-    <nav class="fixed w-full z-50 top-0 left-0 px-6 py-4">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 left-0 px-6 py-4" id="navbar">
         <div class="max-w-7xl mx-auto glass-header rounded-full px-6 py-3 flex justify-between items-center relative z-50">
             <a href="index.html" class="flex items-center gap-2 group">
-                <div class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl group-hover:scale-110 transition-transform duration-300">B</div>
+                <div class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl">B</div>
                 <span class="font-bold text-lg tracking-wider">BBINFO</span>
             </a>
-            <a href="index.html" class="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-2">
-                <i class="ph ph-arrow-left"></i> トップに戻る
-            </a>
+            
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="index.html#features" class="hover:text-white transition-colors">サービス詳細</a>
+                <a href="index.html#channels" class="hover:text-white transition-colors">チャンネル一覧</a>
+                <a href="index.html#pricing" class="hover:text-white transition-colors">料金プラン</a>
+            </div>
+
+            <div class="hidden md:flex items-center gap-3">
+                <a href="contact.html" class="inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white border border-white/20 hover:bg-white hover:text-black transition-all">お問い合わせ</a>
+            </div>
+            
+            <!-- Mobile Menu Button (Simplified for subpages) -->
+            <a href="index.html" class="md:hidden text-white text-sm font-bold border border-white/20 px-4 py-2 rounded-full">TOPへ戻る</a>
         </div>
     </nav>
 
+    <!-- Main Content -->
     <main class="min-h-screen pt-32 pb-20 px-6 relative z-10">
         <div class="max-w-2xl mx-auto">
             
             <div class="text-center mb-12">
+                <!-- 修正: 文字サイズを元のサイズ (text-3xl md:text-5xl) に戻しました -->
                 <h1 class="text-3xl md:text-5xl font-black mb-4">
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Free Trial</span>
                 </h1>
@@ -200,27 +313,28 @@
             <div class="glass-panel rounded-3xl p-8 md:p-12 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
-                <form id="trialForm" name="無料体験お申し込みフォーム" action="thanks.html" method="POST" netlify netlify-honeypot="bot-field" class="space-y-8 relative z-10">
-                    <input type="hidden" name="bot-field" />
+                <form name="trial-application" method="POST" action="/thanks.html" data-netlify="true" class="space-y-8 relative z-10">
+                    <input type="hidden" name="form-name" value="trial-application" />
+                    
                     <div class="space-y-3">
                         <label class="block text-sm font-bold text-gray-300">プラン</label>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <label class="cursor-pointer">
-                                <input type="radio" name="プラン" value="Plan A" class="peer sr-only" checked>
+                                <input type="radio" name="plan" value="Plan A (22ch)" class="peer sr-only" checked>
                                 <div class="glass-panel p-4 rounded-xl text-center peer-checked:border-cyan-400 peer-checked:bg-cyan-900/20 transition-all hover:bg-white/5">
                                     <div class="font-bold mb-1">Plan A</div>
                                     <div class="text-xs text-gray-400">地上波 + BS</div>
                                 </div>
                             </label>
                             <label class="cursor-pointer">
-                                <input type="radio" name="プラン" value="Plan B" class="peer sr-only">
+                                <input type="radio" name="plan" value="Plan B (36ch)" class="peer sr-only">
                                 <div class="glass-panel p-4 rounded-xl text-center peer-checked:border-cyan-400 peer-checked:bg-cyan-900/20 transition-all hover:bg-white/5">
                                     <div class="font-bold mb-1">Plan B</div>
                                     <div class="text-xs text-gray-400">BS充実</div>
                                 </div>
                             </label>
                             <label class="cursor-pointer">
-                                <input type="radio" name="プラン" value="Plan C" class="peer sr-only">
+                                <input type="radio" name="plan" value="Plan C (66ch)" class="peer sr-only">
                                 <div class="glass-panel p-4 rounded-xl text-center peer-checked:border-purple-400 peer-checked:bg-purple-900/20 transition-all hover:bg-white/5">
                                     <div class="font-bold mb-1">Plan C</div>
                                     <div class="text-xs text-gray-400">CS含む全ch</div>
@@ -232,46 +346,46 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="block text-sm font-bold text-gray-300">お名前 <span class="text-red-500">*</span></label>
-                            <input type="text" name="お名前" placeholder="山田 太郎" class="glass-input" required>
+                            <input type="text" name="name" placeholder="山田 太郎" class="glass-input" required>
                         </div>
                         <div class="space-y-2">
                             <label class="block text-sm font-bold text-gray-300">お名前（アルファベット） <span class="text-red-500">*</span></label>
-                            <input type="text" name="お名前（アルファベット）" placeholder="YAMADA TARO" class="glass-input" required>
+                            <input type="text" name="name_alpha" placeholder="YAMADA TARO" class="glass-input" required>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="block text-sm font-bold text-gray-300">電話番号 <span class="text-red-500">*</span></label>
-                            <input type="tel" name="電話番号" placeholder="+91 98765 43210" class="glass-input" required>
+                            <input type="tel" name="phone" placeholder="+91 98765 43210" class="glass-input" required>
                         </div>
                         <div class="space-y-2">
                             <label class="block text-sm font-bold text-gray-300">メールアドレス <span class="text-red-500">*</span></label>
-                            <input type="email" name="メールアドレス" placeholder="your@email.com" class="glass-input" required>
+                            <input type="email" name="email" placeholder="your@email.com" class="glass-input" required>
                         </div>
                     </div>
 
                     <div class="space-y-2">
                         <label class="block text-sm font-bold text-gray-300">住所 <span class="text-red-500">*</span></label>
-                        <textarea name="ご住所" rows="3" placeholder="Building Name, Street, City, State, PIN Code" class="glass-input" required></textarea>
+                        <textarea name="address" rows="3" placeholder="Building Name, Street, City, State, PIN Code" class="glass-input" required></textarea>
                     </div>
 
                     <div class="space-y-3">
                         <label class="block text-sm font-bold text-gray-300">ご希望の機器設置方法 <span class="text-red-500">*</span></label>
                         <div class="space-y-4">
                             <label class="flex items-start gap-3 cursor-pointer group">
-                                <input type="radio" name="設置方法" value="出張設置" class="custom-radio mt-1" required>
+                                <input type="radio" name="installation_method" value="出張設置" class="custom-radio mt-1" required>
                                 <div>
                                     <span class="block text-sm font-medium group-hover:text-white transition-colors">出張設置（スタッフ訪問）</span>
                                     <span class="block text-xs text-gray-500 mt-1">有料：Rs.2,000 / 出張対応時間：平日10:00-17:00<br>デリー・グルガオンの一部のみ</span>
                                 </div>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="radio" name="設置方法" value="来店受取" class="custom-radio">
+                                <input type="radio" name="installation_method" value="来店受取" class="custom-radio">
                                 <span class="text-sm font-medium group-hover:text-white transition-colors">ご自身で設置（弊社オフィスで受取）</span>
                             </label>
                             <label class="flex items-start gap-3 cursor-pointer group">
-                                <input type="radio" name="設置方法" value="郵送" class="custom-radio mt-1">
+                                <input type="radio" name="installation_method" value="郵送" class="custom-radio mt-1">
                                 <div>
                                     <span class="block text-sm font-medium group-hover:text-white transition-colors">ご自身で設置（機器を郵送）</span>
                                     <span class="block text-xs text-gray-500 mt-1">勤務先への発送をご希望の場合は「その他・特記事項」欄にご記入ください</span>
@@ -285,7 +399,7 @@
                             <label class="block text-sm font-bold text-gray-300">設置／来店希望日</label>
                             <div class="text-[10px] text-gray-500 mb-1">新規機械設置・修理受付<br>平日10:00-17:00　定休日:土曜日,日曜日</div>
                             <div class="input-wrapper">
-                                <input type="date" name="希望日" class="glass-input" placeholder="DD/MM/YYYY">
+                                <input type="date" name="preferred_date" class="glass-input" placeholder="DD/MM/YYYY">
                                 <i class="ph ph-calendar-blank input-icon"></i>
                             </div>
                         </div>
@@ -295,43 +409,43 @@
                         <label class="block text-sm font-bold text-gray-300">BBINFOを知ったきっかけ （複数選択可） <span class="text-red-500">*</span></label>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4">
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="きっかけ" value="Web広告" class="custom-checkbox">
+                                <input type="checkbox" name="source" value="Web広告" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">Web広告</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="きっかけ" value="BBINFO公式サイト" class="custom-checkbox">
+                                <input type="checkbox" name="source" value="BBINFO公式サイト" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">BBINFO公式サイト</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="きっかけ" value="Chalo" class="custom-checkbox">
+                                <input type="checkbox" name="source" value="Chalo" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">Chalo</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="きっかけ" value="紹介" class="custom-checkbox">
+                                <input type="checkbox" name="source" value="紹介" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">ご利用者様からの紹介</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="きっかけ" value="チラシ" class="custom-checkbox">
+                                <input type="checkbox" name="source" value="チラシ" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">チラシ</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="きっかけ" value="スターツ" class="custom-checkbox">
+                                <input type="checkbox" name="source" value="スターツ" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">不動産会社(スターツ)</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="きっかけ" value="ピラミッドリロ" class="custom-checkbox">
+                                <input type="checkbox" name="source" value="ピラミッドリロ" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">不動産会社(ピラミッドリロ)</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="きっかけ" value="NRM" class="custom-checkbox">
+                                <input type="checkbox" name="source" value="NRM" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">不動産会社(NRM International)</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="きっかけ" value="日本人会" class="custom-checkbox">
+                                <input type="checkbox" name="source" value="日本人会" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">日本人会</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="きっかけ" value="その他" class="custom-checkbox">
+                                <input type="checkbox" name="source" value="その他" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">その他</span>
                             </label>
                         </div>
@@ -339,7 +453,7 @@
 
                     <div class="space-y-2">
                         <label class="block text-sm font-bold text-gray-300">その他・特記事項</label>
-                        <textarea name="特記事項" rows="3" placeholder="ご質問や郵送先などがあればご記入ください" class="glass-input"></textarea>
+                        <textarea name="notes" rows="3" placeholder="ご質問や郵送先などがあればご記入ください" class="glass-input"></textarea>
                     </div>
 
                     <div class="pt-6">
@@ -350,7 +464,7 @@
                         </button>
                         
                         <p class="text-center text-xs text-gray-500 mt-4">
-                            送信することで、<a href="#" class="text-cyan-400 underline">プライバシーポリシー</a>に同意したものとみなされます。
+                            送信することで、<a href="privacy.html" class="text-cyan-400 underline hover:text-cyan-300 transition-colors">プライバシーポリシー</a>に同意したものとみなされます。
                         </p>
                     </div>
 
@@ -359,43 +473,43 @@
         </div>
     </main>
 
-    <footer class="border-t border-white/10 bg-black py-8">
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div class="text-center md:text-left">
-                <a href="index.html" class="inline-flex items-center gap-2 mb-4 group justify-center md:justify-start">
-                    <div class="text-xl font-bold">BBINFO</div>
+    <footer class="border-t border-white/10 bg-black pt-16 pb-8 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div class="col-span-1 md:col-span-2">
+                <a href="index.html" class="inline-flex items-center gap-2 mb-4 group">
+                    <div class="text-2xl font-bold">BBINFO</div>
                 </a>
-                <p class="text-xs text-gray-400 mb-2">JCNET Communications Private Limited</p>
-                <div class="text-xs text-gray-500 space-y-1">
-                    <p><i class="ph-fill ph-map-pin mr-1"></i> New Delhi</p>
-                    <p><i class="ph-fill ph-phone mr-1"></i> +91 95600 54243 (Mon-Fri 9:00-18:00)</p>
+                <p class="text-gray-400 text-sm mb-4">JCNET Communications Private Limited</p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-black transition-all"><i class="ph-fill ph-facebook-logo"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-black transition-all"><i class="ph-fill ph-instagram-logo"></i></a>
                 </div>
             </div>
-
-            <div class="text-center md:text-right text-xs text-gray-600 flex flex-col gap-2">
-                <a href="#" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
-                <div>© 2025 BBINFO - All Rights Reserved.</div>
+            
+            <div>
+                <h4 class="font-bold mb-4 text-gray-200">CONTACT</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="contact.html" class="hover:text-cyan-400 transition-colors flex items-center"><i class="ph ph-envelope-simple mr-2"></i>お問い合わせ</a></li>
+                    <li><i class="ph ph-phone mr-2"></i>+91 9560054243</li>
+                    <li><i class="ph ph-clock mr-2"></i>Mon-Fri 9:00-18:00</li>
+                    <li><i class="ph ph-map-pin mr-2"></i>インド全土対応</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-bold mb-4 text-gray-200">LINKS</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="index.html#features" class="hover:text-cyan-400 transition-colors">サービス詳細</a></li>
+                    <li><a href="index.html#channels" class="hover:text-cyan-400 transition-colors">チャンネル一覧</a></li>
+                    <li><a href="index.html#pricing" class="hover:text-cyan-400 transition-colors">料金プラン</a></li>
+                </ul>
             </div>
         </div>
+        
+        <div class="max-w-7xl mx-auto pt-8 border-t border-white/5 text-xs text-gray-600 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>© 2025 BBINFO - All Rights Reserved.</div>
+            <a href="privacy.html" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
+        </div>
     </footer>
-
-    <script>
-        // Init Lenis
-        const lenis = new Lenis({
-            duration: 0.8,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            direction: 'vertical',
-            gestureDirection: 'vertical',
-            smooth: true,
-            mouseMultiplier: 1.5,
-            smoothTouch: false,
-            touchMultiplier: 2,
-        });
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
-    </script>
 </body>
 </html>
