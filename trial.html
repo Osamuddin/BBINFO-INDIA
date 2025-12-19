@@ -316,25 +316,28 @@
                 <form name="無料体験お申し込みフォーム" method="POST" action="/thanks.html" data-netlify="true" class="space-y-8 relative z-10">
                     <input type="hidden" name="form-name" value="無料体験お申し込みフォーム" />
                     
+                    <!-- 追加: 通知メールの件名をカスタマイズする隠しフィールド -->
+                    <input type="hidden" name="subject" value="【無料体験】Webサイトからのお申し込み" />
+                    
                     <div class="space-y-3">
                         <label class="block text-sm font-bold text-gray-300">プラン</label>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <label class="cursor-pointer">
-                                <input type="radio" name="plan" value="Plan A (22ch)" class="peer sr-only" checked>
+                                <input type="radio" name="ご希望プラン" value="Plan A (22ch)" class="peer sr-only" checked>
                                 <div class="glass-panel p-4 rounded-xl text-center peer-checked:border-cyan-400 peer-checked:bg-cyan-900/20 transition-all hover:bg-white/5">
                                     <div class="font-bold mb-1">Plan A</div>
                                     <div class="text-xs text-gray-400">地上波 + BS</div>
                                 </div>
                             </label>
                             <label class="cursor-pointer">
-                                <input type="radio" name="plan" value="Plan B (36ch)" class="peer sr-only">
+                                <input type="radio" name="ご希望プラン" value="Plan B (36ch)" class="peer sr-only">
                                 <div class="glass-panel p-4 rounded-xl text-center peer-checked:border-cyan-400 peer-checked:bg-cyan-900/20 transition-all hover:bg-white/5">
                                     <div class="font-bold mb-1">Plan B</div>
                                     <div class="text-xs text-gray-400">BS充実</div>
                                 </div>
                             </label>
                             <label class="cursor-pointer">
-                                <input type="radio" name="plan" value="Plan C (66ch)" class="peer sr-only">
+                                <input type="radio" name="ご希望プラン" value="Plan C (66ch)" class="peer sr-only">
                                 <div class="glass-panel p-4 rounded-xl text-center peer-checked:border-purple-400 peer-checked:bg-purple-900/20 transition-all hover:bg-white/5">
                                     <div class="font-bold mb-1">Plan C</div>
                                     <div class="text-xs text-gray-400">CS含む全ch</div>
@@ -346,46 +349,46 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="block text-sm font-bold text-gray-300">お名前 <span class="text-red-500">*</span></label>
-                            <input type="text" name="name" placeholder="山田 太郎" class="glass-input" required>
+                            <input type="text" name="お名前" placeholder="山田 太郎" class="glass-input" required>
                         </div>
                         <div class="space-y-2">
                             <label class="block text-sm font-bold text-gray-300">お名前（アルファベット） <span class="text-red-500">*</span></label>
-                            <input type="text" name="name_alpha" placeholder="YAMADA TARO" class="glass-input" required>
+                            <input type="text" name="お名前（アルファベット）" placeholder="YAMADA TARO" class="glass-input" required>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="block text-sm font-bold text-gray-300">電話番号 <span class="text-red-500">*</span></label>
-                            <input type="tel" name="phone" placeholder="+91 98765 43210" class="glass-input" required>
+                            <input type="tel" name="電話番号" placeholder="+91 98765 43210" class="glass-input" required>
                         </div>
                         <div class="space-y-2">
                             <label class="block text-sm font-bold text-gray-300">メールアドレス <span class="text-red-500">*</span></label>
-                            <input type="email" name="email" placeholder="your@email.com" class="glass-input" required>
+                            <input type="email" name="メールアドレス" placeholder="your@email.com" class="glass-input" required>
                         </div>
                     </div>
 
                     <div class="space-y-2">
                         <label class="block text-sm font-bold text-gray-300">住所 <span class="text-red-500">*</span></label>
-                        <textarea name="address" rows="3" placeholder="Building Name, Street, City, State, PIN Code" class="glass-input" required></textarea>
+                        <textarea name="住所" rows="3" placeholder="Building Name, Street, City, State, PIN Code" class="glass-input" required></textarea>
                     </div>
 
                     <div class="space-y-3">
                         <label class="block text-sm font-bold text-gray-300">ご希望の機器設置方法 <span class="text-red-500">*</span></label>
                         <div class="space-y-4">
                             <label class="flex items-start gap-3 cursor-pointer group">
-                                <input type="radio" name="installation_method" value="出張設置" class="custom-radio mt-1" required>
+                                <input type="radio" name="機器設置方法" value="出張設置" class="custom-radio mt-1" required>
                                 <div>
                                     <span class="block text-sm font-medium group-hover:text-white transition-colors">出張設置（スタッフ訪問）</span>
                                     <span class="block text-xs text-gray-500 mt-1">有料：Rs.2,000 / 出張対応時間：平日10:00-17:00<br>デリー・グルガオンの一部のみ</span>
                                 </div>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="radio" name="installation_method" value="来店受取" class="custom-radio">
+                                <input type="radio" name="機器設置方法" value="来店受取" class="custom-radio">
                                 <span class="text-sm font-medium group-hover:text-white transition-colors">ご自身で設置（弊社オフィスで受取）</span>
                             </label>
                             <label class="flex items-start gap-3 cursor-pointer group">
-                                <input type="radio" name="installation_method" value="郵送" class="custom-radio mt-1">
+                                <input type="radio" name="機器設置方法" value="郵送" class="custom-radio mt-1">
                                 <div>
                                     <span class="block text-sm font-medium group-hover:text-white transition-colors">ご自身で設置（機器を郵送）</span>
                                     <span class="block text-xs text-gray-500 mt-1">勤務先への発送をご希望の場合は「その他・特記事項」欄にご記入ください</span>
@@ -399,7 +402,7 @@
                             <label class="block text-sm font-bold text-gray-300">設置／来店希望日</label>
                             <div class="text-[10px] text-gray-500 mb-1">新規機械設置・修理受付<br>平日10:00-17:00　定休日:土曜日,日曜日</div>
                             <div class="input-wrapper">
-                                <input type="date" name="preferred_date" class="glass-input" placeholder="DD/MM/YYYY">
+                                <input type="date" name="設置・来店希望日" class="glass-input" placeholder="DD/MM/YYYY">
                                 <i class="ph ph-calendar-blank input-icon"></i>
                             </div>
                         </div>
@@ -409,43 +412,43 @@
                         <label class="block text-sm font-bold text-gray-300">BBINFOを知ったきっかけ （複数選択可） <span class="text-red-500">*</span></label>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4">
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="source" value="Web広告" class="custom-checkbox">
+                                <input type="checkbox" name="BBINFOを知ったきっかけ" value="Web広告" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">Web広告</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="source" value="BBINFO公式サイト" class="custom-checkbox">
+                                <input type="checkbox" name="BBINFOを知ったきっかけ" value="BBINFO公式サイト" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">BBINFO公式サイト</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="source" value="Chalo" class="custom-checkbox">
+                                <input type="checkbox" name="BBINFOを知ったきっかけ" value="Chalo" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">Chalo</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="source" value="紹介" class="custom-checkbox">
+                                <input type="checkbox" name="BBINFOを知ったきっかけ" value="紹介" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">ご利用者様からの紹介</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="source" value="チラシ" class="custom-checkbox">
+                                <input type="checkbox" name="BBINFOを知ったきっかけ" value="チラシ" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">チラシ</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="source" value="スターツ" class="custom-checkbox">
+                                <input type="checkbox" name="BBINFOを知ったきっかけ" value="スターツ" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">不動産会社(スターツ)</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="source" value="ピラミッドリロ" class="custom-checkbox">
+                                <input type="checkbox" name="BBINFOを知ったきっかけ" value="ピラミッドリロ" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">不動産会社(ピラミッドリロ)</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="source" value="NRM" class="custom-checkbox">
+                                <input type="checkbox" name="BBINFOを知ったきっかけ" value="NRM" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">不動産会社(NRM International)</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="source" value="日本人会" class="custom-checkbox">
+                                <input type="checkbox" name="BBINFOを知ったきっかけ" value="日本人会" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">日本人会</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="source" value="その他" class="custom-checkbox">
+                                <input type="checkbox" name="BBINFOを知ったきっかけ" value="その他" class="custom-checkbox">
                                 <span class="text-sm text-gray-400 group-hover:text-white transition-colors">その他</span>
                             </label>
                         </div>
@@ -453,7 +456,7 @@
 
                     <div class="space-y-2">
                         <label class="block text-sm font-bold text-gray-300">その他・特記事項</label>
-                        <textarea name="notes" rows="3" placeholder="ご質問や郵送先などがあればご記入ください" class="glass-input"></textarea>
+                        <textarea name="その他・特記事項" rows="3" placeholder="ご質問や郵送先などがあればご記入ください" class="glass-input"></textarea>
                     </div>
 
                     <div class="pt-6">
