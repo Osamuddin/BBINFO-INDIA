@@ -3,18 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>お問い合わせ完了 | BBINFO</title>
+    <title>送信完了 | BBINFO</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
-    <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- Lenis (Smooth Scroll) -->
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
 
     <script>
@@ -50,7 +46,7 @@
 
     <style>
         body {
-            background-color: #050505;
+            background-color: #030303;
             color: #ffffff;
             overflow-x: hidden;
             /* ページ全体を中央に配置するための設定 */
@@ -59,6 +55,62 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            position: relative;
+        }
+
+        /* -------------------------------------------
+           HeroGeometric 背景
+           ------------------------------------------- */
+        .hero-geometric-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-blur-gradient {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom right, rgba(99, 102, 241, 0.05), transparent, rgba(244, 63, 94, 0.05));
+            z-index: 0;
+        }
+
+        .shape-wrapper {
+            position: absolute; opacity: 0; z-index: 1;
+            animation: drop-in 2.4s cubic-bezier(0.23, 0.86, 0.39, 0.96) forwards;
+        }
+
+        .shape-float {
+            position: relative; width: 100%; height: 100%;
+            animation: float-vertical 12s infinite ease-in-out;
+        }
+
+        .shape-content {
+            width: 100%; height: 100%; border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .shape-content::after {
+            content: ''; position: absolute; inset: 0; border-radius: 9999px;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), transparent 70%);
+            z-index: 2;
+        }
+
+        @keyframes drop-in {
+            0% { opacity: 0; transform: translateY(-150px) rotate(var(--rot-start)); }
+            100% { opacity: 1; transform: translateY(0) rotate(var(--rot-end)); }
+        }
+        @keyframes float-vertical {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(15px); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes pulse-opacity {
+            0%, 100% { opacity: 0.4; filter: brightness(100%); }
+            50% { opacity: 1; filter: brightness(200%); box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
         }
 
         /* -------------------------------------------
@@ -80,50 +132,6 @@
             pointer-events: none;
         }
 
-        /* -------------------------------------------
-           Gradient Dots Background (Optimized)
-           ------------------------------------------- */
-        .gradient-dots-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            --bg-color: #050505;
-            --dot-size: 8px;
-            --spacing: 10px;
-            --hex-spacing: 17.32px;
-            background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)),
-                radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)),
-                radial-gradient(circle at 50% 50%, #f00, transparent 60%),
-                radial-gradient(circle at 50% 50%, #ff0, transparent 60%),
-                radial-gradient(circle at 50% 50%, #0f0, transparent 60%),
-                radial-gradient(ellipse at 50% 50%, #00f, transparent 60%);
-            background-size: 
-                var(--spacing) var(--hex-spacing),
-                var(--spacing) var(--hex-spacing),
-                200% 200%,
-                200% 200%,
-                200% 200%,
-                200% var(--hex-spacing);
-            
-            opacity: 0.8; 
-            animation: gradient-dots-anim 60s linear infinite, hue-shift 30s linear infinite;
-        }
-
-        @keyframes gradient-dots-anim {
-            0% { background-position: 0px 0px, calc(var(--spacing)/2) calc(var(--hex-spacing)/2), 800% 400%, 1000% -400%, -1200% -600%, 400% var(--hex-spacing); }
-            100% { background-position: 0px 0px, calc(var(--spacing)/2) calc(var(--hex-spacing)/2), 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
-        }
-        
-        @keyframes hue-shift {
-            to { filter: hue-rotate(360deg); }
-        }
-
-
         /* Glass Panel */
         .glass-panel {
             background: rgba(20, 20, 20, 0.6);
@@ -133,39 +141,83 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+        
+        /* Glass Header */
+        .glass-header {
+            background: rgba(20, 20, 20, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-cyan-500 selection:text-white">
 
-    <!-- Background -->
-    <div class="gradient-dots-bg"></div>
+    <div class="hero-geometric-bg">
+        <div class="bg-blur-gradient"></div>
 
-    <!-- Main Content -->
+        <div class="shape-wrapper" style="top: 20%; left: -10%; --rot-start: -3deg; --rot-end: 12deg; animation-delay: 0.3s;">
+            <div class="shape-float" style="width: 600px; height: 140px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(99, 102, 241, 0.15), transparent); animation: pulse-opacity 10s infinite ease-in-out;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="top: 70%; right: -5%; --rot-start: -30deg; --rot-end: -15deg; animation-delay: 0.5s;">
+            <div class="shape-float" style="width: 500px; height: 120px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(244, 63, 94, 0.15), transparent); animation: pulse-opacity 14s infinite ease-in-out 2s;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="bottom: 10%; left: 5%; --rot-start: -23deg; --rot-end: -8deg; animation-delay: 0.4s;">
+            <div class="shape-float" style="width: 300px; height: 80px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(139, 92, 246, 0.15), transparent); animation: pulse-opacity 9s infinite ease-in-out 1s;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="top: 15%; right: 20%; --rot-start: 5deg; --rot-end: 20deg; animation-delay: 0.6s;">
+            <div class="shape-float" style="width: 200px; height: 60px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(245, 158, 11, 0.15), transparent); animation: pulse-opacity 11s infinite ease-in-out 4s;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="top: 10%; left: 25%; --rot-start: -40deg; --rot-end: -25deg; animation-delay: 0.7s;">
+            <div class="shape-float" style="width: 150px; height: 40px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(6, 182, 212, 0.15), transparent); animation: pulse-opacity 13s infinite ease-in-out 3s;"></div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="fixed w-full z-50 top-0 left-0 px-6 py-4">
+        <div class="max-w-7xl mx-auto glass-header rounded-full px-6 py-3 flex justify-between items-center relative z-50">
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl group-hover:scale-110 transition-transform duration-300">B</div>
+                <span class="font-bold text-lg tracking-wider">BBINFO</span>
+            </a>
+        </div>
+    </nav>
+
     <main class="relative z-10 w-full flex-grow flex justify-center items-center py-20">
         <div class="max-w-lg w-full mx-auto px-6">
             <div class="glass-panel rounded-3xl p-8 md:p-12 text-center">
                 
-                <i class="ph-fill ph-check-circle text-6xl text-cyan-400 mb-6"></i>
+                <i class="ph-fill ph-paper-plane-tilt text-6xl text-cyan-400 mb-6"></i>
 
                 <h1 class="text-3xl md:text-4xl font-black mb-3">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">お問い合わせ完了</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">送信完了</span>
                 </h1>
                 
                 <p class="text-gray-300 text-lg mb-4">
-                    お問い合わせ内容を受け付けました。
+                    お申し込みありがとうございます。
                 </p>
                 <p class="text-sm text-gray-400 mb-8 max-w-sm mx-auto">
-                    ご記入いただいたメールアドレス宛に自動受付メールを送信いたしました。内容を確認後、担当者より改めてご連絡させていただきます。
+                    内容を確認後、迅速にご連絡させていただきます。
                 </p>
 
                 <a href="index.html" class="inline-flex items-center justify-center gap-2 text-sm font-bold text-white bg-white/10 hover:bg-white/20 transition-colors border border-white/20 rounded-full px-6 py-3">
                     <i class="ph ph-arrow-left"></i> トップページに戻る
                 </a>
+
             </div>
         </div>
     </main>
 
-    <!-- Scripts -->
     <script>
         // Init Lenis (Optimized)
         const lenis = new Lenis({

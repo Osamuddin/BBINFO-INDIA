@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>無料体験お申し込み | BBINFO</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
-    <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <script>
@@ -51,73 +48,65 @@
     <style>
         /* Base Styles & Reset */
         body {
-            background-color: #050505;
+            background-color: #030303; /* index.htmlに合わせて変更 */
             color: #ffffff;
             overflow-x: hidden;
+            position: relative;
         }
 
         /* -------------------------------------------
-           Gradient Dots Background (Restored)
+           HeroGeometric 背景 (index.htmlから移植)
            ------------------------------------------- */
-        .gradient-dots-bg {
+        .hero-geometric-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1;
-            
-            --bg-color: #050505;
-            --dot-size: 8px;
-            --spacing: 10px;
-            --hex-spacing: 17.32px;
-
-            background-color: var(--bg-color);
-            
-            background-image: 
-                radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)),
-                radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)),
-                radial-gradient(circle at 50% 50%, #f00, transparent 60%),
-                radial-gradient(circle at 50% 50%, #ff0, transparent 60%),
-                radial-gradient(circle at 50% 50%, #0f0, transparent 60%),
-                radial-gradient(ellipse at 50% 50%, #00f, transparent 60%);
-                
-            background-size: 
-                var(--spacing) var(--hex-spacing),
-                var(--spacing) var(--hex-spacing),
-                200% 200%,
-                200% 200%,
-                200% 200%,
-                200% var(--hex-spacing);
-                
-            animation: gradient-dots-anim 30s linear infinite, gradient-dots-hue 6s linear infinite;
-            opacity: 0.8;
+            overflow: hidden;
+            pointer-events: none;
         }
 
-        @keyframes gradient-dots-anim {
-            0% {
-                background-position: 
-                    0px 0px, 
-                    calc(var(--spacing) / 2) calc(var(--hex-spacing) / 2),
-                    800% 400%,
-                    1000% -400%,
-                    -1200% -600%,
-                    400% var(--hex-spacing);
-            }
-            100% {
-                background-position: 
-                    0px 0px, 
-                    calc(var(--spacing) / 2) calc(var(--hex-spacing) / 2),
-                    0% 0%,
-                    0% 0%,
-                    0% 0%,
-                    0% 0%;
-            }
+        .bg-blur-gradient {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom right, rgba(99, 102, 241, 0.05), transparent, rgba(244, 63, 94, 0.05));
+            z-index: 0;
         }
 
-        @keyframes gradient-dots-hue {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
+        .shape-wrapper {
+            position: absolute; opacity: 0; z-index: 1;
+            animation: drop-in 2.4s cubic-bezier(0.23, 0.86, 0.39, 0.96) forwards;
+        }
+
+        .shape-float {
+            position: relative; width: 100%; height: 100%;
+            animation: float-vertical 12s infinite ease-in-out;
+        }
+
+        .shape-content {
+            width: 100%; height: 100%; border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .shape-content::after {
+            content: ''; position: absolute; inset: 0; border-radius: 9999px;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), transparent 70%);
+            z-index: 2;
+        }
+
+        @keyframes drop-in {
+            0% { opacity: 0; transform: translateY(-150px) rotate(var(--rot-start)); }
+            100% { opacity: 1; transform: translateY(0) rotate(var(--rot-end)); }
+        }
+        @keyframes float-vertical {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(15px); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes pulse-opacity {
+            0%, 100% { opacity: 0.4; filter: brightness(100%); }
+            50% { opacity: 1; filter: brightness(200%); box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
         }
 
         /* Glassmorphism Card Utilities */
@@ -271,10 +260,36 @@
 </head>
 <body class="antialiased selection:bg-cyan-500 selection:text-white">
 
-    <!-- Background -->
-    <div class="gradient-dots-bg"></div>
+    <div class="hero-geometric-bg">
+        <div class="bg-blur-gradient"></div>
 
-    <!-- Navigation -->
+        <div class="shape-wrapper" style="top: 20%; left: -10%; --rot-start: -3deg; --rot-end: 12deg; animation-delay: 0.3s;">
+            <div class="shape-float" style="width: 600px; height: 140px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(99, 102, 241, 0.15), transparent); animation: pulse-opacity 10s infinite ease-in-out;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="top: 70%; right: -5%; --rot-start: -30deg; --rot-end: -15deg; animation-delay: 0.5s;">
+            <div class="shape-float" style="width: 500px; height: 120px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(244, 63, 94, 0.15), transparent); animation: pulse-opacity 14s infinite ease-in-out 2s;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="bottom: 10%; left: 5%; --rot-start: -23deg; --rot-end: -8deg; animation-delay: 0.4s;">
+            <div class="shape-float" style="width: 300px; height: 80px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(139, 92, 246, 0.15), transparent); animation: pulse-opacity 9s infinite ease-in-out 1s;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="top: 15%; right: 20%; --rot-start: 5deg; --rot-end: 20deg; animation-delay: 0.6s;">
+            <div class="shape-float" style="width: 200px; height: 60px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(245, 158, 11, 0.15), transparent); animation: pulse-opacity 11s infinite ease-in-out 4s;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="top: 10%; left: 25%; --rot-start: -40deg; --rot-end: -25deg; animation-delay: 0.7s;">
+            <div class="shape-float" style="width: 150px; height: 40px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(6, 182, 212, 0.15), transparent); animation: pulse-opacity 13s infinite ease-in-out 3s;"></div>
+            </div>
+        </div>
+    </div>
+
     <nav class="fixed w-full z-50 top-0 left-0 px-6 py-4" id="navbar">
         <div class="max-w-7xl mx-auto glass-header rounded-full px-6 py-3 flex justify-between items-center relative z-50">
             <a href="index.html" class="flex items-center gap-2 group">
@@ -292,17 +307,14 @@
                 <a href="contact.html" class="inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white border border-white/20 hover:bg-white hover:text-black transition-all">お問い合わせ</a>
             </div>
             
-            <!-- Mobile Menu Button (Simplified for subpages) -->
             <a href="index.html" class="md:hidden text-white text-sm font-bold border border-white/20 px-4 py-2 rounded-full">TOPへ戻る</a>
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="min-h-screen pt-32 pb-20 px-6 relative z-10">
         <div class="max-w-2xl mx-auto">
             
             <div class="text-center mb-12">
-                <!-- 修正: 文字サイズを元のサイズ (text-3xl md:text-5xl) に戻しました -->
                 <h1 class="text-3xl md:text-5xl font-black mb-4">
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Free Trial</span>
                 </h1>
@@ -316,7 +328,6 @@
                 <form name="無料体験お申し込みフォーム" method="POST" action="/thanks.html" data-netlify="true" class="space-y-8 relative z-10">
                     <input type="hidden" name="form-name" value="無料体験お申し込みフォーム" />
                     
-                    <!-- 追加: 通知メールの件名をカスタマイズする隠しフィールド -->
                     <input type="hidden" name="subject" value="【無料体験】Webサイトからのお申し込み" />
                     
                     <div class="space-y-3">

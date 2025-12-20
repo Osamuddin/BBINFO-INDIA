@@ -5,16 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>プライバシーポリシー | BBINFO</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
-    <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- Lenis (Smooth Scroll) -->
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
 
     <script>
@@ -54,9 +50,10 @@
     <style>
         /* Base Styles & Reset */
         body {
-            background-color: #050505;
+            background-color: #030303; /* index.htmlに合わせて変更 */
             color: #ffffff;
             overflow-x: hidden;
+            position: relative;
         }
 
         /* Lenis Recommended CSS */
@@ -66,37 +63,59 @@
         .lenis.lenis-stopped { overflow: hidden; }
         .lenis.lenis-scrolling iframe { pointer-events: none; }
 
-        /* Background Gradient Dots */
-        .gradient-dots-bg {
+        /* -------------------------------------------
+           HeroGeometric 背景 (index.htmlから移植)
+           ------------------------------------------- */
+        .hero-geometric-bg {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            --bg-color: #050505;
-            --dot-size: 8px;
-            --spacing: 10px;
-            --hex-spacing: 17.32px;
-            background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)),
-                radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)),
-                radial-gradient(circle at 50% 50%, #f00, transparent 60%),
-                radial-gradient(circle at 50% 50%, #ff0, transparent 60%),
-                radial-gradient(circle at 50% 50%, #0f0, transparent 60%),
-                radial-gradient(ellipse at 50% 50%, #00f, transparent 60%);
-            background-size: 
-                var(--spacing) var(--hex-spacing),
-                var(--spacing) var(--hex-spacing),
-                200% 200%, 200% 200%, 200% 200%, 200% var(--hex-spacing);
-            animation: gradient-dots-anim 30s linear infinite, gradient-dots-hue 6s linear infinite;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
         }
 
-        @keyframes gradient-dots-anim {
-            0% { background-position: 0px 0px, calc(var(--spacing) / 2) calc(var(--hex-spacing) / 2), 800% 400%, 1000% -400%, -1200% -600%, 400% var(--hex-spacing); }
-            100% { background-position: 0px 0px, calc(var(--spacing) / 2) calc(var(--hex-spacing) / 2), 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+        .bg-blur-gradient {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom right, rgba(99, 102, 241, 0.05), transparent, rgba(244, 63, 94, 0.05));
+            z-index: 0;
         }
 
-        @keyframes gradient-dots-hue {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
+        .shape-wrapper {
+            position: absolute; opacity: 0; z-index: 1;
+            animation: drop-in 2.4s cubic-bezier(0.23, 0.86, 0.39, 0.96) forwards;
+        }
+
+        .shape-float {
+            position: relative; width: 100%; height: 100%;
+            animation: float-vertical 12s infinite ease-in-out;
+        }
+
+        .shape-content {
+            width: 100%; height: 100%; border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .shape-content::after {
+            content: ''; position: absolute; inset: 0; border-radius: 9999px;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), transparent 70%);
+            z-index: 2;
+        }
+
+        @keyframes drop-in {
+            0% { opacity: 0; transform: translateY(-150px) rotate(var(--rot-start)); }
+            100% { opacity: 1; transform: translateY(0) rotate(var(--rot-end)); }
+        }
+        @keyframes float-vertical {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(15px); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes pulse-opacity {
+            0%, 100% { opacity: 0.4; filter: brightness(100%); }
+            50% { opacity: 1; filter: brightness(200%); box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
         }
 
         /* Glassmorphism & Cards */
@@ -246,29 +265,50 @@
 </head>
 <body class="antialiased selection:bg-cyan-500 selection:text-white">
 
-    <!-- Background -->
-    <div class="gradient-dots-bg"></div>
-    <!-- 3D Canvas (Removed. Keeping the div just in case but it is empty now) -->
-    <div id="canvas-container" class="fixed inset-0 z-0 opacity-20 pointer-events-none"></div>
+    <div class="hero-geometric-bg">
+        <div class="bg-blur-gradient"></div>
 
-    <!-- Navigation -->
+        <div class="shape-wrapper" style="top: 20%; left: -10%; --rot-start: -3deg; --rot-end: 12deg; animation-delay: 0.3s;">
+            <div class="shape-float" style="width: 600px; height: 140px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(99, 102, 241, 0.15), transparent); animation: pulse-opacity 10s infinite ease-in-out;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="top: 70%; right: -5%; --rot-start: -30deg; --rot-end: -15deg; animation-delay: 0.5s;">
+            <div class="shape-float" style="width: 500px; height: 120px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(244, 63, 94, 0.15), transparent); animation: pulse-opacity 14s infinite ease-in-out 2s;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="bottom: 10%; left: 5%; --rot-start: -23deg; --rot-end: -8deg; animation-delay: 0.4s;">
+            <div class="shape-float" style="width: 300px; height: 80px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(139, 92, 246, 0.15), transparent); animation: pulse-opacity 9s infinite ease-in-out 1s;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="top: 15%; right: 20%; --rot-start: 5deg; --rot-end: 20deg; animation-delay: 0.6s;">
+            <div class="shape-float" style="width: 200px; height: 60px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(245, 158, 11, 0.15), transparent); animation: pulse-opacity 11s infinite ease-in-out 4s;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="top: 10%; left: 25%; --rot-start: -40deg; --rot-end: -25deg; animation-delay: 0.7s;">
+            <div class="shape-float" style="width: 150px; height: 40px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(6, 182, 212, 0.15), transparent); animation: pulse-opacity 13s infinite ease-in-out 3s;"></div>
+            </div>
+        </div>
+    </div>
+
     <nav class="fixed w-full z-50 top-0 left-0 px-6 py-4 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto glass-header rounded-full px-6 py-3 flex justify-between items-center relative z-50">
             
-            <!-- Logo -->
             <a href="index.html" class="flex items-center gap-2 group">
                 <div class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl group-hover:scale-110 transition-transform duration-300">B</div>
                 <span class="font-bold text-lg tracking-wider">BBINFO</span>
             </a>
             
-            <!-- Desktop Menu (Links back to Home) -->
             <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
                 <a href="index.html#features" class="hover:text-white transition-colors">サービス詳細</a>
                 <a href="index.html#channels" class="hover:text-white transition-colors">チャンネル一覧</a>
                 <a href="index.html#pricing" class="hover:text-white transition-colors">料金プラン</a>
             </div>
 
-            <!-- Header Buttons -->
             <div class="hidden md:flex items-center gap-3">
                 <a href="#" class="inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white border border-white/20 hover:bg-white hover:text-black transition-all">
                     お問い合わせ
@@ -280,13 +320,11 @@
                 </a>
             </div>
 
-            <!-- Mobile Menu Button -->
             <button id="menu-toggle" class="md:hidden text-white text-2xl focus:outline-none">
                 <i class="ph ph-list" id="menu-icon"></i>
             </button>
         </div>
 
-        <!-- Mobile Menu Overlay -->
         <div id="mobile-menu" class="hidden absolute top-20 left-6 right-6 glass-panel rounded-3xl p-6 flex-col gap-4 text-center z-40 origin-top">
             <a href="index.html" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">ホームに戻る</a>
             <a href="index.html#features" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">サービス詳細</a>
@@ -300,11 +338,9 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="relative z-10 pt-32 pb-20 px-6 min-h-screen">
         <div class="max-w-4xl mx-auto">
             
-            <!-- Page Title -->
             <div class="text-center mb-16 reveal-up">
                 <h1 class="text-3xl md:text-5xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 text-glow">
                     Privacy Policy
@@ -312,21 +348,18 @@
                 <p class="text-gray-400">プライバシーポリシー</p>
             </div>
 
-            <!-- Policy Content Container -->
             <div class="glow-card-container reveal-up">
                 <div class="glow-effect" aria-hidden="true"></div>
                 <div class="glow-card-content !p-8 md:!p-12">
                     
                     <div class="space-y-10 text-gray-300 leading-relaxed">
                         
-                        <!-- Intro -->
                         <div>
                             <p class="mb-4">
                                 BBINFO（以下、「当社」といいます。）は、本ウェブサイト上で提供するサービス（以下、「本サービス」といいます。）における、ユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めます。
                             </p>
                         </div>
 
-                        <!-- Article 1 -->
                         <section>
                             <h2 class="text-xl md:text-2xl font-bold text-white mb-4 border-l-4 border-cyan-400 pl-4">
                                 第1条（個人情報）
@@ -336,7 +369,6 @@
                             </p>
                         </section>
 
-                        <!-- Article 2 -->
                         <section>
                             <h2 class="text-xl md:text-2xl font-bold text-white mb-4 border-l-4 border-cyan-400 pl-4">
                                 第2条（個人情報の収集方法）
@@ -353,7 +385,6 @@
                             </ul>
                         </section>
 
-                        <!-- Article 3 -->
                         <section>
                             <h2 class="text-xl md:text-2xl font-bold text-white mb-4 border-l-4 border-cyan-400 pl-4">
                                 第3条（個人情報を収集・利用する目的）
@@ -369,7 +400,6 @@
                             </ol>
                         </section>
 
-                        <!-- Article 4 -->
                         <section>
                             <h2 class="text-xl md:text-2xl font-bold text-white mb-4 border-l-4 border-cyan-400 pl-4">
                                 第4条（利用目的の変更）
@@ -379,7 +409,6 @@
                             </p>
                         </section>
 
-                        <!-- Article 5 -->
                         <section>
                             <h2 class="text-xl md:text-2xl font-bold text-white mb-4 border-l-4 border-cyan-400 pl-4">
                                 第5条（個人情報の第三者提供）
@@ -394,7 +423,6 @@
                             </ul>
                         </section>
 
-                        <!-- Article 6 -->
                         <section>
                             <h2 class="text-xl md:text-2xl font-bold text-white mb-4 border-l-4 border-cyan-400 pl-4">
                                 第6条（セキュリティ対策）
@@ -404,7 +432,6 @@
                             </p>
                         </section>
 
-                        <!-- Contact -->
                         <section class="mt-12 pt-8 border-t border-white/10">
                             <h2 class="text-xl md:text-2xl font-bold text-white mb-4">
                                 お問い合わせ窓口
@@ -425,11 +452,9 @@
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="border-t border-white/10 bg-black pt-16 pb-8 px-6">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             <div class="col-span-1 md:col-span-2">
-                <!-- フッターロゴ -->
                 <a href="index.html" class="inline-flex items-center gap-2 mb-4 group">
                     <div class="text-2xl font-bold">BBINFO</div>
                 </a>
@@ -467,7 +492,6 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script>
         // 2. Lenis (Smooth Scroll)
         const initLenis = () => {

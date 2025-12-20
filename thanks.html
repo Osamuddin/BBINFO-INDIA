@@ -18,9 +18,69 @@
         }
     </script>
     <style>
-        body { background-color: #050505; color: #ffffff; overflow-x: hidden; }
-        .gradient-dots-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; --bg-color: #050505; --dot-size: 8px; --spacing: 10px; --hex-spacing: 17.32px; background-color: var(--bg-color); background-image: radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)), radial-gradient(circle at 50% 50%, transparent 1.5px, var(--bg-color) 0 var(--dot-size), transparent var(--dot-size)), radial-gradient(circle at 50% 50%, #f00, transparent 60%), radial-gradient(circle at 50% 50%, #ff0, transparent 60%), radial-gradient(circle at 50% 50%, #0f0, transparent 60%), radial-gradient(ellipse at 50% 50%, #00f, transparent 60%); background-size: var(--spacing) var(--hex-spacing), var(--spacing) var(--hex-spacing), 200% 200%, 200% 200%, 200% 200%, 200% var(--hex-spacing); animation: gradient-dots-anim 60s linear infinite; opacity: 0.5; }
-        @keyframes gradient-dots-anim { 0% { background-position: 0px 0px, calc(var(--spacing)/2) calc(var(--hex-spacing)/2), 800% 400%, 1000% -400%, -1200% -600%, 400% var(--hex-spacing); } 100% { background-position: 0px 0px, calc(var(--spacing)/2) calc(var(--hex-spacing)/2), 0% 0%, 0% 0%, 0% 0%, 0% 0%; } }
+        /* Base Styles & Reset */
+        body {
+            background-color: #030303; /* index.htmlに合わせて変更 */
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* -------------------------------------------
+           HeroGeometric 背景 (index.htmlから移植)
+           ------------------------------------------- */
+        .hero-geometric-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-blur-gradient {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom right, rgba(99, 102, 241, 0.05), transparent, rgba(244, 63, 94, 0.05));
+            z-index: 0;
+        }
+
+        .shape-wrapper {
+            position: absolute; opacity: 0; z-index: 1;
+            animation: drop-in 2.4s cubic-bezier(0.23, 0.86, 0.39, 0.96) forwards;
+        }
+
+        .shape-float {
+            position: relative; width: 100%; height: 100%;
+            animation: float-vertical 12s infinite ease-in-out;
+        }
+
+        .shape-content {
+            width: 100%; height: 100%; border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .shape-content::after {
+            content: ''; position: absolute; inset: 0; border-radius: 9999px;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), transparent 70%);
+            z-index: 2;
+        }
+
+        @keyframes drop-in {
+            0% { opacity: 0; transform: translateY(-150px) rotate(var(--rot-start)); }
+            100% { opacity: 1; transform: translateY(0) rotate(var(--rot-end)); }
+        }
+        @keyframes float-vertical {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(15px); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes pulse-opacity {
+            0%, 100% { opacity: 0.4; filter: brightness(100%); }
+            50% { opacity: 1; filter: brightness(200%); box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
+        }
+
         .glass-panel { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); }
         .glass-header { background: rgba(20, 20, 20, 0.15); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); }
         
@@ -32,7 +92,37 @@
     </style>
 </head>
 <body class="antialiased selection:bg-cyan-500 selection:text-white">
-    <div class="gradient-dots-bg"></div>
+
+    <div class="hero-geometric-bg">
+        <div class="bg-blur-gradient"></div>
+
+        <div class="shape-wrapper" style="top: 20%; left: -10%; --rot-start: -3deg; --rot-end: 12deg; animation-delay: 0.3s;">
+            <div class="shape-float" style="width: 600px; height: 140px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(99, 102, 241, 0.15), transparent); animation: pulse-opacity 10s infinite ease-in-out;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="top: 70%; right: -5%; --rot-start: -30deg; --rot-end: -15deg; animation-delay: 0.5s;">
+            <div class="shape-float" style="width: 500px; height: 120px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(244, 63, 94, 0.15), transparent); animation: pulse-opacity 14s infinite ease-in-out 2s;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="bottom: 10%; left: 5%; --rot-start: -23deg; --rot-end: -8deg; animation-delay: 0.4s;">
+            <div class="shape-float" style="width: 300px; height: 80px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(139, 92, 246, 0.15), transparent); animation: pulse-opacity 9s infinite ease-in-out 1s;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="top: 15%; right: 20%; --rot-start: 5deg; --rot-end: 20deg; animation-delay: 0.6s;">
+            <div class="shape-float" style="width: 200px; height: 60px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(245, 158, 11, 0.15), transparent); animation: pulse-opacity 11s infinite ease-in-out 4s;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="top: 10%; left: 25%; --rot-start: -40deg; --rot-end: -25deg; animation-delay: 0.7s;">
+            <div class="shape-float" style="width: 150px; height: 40px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(6, 182, 212, 0.15), transparent); animation: pulse-opacity 13s infinite ease-in-out 3s;"></div>
+            </div>
+        </div>
+    </div>
+
     <nav class="fixed w-full z-50 top-0 left-0 px-6 py-4">
         <div class="max-w-7xl mx-auto glass-header rounded-full px-6 py-3 flex justify-between items-center relative z-50">
             <a href="index.html" class="flex items-center gap-2 group"><div class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl group-hover:scale-110 transition-transform duration-300">B</div><span class="font-bold text-lg tracking-wider">BBINFO</span></a>
