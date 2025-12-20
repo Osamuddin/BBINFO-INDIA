@@ -33,7 +33,7 @@
         }
 
         /* -------------------------------------------
-           HeroGeometric 背景 (軽量化版)
+           HeroGeometric 背景
            ------------------------------------------- */
         .hero-geometric-bg {
             position: fixed;
@@ -64,7 +64,7 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
             position: relative;
-            background: rgba(255, 255, 255, 0.03); /* 軽量化: blur削除、単色半透明 */
+            background: rgba(255, 255, 255, 0.03);
         }
 
         .shape-content::after {
@@ -87,24 +87,13 @@
             50% { opacity: 1; filter: brightness(200%); box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
         }
 
-        /* -------------------------------------------
-           CTAカードアニメーション定義
-           ------------------------------------------- */
         @keyframes luxury-border-flow {
             0% { background-position: 0% 50%; }
             100% { background-position: 200% 50%; }
         }
 
-        /* -------------------------------------------
-           Z-Index と Pointer Events
-           ------------------------------------------- */
-        
-        nav, section, footer {
-            position: relative;
-            z-index: 10; 
-        }
+        nav, section, footer { position: relative; z-index: 10; }
 
-        /* インタラクティブなカード（料金プラン用） */
         .glow-card-container {
             position: relative;
             z-index: 10;
@@ -122,7 +111,6 @@
             cursor: pointer;
         }
 
-        /* Glow Effect (ホバー時の光) */
         .glow-effect {
             position: absolute; inset: 0; border-radius: inherit;
             pointer-events: none;
@@ -145,18 +133,13 @@
             -webkit-mask-composite: xor; mask-composite: exclude;
         }
 
-        /* -------------------------------------------
-           軽量化対応：チャンネル一覧用静的カード
-           ------------------------------------------- */
         .static-card-container {
             position: relative;
             border-radius: 1.5rem;
             padding: 1px;
             background: rgba(255, 255, 255, 0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            will-change: transform; /* GPU最適化 */
+            /* transition削除: 負荷軽減 */
         }
-
         .static-card-container:hover {
             background: rgba(255, 255, 255, 0.15);
             border-color: rgba(255, 255, 255, 0.3);
@@ -168,14 +151,20 @@
             overflow: hidden;
         }
 
+        /* アコーディオンの矢印回転（CSSのみで制御） */
+        details[open] summary .caret-icon {
+            transform: rotate(180deg);
+        }
+        .caret-icon {
+            transition: transform 0.2s ease; /* 矢印だけは軽く回す（重ければこれも削除可） */
+        }
+
+        /* 画面外描画スキップ */
         .channel-grid-wrapper {
-            content-visibility: auto; /* 画面外の描画スキップ */
+            content-visibility: auto; 
             contain-intrinsic-size: 0 500px;
         }
 
-        /* -------------------------------------------
-           CTAカード (Mouse Glow + Luxury Border)
-           ------------------------------------------- */
         .luxury-card-fix {
             background: transparent !important; 
             padding: 2px !important; 
@@ -184,39 +173,22 @@
             z-index: 10;
             overflow: hidden;
         }
-
         .luxury-card-fix::before {
             content: '';
-            position: absolute;
-            inset: 0; 
-            border-radius: inherit; 
-            z-index: -1; 
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(0, 243, 255, 0.6), 
-                rgba(188, 19, 254, 0.6), 
-                transparent
-            );
+            position: absolute; inset: 0; border-radius: inherit; z-index: -1; 
+            background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.6), rgba(188, 19, 254, 0.6), transparent);
             background-size: 200% 200%;
             animation: luxury-border-flow 4s linear infinite;
         }
-
         .luxury-card-fix .glow-card-content {
             background: rgba(5, 5, 5, 0.95);
-            height: 100%;
-            width: 100%;
-            border-radius: 1.4rem; 
+            height: 100%; width: 100%; border-radius: 1.4rem; 
         }
-
         .luxury-card-fix .glow-effect { z-index: 2; }
         .luxury-card-fix .glow-effect::after { opacity: calc(var(--active) * 0.4) !important; }
 
-        /* -------------------------------------------
-           パネルスタイル（軽量化版：透明度アップ・Blur削除）
-           ------------------------------------------- */
-        
         .glass-panel {
-            background: rgba(10, 10, 10, 0.9); /* 軽量化: 0.6->0.9, blur削除 */
+            background: rgba(10, 10, 10, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -229,7 +201,7 @@
         }
 
         .glass-header {
-            background: rgba(10, 10, 10, 0.95); /* 軽量化: 0.7->0.95, blur削除 */
+            background: rgba(10, 10, 10, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
             transition: all 0.4s ease;
@@ -238,7 +210,7 @@
 
         .glow-card-content {
             position: relative; height: 100%; border-radius: 1.5rem;
-            background: rgba(5, 5, 5, 0.9); /* 軽量化: 0.6->0.9, blur削除 */
+            background: rgba(5, 5, 5, 0.9);
             padding: 2rem; overflow: hidden;
         }
 
@@ -259,7 +231,6 @@
         ::-webkit-scrollbar-thumb:hover { background: #555; }
 
         .text-glow { text-shadow: 0 0 20px rgba(0, 243, 255, 0.3); }
-        .gradient-text { background: linear-gradient(135deg, #fff 0%, #a5f3fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         #mobile-menu { transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; background: rgba(5, 5, 5, 0.98) !important; z-index: 999; }
         #mobile-menu.hidden { display: none; }
@@ -306,10 +277,6 @@
         }
 
         .modal-overlay { background: rgba(0, 0, 0, 0.95); z-index: 1000; }
-        .modal-enter { opacity: 0; transform: scale(0.95); }
-        .modal-enter-active { opacity: 1; transform: scale(1); transition: opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-        .modal-exit { opacity: 1; transform: scale(1); }
-        .modal-exit-active { opacity: 0; transform: scale(0.95); transition: opacity 0.2s ease-in, transform 0.2s ease-in; }
     </style>
 </head>
 <body class="antialiased selection:bg-cyan-500 selection:text-white">
@@ -463,7 +430,7 @@
                                 <span class="w-2 h-2 rounded-full bg-white shadow-[0_0_10px_white]"></span>
                                 <span class="font-bold text-base md:text-lg">地上波：15ch</span>
                             </div>
-                            <i class="ph-bold ph-caret-down transform group-open:rotate-180 transition-transform duration-300"></i>
+                            <i class="ph-bold ph-caret-down caret-icon"></i>
                         </summary>
                         <div class="channel-grid-wrapper p-6 border-t border-white/10">
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm md:text-base text-gray-300">
@@ -480,7 +447,7 @@
                                 <span class="w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_10px_#60a5fa]"></span>
                                 <span class="font-bold text-base md:text-lg">BS：21ch</span>
                             </div>
-                            <i class="ph-bold ph-caret-down transform group-open:rotate-180 transition-transform duration-300"></i>
+                            <i class="ph-bold ph-caret-down caret-icon"></i>
                         </summary>
                         <div class="channel-grid-wrapper p-6 border-t border-white/10">
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm md:text-base text-gray-300">
@@ -497,7 +464,7 @@
                                 <span class="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_10px_#4ade80]"></span>
                                 <span class="font-bold text-base md:text-lg">CS：30ch</span>
                             </div>
-                            <i class="ph-bold ph-caret-down transform group-open:rotate-180 transition-transform duration-300"></i>
+                            <i class="ph-bold ph-caret-down caret-icon"></i>
                         </summary>
                         <div class="channel-grid-wrapper p-6 border-t border-white/10">
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm md:text-base text-gray-300">
@@ -728,62 +695,6 @@
             });
         }
 
-        // 軽量化版アコーディオン制御（requestAnimationFrame使用）
-        const initAccordions = () => {
-            const details = document.querySelectorAll("details");
-            details.forEach((detail) => {
-                const summary = detail.querySelector("summary");
-                const content = summary.nextElementSibling;
-                
-                // 初期スタイルの設定
-                content.style.display = 'grid';
-                content.style.transition = 'grid-template-rows 0.3s ease-out, opacity 0.3s ease-out';
-                content.style.overflow = 'hidden';
-                
-                // 内部要素
-                const inner = content.firstElementChild;
-                if (inner) inner.style.minHeight = '0';
-
-                // 閉じた状態の初期化
-                if (!detail.open) {
-                    content.style.gridTemplateRows = '0fr';
-                    content.style.opacity = '0';
-                } else {
-                    content.style.gridTemplateRows = '1fr';
-                    content.style.opacity = '1';
-                }
-
-                let isAnimating = false;
-
-                summary.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    if (isAnimating) return;
-                    isAnimating = true;
-
-                    if (detail.open) {
-                        // 閉じる動作
-                        content.style.gridTemplateRows = '0fr';
-                        content.style.opacity = '0';
-                        setTimeout(() => {
-                            detail.removeAttribute("open");
-                            isAnimating = false;
-                        }, 300); // transition時間と合わせる
-                    } else {
-                        // 開く動作
-                        detail.setAttribute("open", "true");
-                        // 1フレーム待ってからアニメーション開始
-                        requestAnimationFrame(() => {
-                            content.style.gridTemplateRows = '1fr';
-                            content.style.opacity = '1';
-                            setTimeout(() => {
-                                isAnimating = false;
-                            }, 300);
-                        });
-                    }
-                });
-            });
-        };
-
         const initGlowingEffect = () => {
             const cards = document.querySelectorAll('.glow-card-container');
             const handleMove = (e) => {
@@ -811,7 +722,7 @@
             initScrollObserver();
             initNavbar();
             initGlowingEffect();
-            initAccordions(); 
+            // initAccordions();  <-- 削除: これで完全にネイティブの挙動になります
         });
     </script>
 </body>
