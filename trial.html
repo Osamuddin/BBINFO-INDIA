@@ -330,33 +330,6 @@
                     
                     <input type="hidden" name="subject" value="【無料体験】Webサイトからのお申し込み" />
                     
-                    <div class="space-y-3">
-                        <label class="block text-sm font-bold text-gray-300">プラン</label>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <label class="cursor-pointer">
-                                <input type="radio" name="ご希望プラン" value="Plan A (22ch)" class="peer sr-only" checked>
-                                <div class="glass-panel p-4 rounded-xl text-center peer-checked:border-cyan-400 peer-checked:bg-cyan-900/20 transition-all hover:bg-white/5">
-                                    <div class="font-bold mb-1">Plan A</div>
-                                    <div class="text-xs text-gray-400">地上波 + BS</div>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer">
-                                <input type="radio" name="ご希望プラン" value="Plan B (36ch)" class="peer sr-only">
-                                <div class="glass-panel p-4 rounded-xl text-center peer-checked:border-cyan-400 peer-checked:bg-cyan-900/20 transition-all hover:bg-white/5">
-                                    <div class="font-bold mb-1">Plan B</div>
-                                    <div class="text-xs text-gray-400">BS充実</div>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer">
-                                <input type="radio" name="ご希望プラン" value="Plan C (66ch)" class="peer sr-only">
-                                <div class="glass-panel p-4 rounded-xl text-center peer-checked:border-purple-400 peer-checked:bg-purple-900/20 transition-all hover:bg-white/5">
-                                    <div class="font-bold mb-1">Plan C</div>
-                                    <div class="text-xs text-gray-400">CS含む全ch</div>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="block text-sm font-bold text-gray-300">お名前 <span class="text-red-500">*</span></label>
@@ -416,6 +389,14 @@
                                 <input type="date" name="設置・来店希望日" class="glass-input" placeholder="DD/MM/YYYY">
                                 <i class="ph ph-calendar-blank input-icon"></i>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-bold text-gray-300">LANケーブル接続をご希望の場合は、テレビからルーターまでの壁伝いの長さ入力してください。</label>
+                        <div class="flex items-center gap-3">
+                            <input type="number" name="LANケーブル長さ" placeholder="10" min="0" step="0.5" class="glass-input" style="max-width: 120px;">
+                            <span class="text-white font-medium">メートル</span>
                         </div>
                     </div>
 
