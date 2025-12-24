@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found | BBINFO</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', '"Noto Sans JP"', 'sans-serif'],
+                    },
+                    colors: {
+                        glass: {
+                            header: 'rgba(20, 20, 20, 0.15)',
+                            panel: 'rgba(20, 20, 20, 0.6)',
+                            border: 'rgba(255, 255, 255, 0.1)',
+                        },
+                        neon: {
+                            cyan: '#00f3ff',
+                            purple: '#bc13fe',
+                            pink: '#ff0055'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Styles & Reset */
+        body {
+            background-color: #030303;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* HeroGeometric Background */
+        .hero-geometric-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-blur-gradient {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom right, rgba(99, 102, 241, 0.05), transparent, rgba(244, 63, 94, 0.05));
+            z-index: 0;
+        }
+
+        .shape-wrapper {
+            position: absolute; opacity: 0; z-index: 1;
+            animation: drop-in 2.4s cubic-bezier(0.23, 0.86, 0.39, 0.96) forwards;
+        }
+
+        .shape-float {
+            position: relative; width: 100%; height: 100%;
+            animation: float-vertical 12s infinite ease-in-out;
+        }
+
+        .shape-content {
+            width: 100%; height: 100%; border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .shape-content::after {
+            content: ''; position: absolute; inset: 0; border-radius: 9999px;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), transparent 70%);
+            z-index: 2;
+        }
+
+        @keyframes drop-in {
+            0% { opacity: 0; transform: translateY(-150px) rotate(var(--rot-start)); }
+            100% { opacity: 1; transform: translateY(0) rotate(var(--rot-end)); }
+        }
+        @keyframes float-vertical {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(15px); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes pulse-opacity {
+            0%, 100% { opacity: 0.4; filter: brightness(100%); }
+            50% { opacity: 1; filter: brightness(200%); box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
+        }
+
+        /* Glassmorphism */
+        .glass-panel {
+            background: var(--glass-panel);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-header {
+            background: var(--glass-header);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+        }
+
+        /* Animation Classes */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Neon Text */
+        .text-glow { text-shadow: 0 0 20px rgba(0, 243, 255, 0.3); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        /* Gradient Button (Used in Navbar "Free Trial") */
+        @property --pos-x { syntax: '<percentage>'; initial-value: 11.14%; inherits: false; }
+        @property --pos-y { syntax: '<percentage>'; initial-value: 140%; inherits: false; }
+        @property --spread-x { syntax: '<percentage>'; initial-value: 150%; inherits: false; }
+        @property --spread-y { syntax: '<percentage>'; initial-value: 180.06%; inherits: false; }
+        @property --color-1 { syntax: '<color>'; initial-value: #000; inherits: false; }
+        @property --color-2 { syntax: '<color>'; initial-value: #08012c; inherits: false; }
+        @property --color-3 { syntax: '<color>'; initial-value: #4e1e40; inherits: false; }
+        @property --color-4 { syntax: '<color>'; initial-value: #70464e; inherits: false; }
+        @property --color-5 { syntax: '<color>'; initial-value: #88394c; inherits: false; }
+        @property --border-angle { syntax: '<angle>'; initial-value: 20deg; inherits: true; }
+        @property --border-color-1 { syntax: '<color>'; initial-value: hsla(340, 75%, 60%, 0.2); inherits: true; }
+        @property --border-color-2 { syntax: '<color>'; initial-value: hsla(340, 75%, 40%, 0.75); inherits: true; }
+        @property --stop-1 { syntax: '<percentage>'; initial-value: 37.35%; inherits: false; }
+        @property --stop-2 { syntax: '<percentage>'; initial-value: 61.36%; inherits: false; }
+        @property --stop-3 { syntax: '<percentage>'; initial-value: 78.42%; inherits: false; }
+        @property --stop-4 { syntax: '<percentage>'; initial-value: 89.52%; inherits: false; }
+        @property --stop-5 { syntax: '<percentage>'; initial-value: 100%; inherits: false; }
+
+        .gradient-button {
+            position: relative;
+            appearance: none;
+            cursor: pointer;
+            background: radial-gradient(var(--spread-x) var(--spread-y) at var(--pos-x) var(--pos-y), var(--color-1) var(--stop-1), var(--color-2) var(--stop-2), var(--color-3) var(--stop-3), var(--color-4) var(--stop-4), var(--color-5) var(--stop-5));
+            transition: all 0.5s;
+        }
+        .gradient-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(var(--border-angle), var(--border-color-1), var(--border-color-2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        .gradient-button:hover {
+            --pos-x: 0%; --pos-y: 91.51%; --spread-x: 120.24%; --spread-y: 103.18%;
+            --color-1: #c96287; --color-2: #c66c64; --color-3: #cc7d23; --color-4: #37140a; --color-5: #000;
+            --border-angle: 190deg;
+            --border-color-1: hsla(340, 78%, 90%, 0.1); --border-color-2: hsla(340, 75%, 90%, 0.6);
+            --stop-1: 0%; --stop-2: 8.8%; --stop-3: 21.44%; --stop-4: 71.34%; --stop-5: 85.76%;
+        }
+
+        /* Mobile Menu */
+        #mobile-menu { transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; }
+        #mobile-menu.hidden { display: none; }
+        #mobile-menu.open { display: flex; transform: translateY(0); opacity: 1; }
+        #mobile-menu.closed { transform: translateY(-20px); opacity: 0; }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-white flex flex-col min-h-screen">
+
+    <div class="hero-geometric-bg">
+        <div class="bg-blur-gradient"></div>
+        <div class="shape-wrapper" style="top: 20%; left: -10%; --rot-start: -3deg; --rot-end: 12deg; animation-delay: 0.3s;">
+            <div class="shape-float" style="width: 600px; height: 140px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(99, 102, 241, 0.15), transparent); animation: pulse-opacity 10s infinite ease-in-out;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="top: 70%; right: -5%; --rot-start: -30deg; --rot-end: -15deg; animation-delay: 0.5s;">
+            <div class="shape-float" style="width: 500px; height: 120px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(244, 63, 94, 0.15), transparent); animation: pulse-opacity 14s infinite ease-in-out 2s;"></div>
+            </div>
+        </div>
+        <div class="shape-wrapper" style="bottom: 10%; left: 5%; --rot-start: -23deg; --rot-end: -8deg; animation-delay: 0.4s;">
+            <div class="shape-float" style="width: 300px; height: 80px;">
+                <div class="shape-content" style="background: linear-gradient(to right, rgba(139, 92, 246, 0.15), transparent); animation: pulse-opacity 9s infinite ease-in-out 1s;"></div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="fixed w-full z-50 top-0 left-0 px-6 py-4 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto glass-header rounded-full px-6 py-3 flex justify-between items-center relative z-50">
+            
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl group-hover:scale-110 transition-transform duration-300">B</div>
+                <span class="font-bold text-lg tracking-wider">BBINFO</span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="index.html#features" class="hover:text-white transition-colors">サービス詳細</a>
+                <a href="index.html#channels" class="hover:text-white transition-colors">チャンネル一覧</a>
+                <a href="index.html#pricing" class="hover:text-white transition-colors">料金プラン</a>
+            </div>
+
+            <div class="hidden md:flex items-center gap-3">
+                <a href="contact.html" class="inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white border border-white/20 hover:bg-white hover:text-black transition-all">
+                    お問い合わせ
+                </a>
+                <a href="trial.html" class="hidden md:inline-flex gradient-button items-center justify-center rounded-full min-w-[132px] px-6 md:px-9 py-4 text-sm leading-[19px] font-medium text-white font-sans font-bold hover:scale-105 transition-transform duration-300">
+                    <span class="flex items-center gap-2">
+                        1週間無料体験を申し込む <i class="ph-bold ph-lightning"></i>
+                    </span>
+                </a>
+            </div>
+
+            <button id="menu-toggle" class="md:hidden text-white text-2xl focus:outline-none">
+                <i class="ph ph-list" id="menu-icon"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden absolute top-20 left-6 right-6 glass-panel rounded-3xl p-6 flex-col gap-4 text-center z-40 origin-top">
+            <a href="index.html" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">ホームに戻る</a>
+            <a href="index.html#features" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">サービス詳細</a>
+            <a href="index.html#channels" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">チャンネル一覧</a>
+            <a href="index.html#pricing" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">料金プラン</a>
+            <a href="trial.html" class="mt-2 gradient-button inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white mobile-link whitespace-nowrap">
+                <span class="flex items-center gap-2">
+                    1週間無料体験を申し込む <i class="ph-bold ph-lightning"></i>
+                </span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="relative z-10 flex-grow flex items-center justify-center px-6 pt-32 pb-20">
+        <div class="max-w-4xl mx-auto w-full">
+            
+            <div class="text-center reveal-up flex flex-col items-center">
+                <h1 class="text-[8rem] md:text-[12rem] leading-none font-black mb-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 text-glow select-none">
+                    404
+                </h1>
+                
+                <h2 class="text-2xl md:text-4xl font-bold text-white mb-10">
+                    Page Not Found
+                </h2>
+
+                <a href="index.html" class="inline-flex items-center justify-center rounded-full px-8 py-4 text-base font-bold text-white border border-white/20 hover:bg-white hover:text-black transition-all">
+                    <span class="flex items-center gap-3">
+                        <i class="ph-bold ph-house text-xl"></i> トップページへ戻る
+                    </span>
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="border-t border-white/10 bg-black pt-16 pb-8 px-6 mt-auto">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div class="col-span-1 md:col-span-2">
+                <a href="index.html" class="inline-flex items-center gap-2 mb-4 group">
+                    <div class="text-2xl font-bold">BBINFO</div>
+                </a>
+
+                <p class="text-gray-400 text-sm mb-4">JCNET Communications Private Limited</p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-black transition-all"><i class="ph-fill ph-facebook-logo"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-black transition-all"><i class="ph-fill ph-instagram-logo"></i></a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold mb-4 text-gray-200">CONTACT</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="contact.html" class="hover:text-cyan-400 transition-colors flex items-center"><i class="ph ph-envelope-simple mr-2"></i>お問い合わせ</a></li>
+                    <li><i class="ph ph-phone mr-2"></i>+91 9560054243</li>
+                    <li><i class="ph ph-clock mr-2"></i>Mon-Fri 9:00-18:00</li>
+                    <li><i class="ph ph-map-pin mr-2"></i>インド全土対応</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-bold mb-4 text-gray-200">LINKS</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="index.html#features" class="hover:text-cyan-400 transition-colors">サービス詳細</a></li>
+                    <li><a href="index.html#channels" class="hover:text-cyan-400 transition-colors">チャンネル一覧</a></li>
+                    <li><a href="index.html#pricing" class="hover:text-cyan-400 transition-colors">料金プラン</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto pt-8 border-t border-white/5 text-xs text-gray-600 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>© 2025 BBINFO - All Rights Reserved.</div>
+            <a href="privacypolicy.html" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Scroll Observer (Reveal Up)
+        const initScrollObserver = () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+        };
+
+        // 2. Navbar Logic
+        const initNavbar = () => {
+            const navbar = document.getElementById('navbar');
+            const menuToggle = document.getElementById('menu-toggle');
+            const menuIcon = document.getElementById('menu-icon');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('py-2');
+                    navbar.classList.remove('py-4');
+                } else {
+                    navbar.classList.add('py-4');
+                    navbar.classList.remove('py-2');
+                }
+            });
+
+            menuToggle.addEventListener('click', () => {
+                const isOpen = !mobileMenu.classList.contains('hidden');
+                if (isOpen) {
+                    mobileMenu.classList.remove('open');
+                    mobileMenu.classList.add('closed');
+                    setTimeout(() => {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('closed');
+                    }, 300);
+                    menuIcon.classList.remove('ph-x');
+                    menuIcon.classList.add('ph-list');
+                } else {
+                    mobileMenu.classList.remove('hidden');
+                    void mobileMenu.offsetWidth;
+                    mobileMenu.classList.add('open');
+                    menuIcon.classList.remove('ph-list');
+                    menuIcon.classList.add('ph-x');
+                }
+            });
+        };
+
+        // Initialize
+        window.addEventListener('load', () => {
+            initScrollObserver();
+            initNavbar();
+        });
+    </script>
+</body>
+</html>
