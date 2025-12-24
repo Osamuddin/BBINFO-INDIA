@@ -25,10 +25,13 @@
 
     <style>
         /* Base Styles & Reset */
-        body {
+        /* 横スクロール対策：html, bodyにwidth 100%とoverflow-x: hiddenを適用 */
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
             background-color: #030303;
             color: #ffffff;
-            overflow-x: hidden;
             position: relative;
         }
 
@@ -37,7 +40,9 @@
            ------------------------------------------- */
         .hero-geometric-bg {
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            top: 0; left: 0; 
+            width: 100%; /* 100vwから変更 */
+            height: 100vh;
             z-index: -1;
             overflow: hidden;
             pointer-events: none;
@@ -90,6 +95,12 @@
         @keyframes luxury-border-flow {
             0% { background-position: 0% 50%; }
             100% { background-position: 200% 50%; }
+        }
+
+        /* 回転アニメーション（CTA用） */
+        @keyframes spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
         nav, section, footer { position: relative; z-index: 10; }
@@ -568,33 +579,51 @@
         </div>
     </section>
 
-    <section id="trial" class="py-32 px-6 relative">
+    <section id="trial" class="py-32 px-6 relative overflow-hidden bg-black">
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000&auto=format&fit=crop" alt="World Connection" class="w-full h-full object-cover opacity-30">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent"></div>
+            <div class="absolute inset-0" 
+                 style="background-image: linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px), 
+                        linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px); 
+                        background-size: 50px 50px; 
+                        mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+                        -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);">
+            </div>
+            
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] max-w-full h-[600px] opacity-40 pointer-events-none">
+                <div class="w-full h-full bg-gradient-to-r from-cyan-500 via-purple-500 to-cyan-500 rounded-full blur-[80px] animate-spin-slow" style="animation: spin 10s linear infinite;"></div>
+            </div>
         </div>
 
-        <div class="max-w-3xl mx-auto text-center relative z-10 glow-card-container reveal-up group luxury-card-fix">
-            <div class="glow-effect" aria-hidden="true"></div>
-            <div class="glow-card-content !p-12 flex flex-col items-center">
-                <h2 class="text-3xl md:text-5xl font-black mb-6 text-white">Ready to Watch?</h2>
-                <p class="text-sm md:text-base text-gray-300 mb-8">
+        <div class="max-w-3xl mx-auto text-center relative z-10 glow-card-container reveal-up group">
+            <div class="glow-effect" aria-hidden="true" style="--border-width: 1px;"></div>
+            
+            <div class="glow-card-content !p-12 flex flex-col items-center !bg-black/80 backdrop-blur-xl border border-white/10 shadow-2xl">
+                <h2 class="text-3xl md:text-5xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-200 to-gray-500 tracking-tight">
+                    Ready to Watch?
+                </h2>
+                <p class="text-sm md:text-base text-gray-400 mb-8 font-medium leading-relaxed">
                     今なら1週間、完全無料で日本のテレビ体験を。<br>
                     リスクなしでお試しいただけます。
                 </p>
+                
                 <div class="flex justify-center mb-8 w-full">
-                    <a href="trial.html" class="gradient-button inline-flex items-center justify-center rounded-full min-w-[132px] px-6 md:px-9 py-4 text-sm leading-[19px] font-medium text-white font-sans font-bold focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-transform duration-300 whitespace-nowrap">
+                    <a href="trial.html" class="gradient-button inline-flex items-center justify-center rounded-full min-w-[132px] px-6 md:px-9 py-4 text-sm leading-[19px] font-medium text-white font-sans font-bold focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-transform duration-300 whitespace-nowrap shadow-[0_0_30px_-5px_rgba(0,243,255,0.3)]">
                         <span class="flex items-center gap-2">
-                            1週間無料体験を申し込む <i class="ph-bold ph-lightning"></i>
+                            1週間無料体験を申し込む <i class="ph-bold ph-lightning text-cyan-300"></i>
                         </span>
                     </a>
                 </div>
-                <p class="text-xs text-gray-500">クレジットカード登録不要。自動課金はありません。</p>
+                
+                <div class="flex items-center gap-2 text-xs text-gray-600 border-t border-white/5 pt-4 mt-2">
+                    <i class="ph-fill ph-check-circle text-cyan-900"></i> クレジットカード登録不要
+                    <span class="w-1 h-1 rounded-full bg-gray-800"></span>
+                    <i class="ph-fill ph-check-circle text-cyan-900"></i> 自動課金なし
+                </div>
             </div>
         </div>
     </section>
 
-  <section id="news" class="py-24 px-6 relative border-t border-white/5">
+    <section id="news" class="py-24 px-6 relative border-t border-white/5">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-cyan-900/10 rounded-full blur-[80px] pointer-events-none"></div>
 
         <div class="max-w-4xl mx-auto relative z-10">
@@ -606,8 +635,7 @@
             <div id="news-container" class="flex flex-col gap-3 reveal-up min-h-[200px]">
                 <div class="text-center text-gray-500 py-10">Loading news...</div>
             </div>
-            
-            </div>
+        </div>
     </section>
 
     <footer class="border-t border-white/10 bg-black pt-16 pb-8 px-6">
@@ -656,6 +684,9 @@
     </div>
 
     <script>
+        // ==========================================
+        // Channel Data & Logic
+        // ==========================================
         const channelData = {
             planA: {
                 title: "Plan A",
@@ -696,6 +727,9 @@
         }
         modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) { closeChannelModal(); } });
 
+        // ==========================================
+        // UI Interaction Logic
+        // ==========================================
         const initScrollObserver = () => {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -758,10 +792,10 @@
         };
 
         // ==========================================
-        // News Fetcher & Modal Logic
+        // News Fetcher & News Modal Logic
         // ==========================================
         
-        // 1. モーダル制御用の変数と関数
+        // 1. News Modal Elements & Functions
         const newsModalOverlay = document.getElementById('news-modal-overlay');
         const newsModal = document.getElementById('news-modal');
         const newsModalTitle = document.getElementById('news-modal-title');
@@ -770,7 +804,7 @@
         function openNewsModal(title, body) {
             if(!newsModalOverlay) return;
             newsModalTitle.textContent = title;
-            newsModalBody.innerHTML = body; // HTMLタグ(br等)を有効にする
+            newsModalBody.innerHTML = body; // Enables HTML tags (br, etc.)
             
             newsModalOverlay.classList.remove('hidden'); 
             newsModalOverlay.classList.add('flex');
@@ -799,9 +833,10 @@
             });
         }
 
-        // 2. スプレッドシートデータ取得関数
+        // 2. Spreadsheet Data Fetcher
         const initNewsFetcher = () => {
-            const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyUviJ0leGRaU-ClpiMxxnWVTW83vK9-A3Wo3RmUdg-V4jn_6982iAFZK35u_s7TTQyyQ/exec"; 
+            // Updated valid URL
+            const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyTcCMg76QNhQMQr85Pj6aRcQTvvf3X--ofXdQym_ytMeNdBotfo6OFRwsjRhs0fh4xWg/exec"; 
             
             const container = document.getElementById('news-container');
             if (!container) return;
@@ -814,25 +849,24 @@
                         return;
                     }
 
-                    // 最新3件を表示
+                    // Display top 3
                     const recentNews = data.slice(0, 3);
 
                     const html = recentNews.map(item => {
-                        // 日付整形
+                        // Date Formatting
                         let dateStr = item.date;
                         if (new Date(item.date).toString() !== 'Invalid Date') {
                             const d = new Date(item.date);
                             dateStr = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
                         }
 
-                        // ラベルスタイル設定
+                        // Label Style
                         let labelClass = "border-white/10 bg-white/5 text-gray-400";
                         if (item.type === 'important') labelClass = "border-pink-500/30 bg-pink-900/20 text-pink-400";
                         else if (item.type === 'update') labelClass = "border-cyan-500/30 bg-cyan-900/20 text-cyan-300";
 
-                        // エスケープ処理（シングルクォートや改行コード対策）
+                        // Escape Special Chars for JS function call
                         const safeTitle = (item.title || "").replace(/'/g, "\\'");
-                        // bodyが無い場合は空文字にする安全策
                         const safeBody = (item.body || "").replace(/'/g, "\\'").replace(/\n/g, "<br>");
 
                         return `
@@ -863,7 +897,7 @@
             initScrollObserver();
             initNavbar();
             initGlowingEffect();
-            initNewsFetcher(); // ← News機能初期化
+            initNewsFetcher();
         });
     </script>
 </body>
