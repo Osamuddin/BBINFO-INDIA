@@ -28,7 +28,6 @@
         body {
             background-color: #030303;
             color: #ffffff;
-            /* bodyの横スクロール制御は残しつつ、コンテンツはmainタグで制御します */
             overflow-x: hidden;
             position: relative;
         }
@@ -579,45 +578,37 @@
             </div>
         </section>
 
-        <section id="trial" class="py-32 px-6 relative overflow-hidden bg-black">
+        <section id="trial" class="py-32 px-6 relative">
             <div class="absolute inset-0 z-0">
-                <div class="absolute inset-0" 
-                     style="background-image: linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px), 
-                            linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px); 
-                            background-size: 50px 50px; 
-                            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
-                            -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);">
-                </div>
-                
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] max-w-full h-[600px] opacity-40 pointer-events-none">
-                    <div class="w-full h-full bg-gradient-to-r from-cyan-500 via-purple-500 to-cyan-500 rounded-full blur-[80px] animate-spin-slow" style="animation: spin 10s linear infinite;"></div>
-                </div>
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000&auto=format&fit=crop" alt="World Connection" class="w-full h-full object-cover opacity-30">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent"></div>
             </div>
 
-            <div class="max-w-3xl mx-auto text-center relative z-10 glow-card-container reveal-up group">
-                <div class="glow-effect" aria-hidden="true" style="--border-width: 1px;"></div>
-                
-                <div class="glow-card-content !p-12 flex flex-col items-center !bg-black/80 backdrop-blur-xl border border-white/10 shadow-2xl">
-                    <h2 class="text-3xl md:text-5xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-200 to-gray-500 tracking-tight">
-                        Ready to Watch?
-                    </h2>
-                    <p class="text-sm md:text-base text-gray-400 mb-8 font-medium leading-relaxed">
+            <div class="max-w-3xl mx-auto text-center relative z-10 glow-card-container reveal-up group luxury-card-fix">
+                <div class="glow-effect" aria-hidden="true"></div>
+                <div class="glow-card-content !p-12 flex flex-col items-center">
+                    <h2 class="text-3xl md:text-5xl font-black mb-6 text-white">Ready to Watch?</h2>
+                    <p class="text-sm md:text-base text-gray-300 mb-8">
                         今なら1週間、完全無料で日本のテレビ体験を。<br>
                         リスクなしでお試しいただけます。
                     </p>
-                    
                     <div class="flex justify-center mb-8 w-full">
-                        <a href="trial.html" class="gradient-button inline-flex items-center justify-center rounded-full min-w-[132px] px-6 md:px-9 py-4 text-sm leading-[19px] font-medium text-white font-sans font-bold focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-transform duration-300 whitespace-nowrap shadow-[0_0_30px_-5px_rgba(0,243,255,0.3)]">
+                        <a href="trial.html" class="gradient-button inline-flex items-center justify-center rounded-full min-w-[132px] px-6 md:px-9 py-4 text-sm leading-[19px] font-medium text-white font-sans font-bold focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:scale-105 transition-transform duration-300 whitespace-nowrap">
                             <span class="flex items-center gap-2">
-                                1週間無料体験を申し込む <i class="ph-bold ph-lightning text-cyan-300"></i>
+                                1週間無料体験を申し込む <i class="ph-bold ph-lightning"></i>
                             </span>
                         </a>
                     </div>
-                    
-                    <div class="flex items-center gap-2 text-xs text-gray-600 border-t border-white/5 pt-4 mt-2">
-                        <i class="ph-fill ph-check-circle text-cyan-900"></i> クレジットカード登録不要
-                        <span class="w-1 h-1 rounded-full bg-gray-800"></span>
-                        <i class="ph-fill ph-check-circle text-cyan-900"></i> 自動課金なし
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-5 text-xs text-white font-bold mt-4 w-full">
+                        <div class="flex items-center gap-2">
+                            <i class="ph-fill ph-check-circle text-cyan-400"></i>
+                            <span>クレジットカード登録不要</span>
+                        </div>
+                        <span class="hidden md:block w-1 h-1 rounded-full bg-white/50"></span>
+                        <div class="flex items-center gap-2">
+                            <i class="ph-fill ph-check-circle text-cyan-400"></i>
+                            <span>自動課金なし</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -628,8 +619,8 @@
 
             <div class="max-w-4xl mx-auto relative z-10">
                 <div class="text-center mb-12 reveal-up">
-                    <h2 class="text-3xl md:text-5xl font-bold mb-4">News</h2>
-                    <p class="text-gray-400">最新のお知らせ</p>
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4">お知らせ</h2>
+                    <p class="text-gray-400">最新のニュース</p>
                 </div>
 
                 <div id="news-container" class="flex flex-col gap-3 reveal-up min-h-[200px]">
@@ -678,7 +669,7 @@
             </div>
             <div id="news-modal-body" class="p-8 text-gray-300 text-sm md:text-base leading-relaxed whitespace-pre-wrap max-h-[60vh] overflow-y-auto custom-scrollbar"></div>
             <div class="px-6 py-3 border-t border-white/5 bg-black/20 text-center">
-                <button onclick="closeNewsModal()" class="px-6 py-2 rounded-lg border border-white/10 hover:bg-white hover:text-black text-gray-300 text-xs font-bold transition-all duration-300">閉じる</button>
+                <button id="news-modal-close-btn" onclick="closeNewsModal()" class="w-full sm:w-auto px-6 py-2 rounded-lg border border-white/10 hover:bg-white hover:text-black text-gray-300 text-xs font-bold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-black">閉じる</button>
             </div>
         </div>
     </div>
@@ -812,6 +803,8 @@
             setTimeout(() => { 
                 newsModal.classList.remove('scale-95', 'opacity-0'); 
                 newsModal.classList.add('scale-100', 'opacity-100'); 
+                const closeBtn = document.getElementById('news-modal-close-btn'); 
+                if (closeBtn) { closeBtn.focus(); }
             }, 10);
             document.body.style.overflow = 'hidden';
         }
@@ -835,7 +828,7 @@
 
         // 2. Spreadsheet Data Fetcher
         const initNewsFetcher = () => {
-            // Your GAS Web App URL
+            // Updated valid URL provided by user
             const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyUviJ0leGRaU-ClpiMxxnWVTW83vK9-A3Wo3RmUdg-V4jn_6982iAFZK35u_s7TTQyyQ/exec"; 
             
             const container = document.getElementById('news-container');
