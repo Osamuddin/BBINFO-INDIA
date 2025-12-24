@@ -138,7 +138,6 @@
             border-radius: 1.5rem;
             padding: 1px;
             background: rgba(255, 255, 255, 0.1);
-            /* transition削除: 負荷軽減 */
         }
         .static-card-container:hover {
             background: rgba(255, 255, 255, 0.15);
@@ -151,15 +150,13 @@
             overflow: hidden;
         }
 
-        /* アコーディオンの矢印回転（CSSのみで制御） */
         details[open] summary .caret-icon {
             transform: rotate(180deg);
         }
         .caret-icon {
-            transition: transform 0.2s ease; /* 矢印だけは軽く回す（重ければこれも削除可） */
+            transition: transform 0.2s ease;
         }
 
-        /* 画面外描画スキップ */
         .channel-grid-wrapper {
             content-visibility: auto; 
             contain-intrinsic-size: 0 500px;
@@ -321,6 +318,7 @@
                 <a href="#service_detail" class="hover:text-white transition-colors">サービス詳細</a>
                 <a href="#channels" class="hover:text-white transition-colors">チャンネル一覧</a>
                 <a href="#pricing" class="hover:text-white transition-colors">料金プラン</a>
+                <a href="#news" class="hover:text-white transition-colors">News</a>
             </div>
             <div class="hidden md:flex items-center gap-3">
                 <a href="contact.html" class="inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white border border-white/20 hover:bg-white hover:text-black transition-all">お問い合わせ</a>
@@ -335,6 +333,7 @@
             <a href="#service_detail" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">サービス詳細</a>
             <a href="#channels" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">チャンネル一覧</a>
             <a href="#pricing" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">料金プラン</a>
+            <a href="#news" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">News</a>
             <a href="contact.html" class="inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white border border-white/20 hover:bg-white hover:text-black transition-all mobile-link">お問い合わせ</a>
             <a href="trial.html" class="mt-2 gradient-button inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white mobile-link whitespace-nowrap">
                 <span class="flex items-center gap-2">無料体験を申し込む <i class="ph-bold ph-lightning"></i></span>
@@ -571,7 +570,7 @@
 
     <section id="trial" class="py-32 px-6 relative">
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000&auto=format&fit=crop" alt="World Connection" class="w-full h-full object-cover opacity-20">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000&auto=format&fit=crop" alt="World Connection" class="w-full h-full object-cover opacity-30">
             <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent"></div>
         </div>
 
@@ -595,6 +594,22 @@
         </div>
     </section>
 
+  <section id="news" class="py-24 px-6 relative border-t border-white/5">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-cyan-900/10 rounded-full blur-[80px] pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="text-center mb-12 reveal-up">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">News</h2>
+                <p class="text-gray-400">最新のお知らせ</p>
+            </div>
+
+            <div id="news-container" class="flex flex-col gap-3 reveal-up min-h-[200px]">
+                <div class="text-center text-gray-500 py-10">Loading news...</div>
+            </div>
+            
+            </div>
+    </section>
+
     <footer class="border-t border-white/10 bg-black pt-16 pb-8 px-6">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             <div class="col-span-1 md:col-span-2">
@@ -608,7 +623,7 @@
             </div>
             <div>
                 <h4 class="font-bold mb-4 text-gray-200">LINKS</h4>
-                <ul class="space-y-2 text-sm text-gray-400"><li><a href="#features" class="hover:text-cyan-400 transition-colors">サービス詳細</a></li><li><a href="#channels" class="hover:text-cyan-400 transition-colors">チャンネル一覧</a></li><li><a href="#pricing" class="hover:text-cyan-400 transition-colors">料金プラン</a></li></ul>
+                <ul class="space-y-2 text-sm text-gray-400"><li><a href="#features" class="hover:text-cyan-400 transition-colors">サービス詳細</a></li><li><a href="#channels" class="hover:text-cyan-400 transition-colors">チャンネル一覧</a></li><li><a href="#pricing" class="hover:text-cyan-400 transition-colors">料金プラン</a></li><li><a href="#news" class="hover:text-cyan-400 transition-colors">News</a></li></ul>
             </div>
         </div>
         <div class="max-w-7xl mx-auto pt-8 border-t border-white/5 text-xs text-gray-600 flex flex-col md:flex-row justify-between items-center gap-4"><div>© 2025 BBINFO - All Rights Reserved.</div><a href="privacy.html" class="hover:text-gray-400 transition-colors">Privacy Policy</a></div>
@@ -622,6 +637,21 @@
             </div>
             <div id="modal-content" class="p-6 max-h-[60vh] overflow-y-auto custom-scrollbar" data-lenis-prevent></div>
             <div class="px-6 py-3 border-t border-white/5 bg-black/20 text-center"><button id="modal-close-btn" onclick="closeChannelModal()" class="w-full sm:w-auto px-6 py-2 rounded-lg border border-white/10 hover:bg-white hover:text-black text-gray-300 text-xs font-bold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-black">閉じる</button></div>
+        </div>
+    </div>
+
+    <div id="news-modal-overlay" class="fixed inset-0 z-[100] hidden modal-overlay items-center justify-center p-4">
+        <div id="news-modal" class="bg-[#0a0a0a] border border-white/10 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300">
+            <div class="px-6 py-5 border-b border-white/5 flex justify-between items-center bg-white/[0.02]">
+                <h3 id="news-modal-title" class="text-xl font-bold text-white tracking-tight leading-snug"></h3>
+                <button onclick="closeNewsModal()" class="text-gray-500 hover:text-white transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 shrink-0">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+            <div id="news-modal-body" class="p-8 text-gray-300 text-sm md:text-base leading-relaxed whitespace-pre-wrap max-h-[60vh] overflow-y-auto custom-scrollbar"></div>
+            <div class="px-6 py-3 border-t border-white/5 bg-black/20 text-center">
+                <button onclick="closeNewsModal()" class="px-6 py-2 rounded-lg border border-white/10 hover:bg-white hover:text-black text-gray-300 text-xs font-bold transition-all duration-300">閉じる</button>
+            </div>
         </div>
     </div>
 
@@ -727,10 +757,113 @@
             window.addEventListener('mousemove', handleMove);
         };
 
+        // ==========================================
+        // News Fetcher & Modal Logic
+        // ==========================================
+        
+        // 1. モーダル制御用の変数と関数
+        const newsModalOverlay = document.getElementById('news-modal-overlay');
+        const newsModal = document.getElementById('news-modal');
+        const newsModalTitle = document.getElementById('news-modal-title');
+        const newsModalBody = document.getElementById('news-modal-body');
+
+        function openNewsModal(title, body) {
+            if(!newsModalOverlay) return;
+            newsModalTitle.textContent = title;
+            newsModalBody.innerHTML = body; // HTMLタグ(br等)を有効にする
+            
+            newsModalOverlay.classList.remove('hidden'); 
+            newsModalOverlay.classList.add('flex');
+            
+            setTimeout(() => { 
+                newsModal.classList.remove('scale-95', 'opacity-0'); 
+                newsModal.classList.add('scale-100', 'opacity-100'); 
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeNewsModal() {
+            if(!newsModal) return;
+            newsModal.classList.remove('scale-100', 'opacity-100'); 
+            newsModal.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => { 
+                newsModalOverlay.classList.add('hidden'); 
+                newsModalOverlay.classList.remove('flex'); 
+                document.body.style.overflow = ''; 
+            }, 300);
+        }
+        
+        if(newsModalOverlay) {
+            newsModalOverlay.addEventListener('click', (e) => { 
+                if (e.target === newsModalOverlay) closeNewsModal(); 
+            });
+        }
+
+        // 2. スプレッドシートデータ取得関数
+        const initNewsFetcher = () => {
+            const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyUviJ0leGRaU-ClpiMxxnWVTW83vK9-A3Wo3RmUdg-V4jn_6982iAFZK35u_s7TTQyyQ/exec"; 
+            
+            const container = document.getElementById('news-container');
+            if (!container) return;
+
+            fetch(GAS_API_URL)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data || data.length === 0) {
+                        container.innerHTML = '<div class="text-center text-gray-500 py-4">お知らせはありません</div>';
+                        return;
+                    }
+
+                    // 最新3件を表示
+                    const recentNews = data.slice(0, 3);
+
+                    const html = recentNews.map(item => {
+                        // 日付整形
+                        let dateStr = item.date;
+                        if (new Date(item.date).toString() !== 'Invalid Date') {
+                            const d = new Date(item.date);
+                            dateStr = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+                        }
+
+                        // ラベルスタイル設定
+                        let labelClass = "border-white/10 bg-white/5 text-gray-400";
+                        if (item.type === 'important') labelClass = "border-pink-500/30 bg-pink-900/20 text-pink-400";
+                        else if (item.type === 'update') labelClass = "border-cyan-500/30 bg-cyan-900/20 text-cyan-300";
+
+                        // エスケープ処理（シングルクォートや改行コード対策）
+                        const safeTitle = (item.title || "").replace(/'/g, "\\'");
+                        // bodyが無い場合は空文字にする安全策
+                        const safeBody = (item.body || "").replace(/'/g, "\\'").replace(/\n/g, "<br>");
+
+                        return `
+                        <div onclick="openNewsModal('${safeTitle}', '${safeBody}')" class="group relative overflow-hidden rounded-2xl glass-panel p-5 md:px-8 transition-all duration-300 hover:bg-white/5 hover:border-white/20 hover:-translate-y-1 block cursor-pointer">
+                            <div class="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 relative z-10">
+                                <div class="flex items-center gap-4 shrink-0">
+                                    <time class="text-sm text-gray-500 font-mono tracking-wide">${dateStr}</time>
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${labelClass} tracking-wider">${item.label}</span>
+                                </div>
+                                <p class="flex-1 text-sm md:text-base font-medium text-gray-200 group-hover:text-white transition-colors line-clamp-1">
+                                    ${item.title}
+                                </p>
+                                <i class="ph-bold ph-caret-right text-gray-600 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all duration-300 md:ml-auto"></i>
+                            </div>
+                        </div>
+                        `;
+                    }).join('');
+
+                    container.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Fetch Error:', error);
+                    container.innerHTML = '<div class="text-center text-gray-500 py-4">情報の読み込みに失敗しました</div>';
+                });
+        };
+
         window.addEventListener('load', () => {
             initScrollObserver();
             initNavbar();
             initGlowingEffect();
+            initNewsFetcher(); // ← News機能初期化
         });
     </script>
 </body>
