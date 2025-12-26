@@ -793,8 +793,7 @@
 
         // 2. Spreadsheet Data Fetcher
         const initNewsFetcher = () => {
-            // Updated valid URL provided by user
-            const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyUviJ0leGRaU-ClpiMxxnWVTW83vK9-A3Wo3RmUdg-V4jn_6982iAFZK35u_s7TTQyyQ/exec"; 
+            const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxAobcVcpWMlQaCSainucdxNRZ-XjfqVDeqGfUMZMm6C0oib8wxmvuXZSoIppMnB7q19g/exec"; 
             
             const container = document.getElementById('news-container');
             if (!container) return;
@@ -811,21 +810,36 @@
                     const recentNews = data.slice(0, 3);
 
                     const html = recentNews.map(item => {
+                        // Handle capitalized keys based on screenshot (Date, Label, Type, Title, Content)
+                        // Fallback to lowercase just in case API normalizes them
+                        const entryDate = item.Date || item.date;
+                        const entryTitle = item.Title || item.title;
+                        const entryContent = item.Content || item.content || item.body;
+                        const entryLabel = item.Label || item.label;
+                        const entryType = item.Type || item.type;
+
                         // Date Formatting
-                        let dateStr = item.date;
-                        if (new Date(item.date).toString() !== 'Invalid Date') {
-                            const d = new Date(item.date);
+                        let dateStr = entryDate;
+                        if (entryDate && new Date(entryDate).toString() !== 'Invalid Date') {
+                            const d = new Date(entryDate);
                             dateStr = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
                         }
 
-                        // Label Style
-                        let labelClass = "border-white/10 bg-white/5 text-gray-400";
-                        if (item.type === 'important') labelClass = "border-pink-500/30 bg-pink-900/20 text-pink-400";
-                        else if (item.type === 'update') labelClass = "border-cyan-500/30 bg-cyan-900/20 text-cyan-300";
+                        // Label Style (Mapping Japanese spreadsheet values)
+                        let labelClass = "border-white/10 bg-white/5 text-gray-400"; // Default
+                        
+                        // Check for 'キャンペーン' or 'important'
+                        if (entryType === 'キャンペーン' || entryType === 'important') {
+                             labelClass = "border-pink-500/30 bg-pink-900/20 text-pink-400"; 
+                        } 
+                        // Check for 'お知らせ' or 'update' (giving it a cyan tint if preferred, or keep default)
+                        else if (entryType === 'お知らせ' || entryType === 'update') {
+                            labelClass = "border-cyan-500/30 bg-cyan-900/20 text-cyan-300";
+                        }
 
                         // Escape Special Chars for JS function call
-                        const safeTitle = (item.title || "").replace(/'/g, "\\'");
-                        const safeBody = (item.body || "").replace(/'/g, "\\'").replace(/\n/g, "<br>");
+                        const safeTitle = (entryTitle || "").replace(/'/g, "\\'");
+                        const safeBody = (entryContent || "").replace(/'/g, "\\'").replace(/\n/g, "<br>");
 
                         return `
                         <div onclick="openNewsModal('${safeTitle}', '${safeBody}')" class="group relative overflow-hidden rounded-2xl glass-panel p-5 md:px-8 transition-all duration-300 hover:bg-white/5 hover:border-white/20 hover:-translate-y-1 block cursor-pointer">
@@ -834,10 +848,10 @@
                                 <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 flex-1 min-w-0">
                                     <div class="flex items-center gap-4 shrink-0">
                                         <time class="text-sm text-gray-500 font-mono tracking-wide">${dateStr}</time>
-                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${labelClass} tracking-wider">${item.label}</span>
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${labelClass} tracking-wider">${entryLabel}</span>
                                     </div>
                                     <p class="text-sm md:text-base font-medium text-gray-200 group-hover:text-white transition-colors line-clamp-1 break-all">
-                                        ${item.title}
+                                        ${entryTitle}
                                     </p>
                                 </div>
 

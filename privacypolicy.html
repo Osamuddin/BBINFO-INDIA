@@ -50,7 +50,7 @@
     <style>
         /* Base Styles & Reset */
         body {
-            background-color: #030303; /* index.htmlに合わせて変更 */
+            background-color: #030303;
             color: #ffffff;
             overflow-x: hidden;
             position: relative;
@@ -64,7 +64,7 @@
         .lenis.lenis-scrolling iframe { pointer-events: none; }
 
         /* -------------------------------------------
-           HeroGeometric 背景 (index.htmlから移植)
+           HeroGeometric 背景
            ------------------------------------------- */
         .hero-geometric-bg {
             position: fixed;
@@ -149,7 +149,7 @@
             transform: translateY(0);
         }
 
-        /* Glowing Effect */
+        /* Glowing Effect Base (JS disabled, so this acts as static style) */
         .glow-card-container {
             position: relative;
             border-radius: 1.5rem;
@@ -163,32 +163,7 @@
             border-radius: inherit;
             pointer-events: none;
             overflow: hidden;
-            --start: 0;
-            --spread: 60;
-            --active: 0;
-            --border-width: 2px;
-            --gradient: radial-gradient(circle, #00f3ff 10%, transparent 20%),
-                        radial-gradient(circle at 40% 40%, #bc13fe 10%, transparent 20%),
-                        radial-gradient(circle at 60% 60%, #00f3ff 10%, transparent 20%),
-                        repeating-conic-gradient(from 0deg at 50% 50%, #00f3ff 0%, #bc13fe 25%, #00f3ff 50%, #bc13fe 75%, #00f3ff 100%);
-        }
-
-        .glow-effect::after {
-            content: "";
-            position: absolute;
-            inset: calc(-1 * var(--border-width));
-            border: var(--border-width) solid transparent;
-            border-radius: inherit;
-            background: var(--gradient);
-            background-attachment: fixed;
-            opacity: var(--active);
-            transition: opacity 0.3s;
-            -webkit-mask: linear-gradient(#0000, #0000), conic-gradient(from calc((var(--start) - var(--spread)) * 1deg), transparent 0deg, #fff, transparent calc(var(--spread) * 2deg));
-            mask: linear-gradient(#0000, #0000), conic-gradient(from calc((var(--start) - var(--spread)) * 1deg), transparent 0deg, #fff, transparent calc(var(--spread) * 2deg));
-            -webkit-mask-clip: padding-box, border-box;
-            mask-clip: padding-box, border-box;
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
+            opacity: 0; /* Default hidden without JS */
         }
 
         .glow-card-content {
@@ -310,7 +285,7 @@
             </div>
 
             <div class="hidden md:flex items-center gap-3">
-                <a href="#" class="inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white border border-white/20 hover:bg-white hover:text-black transition-all">
+                <a href="contact.html" class="inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white border border-white/20 hover:bg-white hover:text-black transition-all">
                     お問い合わせ
                 </a>
                 <a href="trial.html" class="hidden md:inline-flex gradient-button items-center justify-center rounded-full min-w-[132px] px-6 md:px-9 py-4 text-sm leading-[19px] font-medium text-white font-sans font-bold hover:scale-105 transition-transform duration-300">
@@ -330,6 +305,7 @@
             <a href="index.html#features" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">サービス詳細</a>
             <a href="index.html#channels" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">チャンネル一覧</a>
             <a href="index.html#pricing" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">料金プラン</a>
+            <a href="contact.html" class="py-3 border-b border-white/10 hover:text-cyan-400 mobile-link text-white">お問い合わせ</a>
             <a href="trial.html" class="mt-2 gradient-button inline-flex items-center justify-center rounded-full px-6 py-4 text-sm font-bold text-white mobile-link whitespace-nowrap">
                 <span class="flex items-center gap-2">
                     1週間無料体験を申し込む <i class="ph-bold ph-lightning"></i>
@@ -562,38 +538,12 @@
             });
         };
 
-        // 5. Glowing Effect Logic
-        const initGlowingEffect = () => {
-            const cards = document.querySelectorAll('.glow-card-container');
-            const handleMove = (e) => {
-                cards.forEach(card => {
-                    const glowEffect = card.querySelector('.glow-effect');
-                    if (!glowEffect) return;
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const inside = x >= -50 && x <= rect.width + 50 && y >= -50 && y <= rect.height + 50;
-                    
-                    if (inside) {
-                        glowEffect.style.setProperty('--active', '1');
-                        const centerX = rect.width / 2;
-                        const centerY = rect.height / 2;
-                        const angle = Math.atan2(y - centerY, x - centerX) * (180 / Math.PI) + 90;
-                        glowEffect.style.setProperty('--start', angle);
-                    } else {
-                        glowEffect.style.setProperty('--active', '0');
-                    }
-                });
-            };
-            window.addEventListener('mousemove', handleMove);
-        };
-
         // Initialize
         window.addEventListener('load', () => {
             initLenis();
             initScrollObserver();
             initNavbar();
-            initGlowingEffect();
+            // initGlowingEffect removed to disable mouse hover glow
         });
     </script>
 </body>
