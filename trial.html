@@ -139,6 +139,18 @@
             transition: all 0.3s ease;
             position: relative;
         }
+        /* Select要素用のスタイル調整 */
+        select.glass-input {
+            appearance: none; /* デフォルトの矢印を消す */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+        }
+        select.glass-input option {
+            background-color: #1a1a1a; /* ドロップダウンの背景色 */
+            color: white;
+        }
+        
         .glass-input:focus {
             outline: none;
             border-color: #00f3ff;
@@ -381,13 +393,39 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
                         <div class="space-y-2">
                             <label class="block text-sm font-bold text-gray-300">設置／来店希望日</label>
                             <div class="text-[10px] text-gray-500 mb-1">新規機械設置・修理受付<br>平日10:00-17:00　定休日:土曜日,日曜日</div>
                             <div class="input-wrapper">
                                 <input type="date" name="設置・来店希望日" class="glass-input" placeholder="DD/MM/YYYY">
                                 <i class="ph ph-calendar-blank input-icon"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-gray-300">設置／来店希望時間</label>
+                            <!-- 高さ合わせのためのスペーサー -->
+                            <div class="text-[10px] text-transparent mb-1 select-none">Time Space<br>Space</div>
+                            <div class="input-wrapper">
+                                <select name="設置・来店希望時間" class="glass-input">
+                                    <option value="" disabled selected>時間を選択</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="10:30">10:30</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="11:30">11:30</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="12:30">12:30</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="13:30">13:30</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="14:30">14:30</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="15:30">15:30</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="16:30">16:30</option>
+                                    <option value="17:00">17:00</option>
+                                </select>
+                                <i class="ph ph-clock input-icon"></i>
                             </div>
                         </div>
                     </div>
