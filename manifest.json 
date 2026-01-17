@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Enter Safe for ChatGPT",
+  "version": "0.1",
+  "description": "Prevent accidental Enter sends on ChatGPT",
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}

@@ -4,19 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>送信完了 | BBINFO</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['"Inter"', '"Noto Sans JP"', 'sans-serif'] },
-                    colors: { glass: { 100: 'rgba(255, 255, 255, 0.05)', 200: 'rgba(255, 255, 255, 0.1)' } },
+                    fontFamily: {
+                        sans: ['"Inter"', '"Noto Sans JP"', 'sans-serif'],
+                    },
+                    colors: {
+                        glass: {
+                            100: 'rgba(255, 255, 255, 0.05)',
+                            200: 'rgba(255, 255, 255, 0.1)',
+                        },
+                        neon: {
+                            cyan: '#00f3ff',
+                            purple: '#bc13fe',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
                 }
             }
         }
     </script>
+
     <style>
         /* Base Styles & Reset */
         body {
@@ -25,6 +52,15 @@
             overflow-x: hidden;
             position: relative;
         }
+
+        /* -------------------------------------------
+           Lenis Recommended CSS
+           ------------------------------------------- */
+        html.lenis, html.lenis body { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+        .lenis.lenis-scrolling iframe { pointer-events: none; }
 
         /* -------------------------------------------
            HeroGeometric 背景 (index.htmlから移植)
@@ -150,5 +186,48 @@
             </div>
         </div>
     </main>
+
+    <footer class="border-t border-white/10 bg-black py-8">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
+            
+            <div class="text-center md:text-left">
+                <a href="index.html" class="inline-flex items-center gap-2 mb-4 group justify-center md:justify-start">
+                    <div class="text-xl font-bold">BBINFO</div>
+                </a>
+                <p class="text-xs text-gray-400 mb-2">JCNET Communications Private Limited</p>
+                <div class="text-xs text-gray-500 space-y-1">
+                    <p><i class="ph-fill ph-map-pin mr-1"></i> New Delhi</p>
+                    <p><i class="ph-fill ph-phone mr-1"></i> +91 95600 54243 (Mon-Fri 9:00-18:00)</p>
+                </div>
+            </div>
+
+            <div class="text-center md:text-right text-xs text-gray-600 flex flex-col gap-2 justify-end h-full">
+                <div class="flex justify-center md:justify-end gap-6">
+                    <a href="privacypolicy.html" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
+                    <a href="TermsofService.html" class="hover:text-gray-400 transition-colors">Terms of Service</a>
+                </div>
+                <div>© 2026 BBINFO - All Rights Reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Init Lenis (Optimized)
+        const lenis = new Lenis({
+            duration: 0.8, // Snappy scroll
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1.5,
+            smoothTouch: false,
+            touchMultiplier: 2,
+        });
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+    </script>
 </body>
 </html>
